@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Distribution & Nutrition Support - Mahama Refugee Camp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            blue: '#3B82F6',
+                            green: '#10B981',
+                            yellow: '#FBBF24',
+                            light: '#FEF3C7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Professional navigation styles */
+        .nav-professional {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .donate-btn {
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        /* Enhanced animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Enhanced hover effects */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            z-index: 1002;
+            transition: width 0.3s ease;
+        }
+        
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 12rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0;
+            z-index: 100;
+            animation: slideDown 0.2s ease-out;
+        }
+        .dropdown-content.active {
+            display: block;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        /* Mobile dropdown styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+        .mobile-dropdown-content.active {
+            display: block;
+        }
+        
+        /* Professional button animations */
+        .btn-professional {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-professional::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-professional:hover::before {
+            left: 100%;
+        }
+
+        /* Food specific styles */
+        .food-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Professional Navigation -->
+    <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <!-- Enhanced Logo -->
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xl text-gray-800">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
+                    
+                    <!-- Programs Dropdown -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
+                            Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="programs-dropdown">
+                            <a href="hunger-help.html" class="block px-4 py-2 text-primary-blue font-semibold bg-blue-50">Hunger Help</a>
+                            <a href="youth-empowerment.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
+                            <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                            <!-- <a href="health-services.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Health Services</a> -->
+                            <!-- <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Advertisement</a> -->
+                        </div>
+                    </div>
+                    
+                    <a href="about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">who we are</a>
+                    <a href="get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
+                    
+                    <!-- News & Updates -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
+                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="news-dropdown">
+                            <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Advertisement</a>
+                            <!-- <a href="events.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Upcoming Events</a> -->
+                            <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="nav-item text-primary-blue font-semibold border-b-2 border-primary-blue">Contact</a>
+                    
+                    <!-- Opportunities -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300 flex items-center" data-dropdown="opportunities">
+                            Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="opportunities-dropdown">
+                            <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
+                            <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
+                            <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="openModal('donateModal')" class="donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
+                    </button>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-600 hover:text-primary-blue transition">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="mobile-menu">
+                <div class="px-4 py-2 space-y-3">
+                    <a href="index.html" class="block py-2 text-primary-blue font-semibold border-b border-gray-200 transition">Home</a>
+                    
+                    <!-- Programs Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            Programs <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="hunger-help.html" class="block py-2 text-primary-blue font-semibold pl-4">Food & Nutrition</a>
+                            <a href="youth-empowerment.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
+                            <a href="mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
+                            <!-- <a href="health-services.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Health Services</a>
+                            <a href="education.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Education & Training</a> -->
+                        </div>
+                    </div>
+                    
+                    <a href="about-us.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">About</a>
+                    <a href="get-involved.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Get Involved</a>
+                    
+                    <!-- News & Updates Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            News & Updates <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Advertisement</a>
+                            <!-- <a href="events.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Upcoming Events</a> -->
+                            <a href="stories.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Success Stories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="block py-2 text-primary-blue font-semibold border-b-2 border-primary-blue transition">Contact</a>
+                    
+                    <!-- Opportunities Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 bg-primary-yellow text-gray-800 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-between px-4">
+                            Opportunities <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Volunteer</a>
+                            <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Careers</a>
+                            <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Partnerships</a>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openModal('donateModal')" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition transform hover:scale-105 text-left flex items-center">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Food & Nutrition Content -->
+    <main class="pt-32">
+        <!-- Header Section -->
+        <section class="bg-gradient-to-r from-orange-500 to-amber-500 py-20 text-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center fade-in">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Food Distribution & Nutrition Support</h1>
+                    <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-4xl mx-auto">
+                        Ensuring food security and proper nutrition for vulnerable groups in Mahama Refugee Camp
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="scrollToSection('distribution-points')" class="btn-professional bg-white text-orange-500 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-map-marker-alt mr-2"></i>Distribution Points
+                        </button>
+                        <button onclick="scrollToSection('nutrition-support')" class="btn-professional bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-orange-500 transition transform hover:scale-105">
+                            <i class="fas fa-apple-alt mr-2"></i>Nutrition Programs
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Summary -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Food Security in Mahama Refugee Camp</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive food distribution and nutrition programs for 60,000+ refugees</p>
+                </div>
+                
+                <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-2xl p-8 mb-8 fade-in">
+                    <div class="flex items-start">
+                        <i class="fas fa-utensils text-3xl text-orange-500 mr-4 mt-1"></i>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Overview</h3>
+                            <p class="text-gray-700 text-lg leading-relaxed">
+                                Mahama Refugee Camp faces significant food security challenges with over 60,000 residents relying on humanitarian assistance. 
+                                Our comprehensive food distribution system ensures regular access to nutritious food while specialized nutrition programs 
+                                target the most vulnerable groups including children under 5, pregnant and lactating women, elderly, and individuals with 
+                                chronic illnesses. Through strategic partnerships and community-based approaches, we're working to eliminate malnutrition 
+                                and build food resilience.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Food Security Statistics -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                    <div class="stat-card text-white text-center p-6 rounded-2xl shadow-lg">
+                        <div class="text-3xl font-bold mb-2 counter" data-target="58000">0</div>
+                        <div class="text-lg">People Served Monthly</div>
+                    </div>
+                    <div class="stat-card text-white text-center p-6 rounded-2xl shadow-lg">
+                        <div class="text-3xl font-bold mb-2 counter" data-target="12">0</div>
+                        <div class="text-lg">Distribution Points</div>
+                    </div>
+                    <div class="stat-card text-white text-center p-6 rounded-2xl shadow-lg">
+                        <div class="text-3xl font-bold mb-2 counter" data-target="2100">0</div>
+                        <div class="text-lg">Children in Nutrition Programs</div>
+                    </div>
+                    <div class="stat-card text-white text-center p-6 rounded-2xl shadow-lg">
+                        <div class="text-3xl font-bold mb-2 counter" data-target="96">0</div>
+                        <div class="text-lg">Food Security Rate %</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Food Distribution Points -->
+        <section id="distribution-points" class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Regular Food Distribution Points</h2>
+                    <p class="text-xl text-gray-600">Strategic locations ensuring equitable access to food assistance</p>
+                </div>
+
+                <div class="food-card bg-white rounded-2xl shadow-lg overflow-hidden border-l-4 border-orange-500 fade-in hover-lift mb-8">
+                    <div class="p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-warehouse text-orange-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-800">Main Distribution Centers</h3>
+                                    <p class="text-gray-600">Centralized food distribution hubs</p>
+                                </div>
+                            </div>
+                            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
+                                <i class="fas fa-truck mr-1"></i>4 Centers
+                            </span>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-4 text-lg">Distribution Schedule & Process</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-orange-500 mt-1 mr-3"></i>
+                                        <span>Bi-weekly distributions on 1st and 15th of each month</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-orange-500 mt-1 mr-3"></i>
+                                        <span>Digital registration and e-voucher system for efficiency</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-orange-500 mt-1 mr-3"></i>
+                                        <span>Priority access for vulnerable groups and persons with disabilities</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-orange-500 mt-1 mr-3"></i>
+                                        <span>Community volunteers assist with distribution logistics</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-700 mb-4 text-lg">Standard Food Basket</h4>
+                                <div class="space-y-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-wheat-alt text-orange-600 mr-3"></i>
+                                        <span>Maize flour (12kg per person/month)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-seedling text-green-600 mr-3"></i>
+                                        <span>Beans (3kg per person/month)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-oil-can text-yellow-600 mr-3"></i>
+                                        <span>Cooking oil (1L per person/month)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-cube text-blue-600 mr-3"></i>
+                                        <span>Corn Soy Blend (2kg per child/month)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-card bg-white rounded-2xl shadow-lg overflow-hidden border-l-4 border-green-500 fade-in hover-lift">
+                    <div class="p-8">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marked-alt text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-gray-800">Neighborhood Distribution Points</h3>
+                                    <p class="text-gray-600">Decentralized access points for community convenience</p>
+                                </div>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                                <i class="fas fa-users mr-1"></i>8 Locations
+                            </span>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-semibold text-gray-700 mb-4 text-lg">Location Strategy</h4>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>Strategic placement within 1km of all residential zones</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>Mobile distribution for remote or inaccessible areas</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>Extended hours during distribution days (6AM-6PM)</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                        <span>Separate queues for vulnerable groups to reduce waiting time</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-gray-700 mb-4 text-lg">Community Benefits</h4>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-700">Average Wait Time:</span>
+                                        <span class="font-semibold text-green-600">45 mins</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-700">Accessibility:</span>
+                                        <span class="font-semibold text-green-600">98% coverage</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-700">Satisfaction Rate:</span>
+                                        <span class="font-semibold text-green-600">94%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nutrition Support Programs -->
+        <section id="nutrition-support" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Nutrition Support for Vulnerable Groups</h2>
+                    <p class="text-xl text-gray-600">Specialized programs targeting those most at risk of malnutrition</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="food-card bg-white rounded-2xl shadow-lg overflow-hidden border-l-4 border-purple-500 fade-in hover-lift p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-baby text-purple-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Child Nutrition Program</h3>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-purple-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Supplementary Feeding</h4>
+                                    <p class="text-gray-600 text-sm">Therapeutic food for moderately malnourished children (6-59 months)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-purple-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Growth Monitoring</h4>
+                                    <p class="text-gray-600 text-sm">Monthly weight and height checks at community health posts</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-purple-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Nutrition Education</h4>
+                                    <p class="text-gray-600 text-sm">Cooking demonstrations and feeding practices for caregivers</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 bg-purple-50 rounded-lg p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">Children Supported:</span>
+                                <span class="font-semibold text-purple-600">2,100+ monthly</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="food-card bg-white rounded-2xl shadow-lg overflow-hidden border-l-4 border-pink-500 fade-in hover-lift p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-female text-pink-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Maternal Nutrition</h3>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-pink-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Pregnant Women Support</h4>
+                                    <p class="text-gray-600 text-sm">Extra rations and micronutrient supplements</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-pink-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Lactating Mothers</h4>
+                                    <p class="text-gray-600 text-sm">Enhanced food basket for first 6 months postpartum</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-pink-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Breastfeeding Support</h4>
+                                    <p class="text-gray-600 text-sm">Counseling and mother-to-mother support groups</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 bg-pink-50 rounded-lg p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">Women Supported:</span>
+                                <span class="font-semibold text-pink-600">850+ monthly</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Nutrition Programs -->
+                <div class="grid md:grid-cols-2 gap-8 mt-8">
+                    <div class="food-card bg-white rounded-2xl shadow-lg overflow-hidden border-l-4 border-blue-500 fade-in hover-lift p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-user-injured text-blue-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Medical Nutrition Therapy</h3>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Chronic Illness Support</h4>
+                                    <p class="text-gray-600 text-sm">Specialized diets for TB, HIV/AIDS, and other chronic conditions</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-blue-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Elderly Nutrition</h4>
+                                    <p class="text-gray-600 text-sm">Softer foods and nutrient-dense options for seniors</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="food-card bg-white rounded-2xl shadow-lg overflow-hidden border-l-4 border-yellow-500 fade-in hover-lift p-8">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-seedling text-yellow-600 text-xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-800">Community Gardens</h3>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-yellow-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Food Production</h4>
+                                    <p class="text-gray-600 text-sm">15 community gardens producing fresh vegetables</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-yellow-500 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800">Nutrition Diversity</h4>
+                                    <p class="text-gray-600 text-sm">Increasing access to micronutrient-rich foods</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 bg-yellow-50 rounded-lg p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700">Gardens Active:</span>
+                                <span class="font-semibold text-yellow-600">15 locations</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partner Organizations -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Partner Organizations</h2>
+                    <p class="text-xl text-gray-600">Collaborating for comprehensive food security solutions</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-gray-50 rounded-2xl p-6 text-center fade-in hover-lift">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-globe-africa text-orange-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">World Food Programme</h4>
+                        <p class="text-gray-600 text-sm">Primary food supplier and logistics coordination</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-2xl p-6 text-center fade-in hover-lift">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-university text-green-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">UNHCR</h4>
+                        <p class="text-gray-600 text-sm">Coordination, protection, and overall camp management</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-2xl p-6 text-center fade-in hover-lift">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-hands-helping text-blue-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">ARC</h4>
+                        <p class="text-gray-600 text-sm">Nutrition program implementation and monitoring</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-2xl p-6 text-center fade-in hover-lift">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-cross text-red-600 text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">Red Cross</h4>
+                        <p class="text-gray-600 text-sm">Emergency response and community mobilization</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenges & Opportunities -->
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Challenges -->
+                    <div class="fade-in">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-exclamation-triangle mr-3 text-orange-600"></i>
+                            Key Challenges
+                        </h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+                                <i class="fas fa-truck-loading text-orange-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-lg">Supply Chain Disruptions</h4>
+                                    <p class="text-gray-700 mt-1">Delays in food deliveries due to logistical challenges and funding gaps</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                                <i class="fas fa-child text-red-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-lg">Persistent Malnutrition</h4>
+                                    <p class="text-gray-700 mt-1">12% global acute malnutrition rate among children under 5</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                                <i class="fas fa-tint text-purple-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-lg">Water & Sanitation</h4>
+                                    <p class="text-gray-700 mt-1">Limited clean water affecting food preparation and nutrition</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunities -->
+                    <div class="fade-in">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i class="fas fa-lightbulb mr-3 text-green-600"></i>
+                            Future Opportunities
+                        </h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                                <i class="fas fa-mobile-alt text-green-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-lg">Digital Food Vouchers</h4>
+                                    <p class="text-gray-700 mt-1">Expanding cash-based transfers for greater food choice</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                                <i class="fas fa-industry text-blue-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-lg">Local Food Production</h4>
+                                    <p class="text-gray-700 mt-1">Scaling up community gardens and small-scale agriculture</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                                <i class="fas fa-graduation-cap text-yellow-600 mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-lg">Nutrition Education</h4>
+                                    <p class="text-gray-700 mt-1">Expanding community-based nutrition training programs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <!-- Footer Logo -->
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-lg">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Ensuring food security and nutrition for refugees in Mahama Camp, Rwanda.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Food Programs</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-warehouse mr-3 text-xs"></i>
+                            Distribution Centers
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-baby mr-3 text-xs"></i>
+                            Child Nutrition
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-female mr-3 text-xs"></i>
+                            Maternal Support
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-seedling mr-3 text-xs"></i>
+                            Community Gardens
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            Mahama Camp, Kirehe District, Rwanda
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            foodsecurity.hopelink@gmail.com
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-3"></i>
+                            +250 123 456 789
+                        </p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition transform hover:scale-110">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-red-500 transition transform hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 HopeLink Mahama — Ensuring Food Security for Refugees.</p>
+                <p class="text-xs mt-2">Data Sources: WFP, UNHCR, ARC, Red Cross, Camp Management</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for interactive features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll progress bar
+            window.addEventListener('scroll', function() {
+                const scrollProgress = document.getElementById('scrollProgress');
+                const scrollTop = document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercent = (scrollTop / scrollHeight) * 100;
+                scrollProgress.style.width = scrollPercent + '%';
+            });
+
+            // Navbar scroll effect
+            const nav = document.getElementById('mainNav');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            });
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Dropdown functionality
+            const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const dropdownId = this.getAttribute('data-dropdown') + '-dropdown';
+                    const dropdown = document.getElementById(dropdownId);
+                    dropdown.classList.toggle('active');
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.matches('.dropdown-btn')) {
+                    const dropdowns = document.querySelectorAll('.dropdown-content');
+                    dropdowns.forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+            });
+
+            // Mobile dropdown functionality
+            const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-btn');
+            mobileDropdownButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('active');
+                });
+            });
+
+            // Counter animation
+            const counters = document.querySelectorAll('.counter');
+            const speed = 200;
+
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(animateCounters, 1);
+                    } else {
+                        counter.innerText = target.toLocaleString();
+                    }
+                });
+            };
+
+            // Intersection Observer for fade-in animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        if (entry.target.querySelector('.counter')) {
+                            animateCounters();
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        function openModal(modalId) {
+            // Modal functionality can be added here
+            console.log('Open modal: ' + modalId);
+        }
+    </script>
+</body>
+</html>

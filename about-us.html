@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About HopeLink Mahama - Empowering Refugees Through Technology</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#3B82F6',
+                        'primary-green': '#10B981',
+                        'primary-yellow': '#F59E0B',
+                    },
+                    animation: {
+                        'pulse-custom': 'pulse 2s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Animation Styles */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 1;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body class="font-sans bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <!-- Professional Logo -->
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary-blue to-primary-green rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-hands-helping text-white text-lg"></i>
+                        </div>
+                        <div class="font-bold text-xl bg-gradient-to-br from-primary-blue to-primary-green bg-clip-text text-transparent">
+                            HopeLink Mahama
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-blue transition-colors">Home</a>
+                    
+                    <!-- Programs Dropdown -->
+                    <div class="dropdown">
+                        <button class="text-gray-600 hover:text-primary-blue transition-colors flex items-center">
+                            Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="hunger-help.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Hunger Help</a>
+                            <a href="youth-empowerment.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Youth Empowerment</a>
+                            <a href="mental-wellness.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Mental Wellness</a>
+                        </div>
+                    </div>
+                    
+                    <a href="about-us.html" class="text-primary-blue font-semibold border-b-2 border-primary-blue">who we are</a>
+                    <a href="get-involved.html" class="text-gray-600 hover:text-primary-blue transition-colors">Get Involved</a>
+                    
+                    <!-- News & Updates -->
+                    <div class="dropdown">
+                        <button class="text-gray-600 hover:text-primary-blue transition-colors flex items-center">
+                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="./advertisement.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Advertisement</a>
+                            <!-- <a href="events.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Upcoming Events</a> -->
+                            <a href="stories.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Success Stories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="text-gray-600 hover:text-primary-blue transition-colors">Contact</a>
+                    
+                    <!-- Advertisement -->
+                    <div class="dropdown">
+                        <button class="bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center">
+                            Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="volunteer.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Volunteer</a>
+                            <a href="careers.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Careers</a>
+                            <a href="partnerships.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Partnerships</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="openModal('donateModal')" class="bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">
+                        Donate Now
+                    </button>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="mobile-menu">
+                <div class="px-4 py-2 space-y-3">
+                    <a href="index.html" class="block py-2 text-gray-600 hover:text-primary-blue transition-colors">Home</a>
+                    
+                    <div class="py-2">
+                        <button class="flex items-center justify-between w-full text-gray-600 hover:text-primary-blue transition-colors" onclick="toggleMobileMenu('mobileProgramsMenu')">
+                            <span>Programs</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="pl-4 mt-2 space-y-2 hidden" id="mobileProgramsMenu">
+                            <a href="hunger-help.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Hunger Help</a>
+                            <a href="youth-empowerment.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Youth Empowerment</a>
+                            <a href="mental-wellness.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Mental Wellness</a>
+                        </div>
+                    </div>
+                    
+                    <a href="about.html" class="block py-2 text-primary-blue font-semibold border-l-4 border-primary-blue pl-2">About</a>
+                    <a href="get-involved.html" class="block py-2 text-gray-600 hover:text-primary-blue transition-colors">Get Involved</a>
+                    
+                    <div class="py-2">
+                        <button class="flex items-center justify-between w-full text-gray-600 hover:text-primary-blue transition-colors" onclick="toggleMobileMenu('mobileNewsMenu')">
+                            <span>News & Updates</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="pl-4 mt-2 space-y-2 hidden" id="mobileNewsMenu">
+                            <a href="./advertisement.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Advertisement</a>
+                            <!-- <a href="events.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Upcoming Events</a> -->
+                            <a href="stories.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Success Stories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="block py-2 text-gray-600 hover:text-primary-blue transition-colors">Contact</a>
+                    
+                    <div class="py-2">
+                        <button class="flex items-center justify-between w-full text-gray-600 hover:text-primary-blue transition-colors" onclick="toggleMobileMenu('mobileOpportunitiesMenu')">
+                            <span>Opportunities</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="pl-4 mt-2 space-y-2 hidden" id="mobileOpportunitiesMenu">
+                            <a href="volunteer.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Volunteer</a>
+                            <a href="careers.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Careers</a>
+                            <a href="partnerships.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Partnerships</a>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openModal('donateModal')" class="w-full bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors text-left">
+                        Donate Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Video Background -->
+    <section class="relative h-screen min-h-[600px] overflow-hidden flex items-center justify-center pt-16 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1511898634545-c01af8a54dd5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')">
+        <!-- Dark overlay for better text readability -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40 z-0"></div>
+        
+        <!-- Hero Content -->
+        <div class="relative z-10 text-center text-white max-w-[1200px] px-8">
+            <div class="fade-in">
+                <span class="inline-block bg-gradient-to-br from-primary-blue to-primary-green px-6 py-2 rounded-full font-semibold mb-6 animate-pulse-custom">
+                    Since 2025
+                </span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
+                    Building Hope Through <span class="text-primary-green">Technology</span>
+                </h1>
+                <p class="text-xl md:text-2xl lg:text-3xl opacity-90 max-w-4xl mx-auto mb-8 leading-relaxed">
+                    Empowering Mahama Refugee Camp with digital solutions, education, and sustainable community development. We're transforming challenges into opportunities through innovation and compassion.
+                </p>
+                
+                <!-- Impact Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 max-w-2xl mx-auto">
+                    <div class="text-center">
+                        <div class="text-2xl md:text-3xl font-bold text-primary-green">1,250+</div>
+                        <div class="text-sm md:text-base opacity-90">Youth Trained</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl md:text-3xl font-bold text-primary-blue">680+</div>
+                        <div class="text-sm md:text-base opacity-90">Families Supported</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl md:text-3xl font-bold text-primary-yellow">420+</div>
+                        <div class="text-sm md:text-base opacity-90">Community Members</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl md:text-3xl font-bold text-purple-400">3,200+</div>
+                        <div class="text-sm md:text-base opacity-90">Lives Touched</div>
+                    </div>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button onclick="openModal('volunteerModal')" class="bg-primary-green text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-600 transition-all transform hover:scale-105 shadow-lg flex items-center">
+                        <i class="fas fa-hands-helping mr-3"></i>
+                        Join Our Mission
+                    </button>
+                    <button onclick="document.getElementById('our-story').scrollIntoView({behavior: 'smooth'})" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-gray-800 transition-all transform hover:scale-105 flex items-center">
+                        <i class="fas fa-book-open mr-3"></i>
+                        Our Story
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <button onclick="document.getElementById('our-story').scrollIntoView({behavior: 'smooth'})" class="text-white text-2xl">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Building Hope Through Technology Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Text on the left -->
+                <div class="fade-in">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Building Hope Through Technology</h2>
+                    <div class="space-y-4 text-gray-600 text-lg leading-relaxed">
+                        <p>
+                            At HopeLink Mahama, we believe technology is more than just tools and devices—it's a bridge to opportunity, education, and connection. Our digital initiatives are designed to empower individuals and transform communities.
+                        </p>
+                        <p>
+                            Through our innovative programs, we're providing access to digital literacy training, online education resources, and technology-enabled services that help refugees build skills, find opportunities, and connect with the global community.
+                        </p>
+                        <p>
+                            Our approach combines cutting-edge technology with community-centered design, ensuring our solutions are not only effective but also sustainable and culturally appropriate for the unique context of Mahama Refugee Camp.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Image on the right -->
+                <div class="fade-in">
+                    <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Technology empowering community" 
+                             class="w-full h-96 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end">
+                            <div class="p-6 text-white">
+                                <h3 class="text-xl font-bold">Digital Empowerment</h3>
+                                <p class="opacity-90">Transforming lives through technology education</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="our-story" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Our Story</h2>
+                    <div class="space-y-4 text-gray-600 text-lg leading-relaxed">
+                        <p>
+                            HopeLink Mahama was founded in 2025 by a group of passionate young developers from Mahama Refugee Camp who witnessed firsthand the struggles of their community. We saw children without access to quality education, women facing barriers to opportunity, and youth without digital skills to build their futures.
+                        </p>
+                        <p>
+                            Rather than accepting these challenges, we decided to turn technology into a tool for change. What started as a small coding initiative has grown into a comprehensive digital platform connecting refugees and host communities to essential services.
+                        </p>
+                        <p>
+                            Our journey began with just five laptops and a shared vision. Today, we've trained over 1,000 youth in digital skills, provided food assistance to hundreds of families, and created safe spaces for mental wellness support.
+                        </p>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Our Story" 
+                             class="w-full h-96 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end">
+                            <div class="p-6 text-white">
+                                <h3 class="text-xl font-bold">Digital Innovation</h3>
+                                <p class="opacity-90">Transforming challenges into opportunities through technology</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission, Vision & Values Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Core Beliefs</h2>
+                <p class="text-xl text-gray-600">Guiding principles that drive our work every day</p>
+            </div>
+
+            <!-- Mission Section - Text left, Image right -->
+            <div class="grid md:grid-cols-2 gap-12 mb-16 items-center">
+                <div class="fade-in">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-primary-blue">
+                        <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-bullseye text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            To empower every child, woman, and youth in Mahama Refugee Camp by connecting them with technology-driven solutions that promote education, opportunity, food security, and emotional well-being.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Our Mission" 
+                             class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="text-lg font-bold">Empowering Communities</h3>
+                                <p class="opacity-90 text-sm">Creating pathways to opportunity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision Section - Text left, Image right -->
+            <div class="grid md:grid-cols-2 gap-12 mb-16 items-center">
+                <div class="fade-in">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-primary-green">
+                        <div class="w-12 h-12 bg-primary-green rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-eye text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            A self-reliant, digitally connected refugee and host community where innovation and humanity work hand in hand to create sustainable solutions and lasting hope.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Our Vision" 
+                             class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="text-lg font-bold">Building a Brighter Future</h3>
+                                <p class="opacity-90 text-sm">Where innovation meets compassion</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Values -->
+            <div class="text-center mb-12 fade-in">
+                <h3 class="text-3xl font-bold text-gray-800 mb-8">Our Values</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Compassion</h4>
+                    <p class="text-gray-600 text-sm">Heart-centered approach to community service</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-primary-green rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-globe text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Inclusion</h4>
+                    <p class="text-gray-600 text-sm">Everyone has a place and a voice</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-primary-yellow rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Innovation</h4>
+                    <p class="text-gray-600 text-sm">Creative tech solutions for community challenges</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-handshake text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Collaboration</h4>
+                    <p class="text-gray-600 text-sm">Stronger together with shared purpose</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-seedling text-white text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-2">Hope</h4>
+                    <p class="text-gray-600 text-sm">Building a brighter tomorrow together</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Approach Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Approach</h2>
+                <p class="text-xl text-gray-600">How we create lasting change in Mahama Camp</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in">
+                    <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Community-Led</h3>
+                    <p class="text-gray-600">Our programs are designed and implemented with direct input from community members, ensuring they address real needs.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in">
+                    <div class="w-12 h-12 bg-primary-green rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-laptop-code text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Technology-Enabled</h3>
+                    <p class="text-gray-600">We leverage digital tools to create efficient, scalable solutions that can reach more people with limited resources.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-lg fade-in">
+                    <div class="w-12 h-12 bg-primary-yellow rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-heart text-white text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Holistic Support</h3>
+                    <p class="text-gray-600">We address multiple dimensions of well-being - from basic needs to skills development and mental health.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="py-20 bg-gradient-to-r from-primary-blue to-primary-green">
+        <div class="max-w-4xl mx-auto text-center text-white px-4">
+            <h2 class="text-4xl font-bold mb-6 fade-in">
+                Join us in building a future of hope, connection, and empowerment for Mahama and beyond.
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <button onclick="openModal('volunteerModal')" class="bg-white text-primary-blue px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all transform hover:scale-105">
+                    Become a Volunteer
+                </button>
+                <button onclick="openModal('donateModal')" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-primary-blue transition-all transform hover:scale-105">
+                    Support Our Mission
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary-blue to-primary-green rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-hands-helping text-white text-lg"></i>
+                        </div>
+                        <div class="font-bold text-xl bg-gradient-to-br from-primary-blue to-primary-green bg-clip-text text-transparent">
+                            HopeLink Mahama
+                        </div>
+                    </div>
+                    <p class="text-gray-400">
+                        Empowering refugees through technology and innovation in Mahama Camp, Rwanda.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="get-involved.html" class="text-gray-400 hover:text-white transition-colors">Get Involved</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            Mahama Camp, Kirehe District, Rwanda
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            hopelink.mahama@gmail.com
+                        </p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 HopeLink Mahama — Empowering Refugees Through Innovation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notification System -->
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <i id="notificationIcon" class="fas fa-check-circle mr-2"></i>
+            <span id="notificationMessage">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Donation Modal -->
+    <div id="donateModal" class="modal">
+        <div class="bg-white p-8 rounded-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Make a Donation</h3>
+                <button onclick="closeModal('donateModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="donationForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Donation Amount</label>
+                    <div class="grid grid-cols-3 gap-2 mb-2">
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="10">$10</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="25">$25</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="50">$50</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="100">$100</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="250">$250</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="500">$500</button>
+                    </div>
+                    <input type="number" id="customAmount" placeholder="Custom Amount" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="donorName" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" id="donorEmail" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2">Payment Method</label>
+                    <select id="paymentMethod" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                        <option value="credit">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bank">Bank Transfer</option>
+                    </select>
+                </div>
+                
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors">
+                        Process Donation
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Volunteer Modal -->
+    <div id="volunteerModal" class="modal">
+        <div class="bg-white p-8 rounded-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Become a Volunteer</h3>
+                <button onclick="closeModal('volunteerModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="volunteerForm" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">First Name</label>
+                        <input type="text" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Last Name</label>
+                        <input type="text" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2">Phone Number</label>
+                    <input type="tel" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                </div>
+                
+                <div>
+                    <label class="block text-gray-700 mb-2">Area of Interest</label>
+                    <select class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                        <option value="">Select an area</option>
+                        <option value="teaching">Teaching/Tutoring</option>
+                        <option value="tech">Technology Support</option>
+                        <option value="outreach">Community Outreach</option>
+                        <option value="fundraising">Fundraising</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-primary-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors">
+                        Submit Application
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ========== MODAL MANAGEMENT ==========
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside content
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ========== MOBILE MENU ==========
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        });
+
+        function toggleMobileMenu(menuId) {
+            const menu = document.getElementById(menuId);
+            menu.classList.toggle('hidden');
+            
+            // Toggle the chevron icon
+            const button = menu.parentElement.querySelector('button');
+            const icon = button.querySelector('i');
+            if (icon.classList.contains('fa-chevron-down')) {
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            } else {
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            
+            if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // ========== NOTIFICATION SYSTEM ==========
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationIcon = document.getElementById('notificationIcon');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            // Set notification content and style
+            notificationMessage.textContent = message;
+            notification.className = 'notification ' + type;
+            
+            if (type === 'success') {
+                notificationIcon.className = 'fas fa-check-circle mr-2';
+                notification.classList.add('bg-primary-green');
+            } else {
+                notificationIcon.className = 'fas fa-exclamation-circle mr-2';
+                notification.classList.add('bg-red-500');
+            }
+            
+            // Show notification
+            notification.classList.add('show');
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // ========== FORM HANDLING ==========
+        // Donation form
+        document.getElementById('donationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get donation amount
+            let amount = document.getElementById('customAmount').value;
+            if (!amount) {
+                // Check if a preset amount was selected
+                const selectedAmount = document.querySelector('.donation-amount.active');
+                if (selectedAmount) {
+                    amount = selectedAmount.getAttribute('data-amount');
+                }
+            }
+            
+            if (!amount || amount <= 0) {
+                showNotification('Please select or enter a valid donation amount', 'error');
+                return;
+            }
+            
+            const name = document.getElementById('donorName').value;
+            const email = document.getElementById('donorEmail').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            
+            if (!name || !email) {
+                showNotification('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNotification('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            submitButton.disabled = true;
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                // In a real application, you would integrate with a payment processor here
+                showNotification(`Thank you for your donation of $${amount}! A receipt has been sent to ${email}.`);
+                closeModal('donateModal');
+                
+                // Reset form
+                document.getElementById('donationForm').reset();
+                document.querySelectorAll('.donation-amount').forEach(btn => {
+                    btn.classList.remove('active', 'bg-primary-blue', 'text-white');
+                });
+                
+                // Reset button state
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }, 2000);
+        });
+
+        // Volunteer form
+        document.getElementById('volunteerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real application, you would send this data to a server
+            showNotification('Thank you for your volunteer application! We will contact you soon.');
+            closeModal('volunteerModal');
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Donation amount buttons
+        document.querySelectorAll('.donation-amount').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.donation-amount').forEach(btn => {
+                    btn.classList.remove('active', 'bg-primary-blue', 'text-white');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active', 'bg-primary-blue', 'text-white');
+                
+                // Clear custom amount
+                document.getElementById('customAmount').value = '';
+            });
+        });
+
+        // Clear preset amount when custom amount is entered
+        document.getElementById('customAmount').addEventListener('input', function() {
+            document.querySelectorAll('.donation-amount').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-blue', 'text-white');
+            });
+        });
+
+        // ========== ANIMATIONS ==========
+        // Intersection Observer for fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Counter animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 20);
+        }
+
+        // ========== UTILITY FUNCTIONS ==========
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Observe fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Observe counter elements and animate when visible
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        animateCounter(entry.target, target);
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.impact-counter').forEach(counter => {
+                counterObserver.observe(counter);
+            });
+
+            // Add click handlers for social media links in footer
+            document.querySelectorAll('footer a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        showNotification('This would open the social media page in a real application', 'success');
+                    }
+                });
+            });
+
+            // Initialize all forms with validation
+            const allForms = document.querySelectorAll('form');
+            allForms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    // Additional form validation could be added here
+                });
+            });
+
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        const headerHeight = document.querySelector('nav').offsetHeight;
+                        const targetPosition = targetElement.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+
+        // ========== ADDITIONAL FEATURES ==========
+        // Page view tracking
+        window.addEventListener('load', function() {
+            // In a real app, this would send page view data to analytics
+            console.log('HopeLink Mahama about page loaded');
+        });
+
+        // Real-time form validation
+        document.querySelectorAll('form input, form textarea').forEach(field => {
+            field.addEventListener('blur', function() {
+                if (this.hasAttribute('required') && !this.value) {
+                    this.classList.add('border-red-500');
+                } else {
+                    this.classList.remove('border-red-500');
+                }
+                
+                if (this.type === 'email' && this.value && !isValidEmail(this.value)) {
+                    this.classList.add('border-red-500');
+                }
+            });
+            
+            field.addEventListener('input', function() {
+                if (this.value) {
+                    this.classList.remove('border-red-500');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
