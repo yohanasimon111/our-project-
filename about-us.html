@@ -234,92 +234,61 @@
         </div>
     </nav>
 
-    <!-- Hero Section with Video Background -->
-    <section class="relative h-screen min-h-[600px] overflow-hidden flex items-center justify-center pt-16 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1511898634545-c01af8a54dd5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')">
-        <!-- Dark overlay for better text readability -->
-        <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-black/40 z-0"></div>
-        
-        <!-- Hero Content -->
-        <div class="relative z-10 text-center text-white max-w-[1200px] px-8">
-            <div class="fade-in">
-                <span class="inline-block bg-gradient-to-br from-primary-blue to-primary-green px-6 py-2 rounded-full font-semibold mb-6 animate-pulse-custom">
-                    Since 2025
-                </span>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-                    Building Hope Through <span class="text-primary-green">Technology</span>
-                </h1>
-                <p class="text-xl md:text-2xl lg:text-3xl opacity-90 max-w-4xl mx-auto mb-8 leading-relaxed">
-                    Empowering Mahama Refugee Camp with digital solutions, education, and sustainable community development. We're transforming challenges into opportunities through innovation and compassion.
-                </p>
-                
-                <!-- Impact Stats -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 max-w-2xl mx-auto">
-                    <div class="text-center">
-                        <div class="text-2xl md:text-3xl font-bold text-primary-green">1,250+</div>
-                        <div class="text-sm md:text-base opacity-90">Youth Trained</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl md:text-3xl font-bold text-primary-blue">680+</div>
-                        <div class="text-sm md:text-base opacity-90">Families Supported</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl md:text-3xl font-bold text-primary-yellow">420+</div>
-                        <div class="text-sm md:text-base opacity-90">Community Members</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-2xl md:text-3xl font-bold text-purple-400">3,200+</div>
-                        <div class="text-sm md:text-base opacity-90">Lives Touched</div>
-                    </div>
-                </div>
-                
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <button onclick="openModal('volunteerModal')" class="bg-primary-green text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-600 transition-all transform hover:scale-105 shadow-lg flex items-center">
-                        <i class="fas fa-hands-helping mr-3"></i>
-                        Join Our Mission
-                    </button>
-                    <button onclick="document.getElementById('our-story').scrollIntoView({behavior: 'smooth'})" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-gray-800 transition-all transform hover:scale-105 flex items-center">
-                        <i class="fas fa-book-open mr-3"></i>
-                        Our Story
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <button onclick="document.getElementById('our-story').scrollIntoView({behavior: 'smooth'})" class="text-white text-2xl">
-                <i class="fas fa-chevron-down"></i>
-            </button>
-        </div>
-    </section>
-
-    <!-- Building Hope Through Technology Section -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
+    <!-- Hero Section with Text on Left and Image on Right -->
+    <section class="relative min-h-screen flex items-center pt-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 w-full">
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <!-- Text on the left -->
+                <!-- Text Content on Left -->
                 <div class="fade-in">
-                    <h2 class="text-4xl font-bold text-gray-800 mb-6">Building Hope Through Technology</h2>
-                    <div class="space-y-4 text-gray-600 text-lg leading-relaxed">
-                        <p>
-                            At HopeLink Mahama, we believe technology is more than just tools and devices—it's a bridge to opportunity, education, and connection. Our digital initiatives are designed to empower individuals and transform communities.
-                        </p>
-                        <p>
-                            Through our innovative programs, we're providing access to digital literacy training, online education resources, and technology-enabled services that help refugees build skills, find opportunities, and connect with the global community.
-                        </p>
-                        <p>
-                            Our approach combines cutting-edge technology with community-centered design, ensuring our solutions are not only effective but also sustainable and culturally appropriate for the unique context of Mahama Refugee Camp.
-                        </p>
+                    <span class="inline-block bg-gradient-to-br from-primary-blue to-primary-green px-6 py-2 rounded-full font-semibold mb-6 animate-pulse-custom">
+                        Since 2025
+                    </span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 leading-tight">
+                        Building Hope Through <span class="text-primary-green">Technology</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mb-8 leading-relaxed">
+                        Empowering Mahama Refugee Camp with digital solutions, education, and sustainable community development. We're transforming challenges into opportunities through innovation and compassion.
+                    </p>
+                    
+                    <!-- Impact Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 max-w-2xl">
+                        <div class="text-center">
+                            <div class="text-2xl md:text-3xl font-bold text-primary-green">1,250+</div>
+                            <div class="text-sm md:text-base text-gray-600">Youth Trained</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl md:text-3xl font-bold text-primary-blue">680+</div>
+                            <div class="text-sm md:text-base text-gray-600">Families Supported</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl md:text-3xl font-bold text-primary-yellow">420+</div>
+                            <div class="text-sm md:text-base text-gray-600">Community Members</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl md:text-3xl font-bold text-purple-500">3,200+</div>
+                            <div class="text-sm md:text-base text-gray-600">Lives Touched</div>
+                        </div>
+                    </div>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="openModal('volunteerModal')" class="bg-primary-green text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-600 transition-all transform hover:scale-105 shadow-lg flex items-center justify-center">
+                            <i class="fas fa-hands-helping mr-3"></i>
+                            Join Our Mission
+                        </button>
+                        <button onclick="document.getElementById('our-story').scrollIntoView({behavior: 'smooth'})" class="border-2 border-primary-blue text-primary-blue px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-blue hover:text-white transition-all transform hover:scale-105 flex items-center justify-center">
+                            <i class="fas fa-book-open mr-3"></i>
+                            Our Story
+                        </button>
                     </div>
                 </div>
                 
-                <!-- Image on the right -->
+                <!-- Image on Right -->
                 <div class="fade-in">
-                    <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl">
                         <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
                              alt="Technology empowering community" 
-                             class="w-full h-96 object-cover">
+                             class="w-full h-[600px] object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end">
                             <div class="p-6 text-white">
                                 <h3 class="text-xl font-bold">Digital Empowerment</h3>
@@ -327,6 +296,72 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <button onclick="document.getElementById('our-story').scrollIntoView({behavior: 'smooth'})" class="text-gray-600 text-2xl">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Building Hope Through Technology Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6 text-center">Building Hope Through Technology</h2>
+                <div class="space-y-6 text-gray-600 text-lg leading-relaxed">
+                    <p>
+                        At HopeLink Mahama, we believe technology is more than just tools and devices—it's a bridge to opportunity, education, and connection. Our digital initiatives are designed to empower individuals and transform communities.
+                    </p>
+                    <p>
+                        Through our innovative programs, we're providing access to digital literacy training, online education resources, and technology-enabled services that help refugees build skills, find opportunities, and connect with the global community.
+                    </p>
+                    <p>
+                        Our approach combines cutting-edge technology with community-centered design, ensuring our solutions are not only effective but also sustainable and culturally appropriate for the unique context of Mahama Refugee Camp.
+                    </p>
+                </div>
+                
+                <!-- Technology Features -->
+                <div class="grid md:grid-cols-3 gap-6 mt-10">
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-laptop-code text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Digital Literacy</h3>
+                        <p class="text-gray-600">Teaching essential digital skills to empower individuals in the digital age.</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div class="w-12 h-12 bg-primary-green rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-wifi text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Connectivity</h3>
+                        <p class="text-gray-600">Providing internet access to bridge the digital divide in refugee communities.</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
+                        <div class="w-12 h-12 bg-primary-yellow rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Education</h3>
+                        <p class="text-gray-600">Offering online learning opportunities for skill development and growth.</p>
+                    </div>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mt-12">
+                    <button onclick="openModal('volunteerModal')" class="bg-primary-blue text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-600 transition-all transform hover:scale-105 shadow-lg flex items-center justify-center">
+                        <i class="fas fa-laptop-code mr-3"></i>
+                        Tech Volunteer Program
+                    </button>
+                    <button onclick="openModal('donateModal')" class="bg-primary-green text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-600 transition-all transform hover:scale-105 shadow-lg flex items-center justify-center">
+                        <i class="fas fa-tablet-alt mr-3"></i>
+                        Donate Devices
+                    </button>
                 </div>
             </div>
         </div>
