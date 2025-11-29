@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partnerships - HopeLink Mahama</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            blue: '#3B82F6',
+                            green: '#10B981',
+                            yellow: '#FBBF24',
+                            light: '#FEF3C7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Professional navigation styles */
+        .nav-professional {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .donate-btn {
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        /* Enhanced animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        .program-modal {
+            max-width: 800px;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        /* Enhanced hover effects */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            z-index: 1002;
+            transition: width 0.3s ease;
+        }
+        
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 12rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0;
+            z-index: 100;
+            animation: slideDown 0.2s ease-out;
+        }
+        .dropdown-content.active {
+            display: block;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        /* Mobile dropdown styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+        .mobile-dropdown-content.active {
+            display: block;
+        }
+        
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.success {
+            background-color: #10B981;
+        }
+        .notification.error {
+            background-color: #EF4444;
+        }
+        
+        /* Partnership card styles */
+        .partnership-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .partnership-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Professional button animations */
+        .btn-professional {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-professional::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-professional:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation with professional background -->
+    <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <!-- Enhanced Logo -->
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-xl text-gray-800">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
+                    
+                    <!-- Programs Dropdown -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
+                            Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="programs-dropdown">
+                            <a href="hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
+                            <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
+                            <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                        </div>
+                    </div>
+                    
+                    <a href="about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Who We Are</a>
+                    <a href="get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
+                    
+                    <!-- News & Updates -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
+                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="news-dropdown">
+                            <a href="news.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Latest News</a>
+                            <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Advertisement</a>
+                            <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
+                    
+                    <!-- Opportunities -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300 flex items-center" data-dropdown="opportunities">
+                            Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="opportunities-dropdown">
+                            <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
+                            <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
+                            <a href="partnerships.html" class="block px-4 py-2 text-primary-blue font-semibold hover:bg-blue-50 transition">Partnerships</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="openModal('donateModal')" class="donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
+                    </button>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-600 hover:text-primary-blue transition">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="mobile-menu">
+                <div class="px-4 py-2 space-y-3">
+                    <a href="index.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Home</a>
+                    
+                    <!-- Programs Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            Programs <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="hunger-help.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Hunger Help</a>
+                            <a href="./Youth Empowerment .html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
+                            <a href="mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
+                        </div>
+                    </div>
+                    
+                    <a href="about-us.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">About</a>
+                    <a href="get-involved.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Get Involved</a>
+                    
+                    <!-- News & Updates Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            News & Updates <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="news.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Latest News</a>
+                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Advertisement</a>
+                            <a href="stories.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Success Stories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Contact</a>
+                    
+                    <!-- Opportunities Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 bg-primary-yellow text-gray-800 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-between px-4">
+                            Opportunities <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Volunteer</a>
+                            <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Careers</a>
+                            <a href="partnerships.html" class="block py-2 text-primary-blue font-semibold transition pl-4">Partnerships</a>
+                        </div>
+                    </div>
+                    
+                    <button onclick="openModal('donateModal')" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition transform hover:scale-105 text-left flex items-center">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notification System -->
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <i id="notificationIcon" class="fas fa-check-circle mr-2"></i>
+            <span id="notificationMessage">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-32 bg-gradient-to-r from-primary-blue to-primary-green min-h-[60vh] flex items-center relative overflow-hidden">
+        <!-- Animated background elements -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full animate-pulse"></div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-white rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-white rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 py-20 text-center text-white relative z-10">
+            <div class="fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                    Partner With Us
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-4xl mx-auto">
+                    Join forces with HopeLink Mahama to create lasting impact in the refugee community through strategic partnerships.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="scrollToSection('partnershipTypes')" class="btn-professional bg-white text-primary-blue px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-handshake mr-2"></i>Explore Partnership Types
+                    </button>
+                    <button onclick="openModal('partnershipModal')" class="btn-professional bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-primary-blue transition transform hover:scale-105">
+                        <i class="fas fa-file-signature mr-2"></i>Become a Partner
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <button onclick="scrollToSection('partnershipTypes')" class="text-white text-2xl">
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Why Partner With Us Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Why Partner With HopeLink Mahama?</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Together, we can amplify our impact and create sustainable change in the Mahama Refugee Camp community</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="text-center fade-in hover-lift p-6 rounded-2xl bg-primary-light">
+                    <div class="w-20 h-20 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-bullseye text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Shared Mission</h3>
+                    <p class="text-gray-600">Align your organization's values with our humanitarian mission to create meaningful social impact.</p>
+                </div>
+                
+                <div class="text-center fade-in hover-lift p-6 rounded-2xl bg-primary-light">
+                    <div class="w-20 h-20 bg-primary-green rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Measurable Impact</h3>
+                    <p class="text-gray-600">Track and report on the tangible outcomes of your partnership through our transparent monitoring systems.</p>
+                </div>
+                
+                <div class="text-center fade-in hover-lift p-6 rounded-2xl bg-primary-light">
+                    <div class="w-20 h-20 bg-primary-yellow rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-globe text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Community Integration</h3>
+                    <p class="text-gray-600">Work directly with refugee communities to develop solutions that address their most pressing needs.</p>
+                </div>
+            </div>
+
+            <!-- Partnership Stats -->
+            <div class="text-center max-w-4xl mx-auto fade-in">
+                <h3 class="text-2xl font-bold text-gray-800 mb-8">Our Partnership Impact</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="bg-white p-4 rounded-lg shadow-md border border-gray-100">
+                        <div class="text-3xl font-bold text-primary-blue mb-2">15+</div>
+                        <div class="text-sm font-semibold text-gray-800">Active Partners</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md border border-gray-100">
+                        <div class="text-3xl font-bold text-primary-green mb-2">$2.5M+</div>
+                        <div class="text-sm font-semibold text-gray-800">Funding Leveraged</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md border border-gray-100">
+                        <div class="text-3xl font-bold text-primary-yellow mb-2">50+</div>
+                        <div class="text-sm font-semibold text-gray-800">Projects Completed</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-md border border-gray-100">
+                        <div class="text-3xl font-bold text-primary-blue mb-2">10K+</div>
+                        <div class="text-sm font-semibold text-gray-800">Lives Impacted</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Types Section -->
+    <section id="partnershipTypes" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Partnership Opportunities</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">We offer various partnership models to match your organization's capacity and strategic goals</p>
+            </div>
+            
+            <!-- Partnership Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Corporate Partnership -->
+                <div class="partnership-card bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+                    <div class="w-16 h-16 bg-primary-blue rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-building text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Corporate Partnership</h3>
+                    <p class="text-gray-600 mb-4">Align your corporate social responsibility with our mission through financial support, in-kind donations, or employee engagement.</p>
+                    <ul class="text-gray-600 mb-6 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Financial contributions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>In-kind donations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Employee volunteering</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Skills-based support</span>
+                        </li>
+                    </ul>
+                    <button onclick="openLearnMoreModal('corporate')" class="w-full bg-primary-blue text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition flex items-center justify-center">
+                        <i class="fas fa-info-circle mr-2"></i>Learn More
+                    </button>
+                </div>
+                
+                <!-- NGO Partnership -->
+                <div class="partnership-card bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+                    <div class="w-16 h-16 bg-primary-green rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-hands-helping text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">NGO Partnership</h3>
+                    <p class="text-gray-600 mb-4">Collaborate with us on program implementation, research, advocacy, or capacity building initiatives.</p>
+                    <ul class="text-gray-600 mb-6 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Program collaboration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Joint funding proposals</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Knowledge sharing</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Advocacy campaigns</span>
+                        </li>
+                    </ul>
+                    <button onclick="openLearnMoreModal('ngo')" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center">
+                        <i class="fas fa-info-circle mr-2"></i>Learn More
+                    </button>
+                </div>
+                
+                <!-- Academic Partnership -->
+                <div class="partnership-card bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+                    <div class="w-16 h-16 bg-primary-yellow rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Academic Partnership</h3>
+                    <p class="text-gray-600 mb-4">Partner with us for research, student internships, curriculum development, or community-based learning.</p>
+                    <ul class="text-gray-600 mb-6 space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Research collaborations</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Student internships</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Curriculum development</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                            <span>Knowledge exchange</span>
+                        </li>
+                    </ul>
+                    <button onclick="openLearnMoreModal('academic')" class="w-full bg-primary-yellow text-gray-800 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-center">
+                        <i class="fas fa-info-circle mr-2"></i>Learn More
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Partners Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Valued Partners</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">We're proud to collaborate with these organizations who share our commitment to creating positive change</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+                <div class="bg-gray-100 p-6 rounded-lg flex items-center justify-center h-32">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-leaf text-white"></i>
+                        </div>
+                        <span class="font-semibold text-gray-800">Green Future</span>
+                    </div>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg flex items-center justify-center h-32">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary-green rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-heart text-white"></i>
+                        </div>
+                        <span class="font-semibold text-gray-800">Health First</span>
+                    </div>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg flex items-center justify-center h-32">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary-yellow rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-book text-white"></i>
+                        </div>
+                        <span class="font-semibold text-gray-800">EduConnect</span>
+                    </div>
+                </div>
+                <div class="bg-gray-100 p-6 rounded-lg flex items-center justify-center h-32">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-laptop text-white"></i>
+                        </div>
+                        <span class="font-semibold text-gray-800">TechForGood</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button onclick="openModal('partnershipModal')" class="btn-professional bg-primary-green text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-handshake mr-2"></i>Become Our Partner
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Process Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Our Partnership Process</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">We've designed a straightforward process to establish meaningful and impactful partnerships</p>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Initial Discussion</h3>
+                    <p class="text-gray-600">We explore mutual interests and alignment between our organizations</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-primary-green rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Proposal Development</h3>
+                    <p class="text-gray-600">We co-create a partnership proposal outlining goals and expectations</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-primary-yellow rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Agreement Finalization</h3>
+                    <p class="text-gray-600">We formalize our partnership through a mutually beneficial agreement</p>
+                </div>
+                
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">4</div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Implementation & Review</h3>
+                    <p class="text-gray-600">We launch the partnership and regularly assess our collective impact</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Modal -->
+    <div id="partnershipModal" class="modal">
+        <div class="modal-content program-modal">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Become a Partner</h3>
+                <button onclick="closeModal('partnershipModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-semibold text-lg text-blue-800 mb-2">Partnership Inquiry</h4>
+                    <p class="text-gray-700">We're excited about your interest in partnering with HopeLink Mahama! Please fill out the form below and our partnership team will contact you shortly.</p>
+                </div>
+                
+                <!-- Partnership Inquiry Form -->
+                <div class="pt-4">
+                    <form id="partnershipForm" class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Organization Name</label>
+                                <input type="text" name="organizationName" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">Organization Type</label>
+                                <select name="organizationType" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                                    <option value="">Select Type</option>
+                                    <option value="corporate">Corporate</option>
+                                    <option value="ngo">NGO/Non-profit</option>
+                                    <option value="academic">Academic Institution</option>
+                                    <option value="government">Government Agency</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Contact Person</label>
+                                <input type="text" name="contactPerson" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">Position/Title</label>
+                                <input type="text" name="position" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" name="email" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" name="phone" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-2">Partnership Type of Interest</label>
+                            <select name="partnershipType" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                                <option value="">Select Partnership Type</option>
+                                <option value="corporate">Corporate Partnership</option>
+                                <option value="ngo">NGO Partnership</option>
+                                <option value="academic">Academic Partnership</option>
+                                <option value="not-sure">Not Sure - Would Like to Discuss</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-2">Tell Us About Your Organization</label>
+                            <textarea name="organizationInfo" rows="3" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue" placeholder="Brief description of your organization's mission and work..."></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 mb-2">Partnership Ideas or Areas of Interest</label>
+                            <textarea name="partnershipIdeas" rows="3" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue" placeholder="How do you envision partnering with HopeLink Mahama? What specific areas interest you?"></textarea>
+                        </div>
+                        
+                        <div class="pt-4 flex gap-2">
+                            <button type="button" onclick="closeModal('partnershipModal')" class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition flex items-center justify-center">
+                                Cancel
+                            </button>
+                            <button type="submit" class="flex-1 bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center">
+                                <i class="fas fa-paper-plane mr-2"></i>Submit Inquiry
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Learn More Modal -->
+    <div id="learnMoreModal" class="modal">
+        <div class="modal-content program-modal">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="learnMoreTitle" class="text-2xl font-bold text-gray-800">Partnership Details</h3>
+                <button onclick="closeModal('learnMoreModal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="learnMoreContent" class="space-y-4">
+                <!-- Content will be dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <!-- Footer Logo -->
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-lg">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Empowering refugees through technology and innovation in Mahama Camp, Rwanda.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="about-us.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-info-circle mr-2 text-xs"></i>About</a></li>
+                        <li><a href="get-involved.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            Mahama Camp, Kirehe District, Rwanda
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            hopelink.mahama@gmail.com
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-3"></i>
+                            +250 123 456 789
+                        </p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition transform hover:scale-110">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-red-500 transition transform hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Newsletter Signup -->
+                    <div class="mt-6">
+                        <h5 class="text-sm font-semibold mb-2">Stay Updated</h5>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none">
+                            <button class="bg-primary-green text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 HopeLink Mahama — Empowering Refugees Through Innovation.</p>
+                <p class="text-xs mt-2">All rights reserved. Registered non-profit organization.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Partnership data for Learn More modals
+        const partnershipDetails = {
+            corporate: {
+                title: "Corporate Partnership",
+                description: "Corporate partnerships with HopeLink Mahama provide businesses with meaningful opportunities to align their corporate social responsibility initiatives with our humanitarian mission.",
+                benefits: [
+                    "Enhanced brand reputation and visibility",
+                    "Employee engagement and team building opportunities",
+                    "Positive social impact in refugee communities",
+                    "Networking with other socially responsible organizations",
+                    "Tax benefits for eligible contributions"
+                ],
+                examples: [
+                    "Financial sponsorship of specific programs",
+                    "In-kind donations of goods or services",
+                    "Employee volunteer programs",
+                    "Skills-based volunteering (pro bono services)",
+                    "Cause-related marketing campaigns"
+                ],
+                process: [
+                    "Initial consultation to identify shared goals",
+                    "Development of partnership proposal",
+                    "Agreement on deliverables and expectations",
+                    "Implementation and regular progress reviews",
+                    "Impact assessment and reporting"
+                ]
+            },
+            ngo: {
+                title: "NGO Partnership",
+                description: "NGO partnerships allow us to combine resources, expertise, and networks to create greater impact in the Mahama Refugee Camp community.",
+                benefits: [
+                    "Shared resources and reduced operational costs",
+                    "Expanded reach and program impact",
+                    "Knowledge sharing and capacity building",
+                    "Joint advocacy and policy influence",
+                    "Access to new funding opportunities"
+                ],
+                examples: [
+                    "Joint program implementation",
+                    "Collaborative research projects",
+                    "Shared training and capacity building",
+                    "Coordinated advocacy campaigns",
+                    "Resource and information sharing"
+                ],
+                process: [
+                    "Assessment of alignment and complementary strengths",
+                    "Development of joint work plan",
+                    "Resource mobilization and allocation",
+                    "Implementation with regular coordination",
+                    "Monitoring, evaluation, and learning"
+                ]
+            },
+            academic: {
+                title: "Academic Partnership",
+                description: "Academic partnerships bridge the gap between theory and practice, bringing research expertise and student energy to address real-world challenges in refugee settings.",
+                benefits: [
+                    "Access to cutting-edge research and expertise",
+                    "Opportunities for student learning and engagement",
+                    "Evidence-based program development",
+                    "Publication and knowledge dissemination",
+                    "Long-term capacity building"
+                ],
+                examples: [
+                    "Research collaborations on refugee issues",
+                    "Student internships and field placements",
+                    "Curriculum development and co-teaching",
+                    "Joint conferences and workshops",
+                    "Community-based participatory research"
+                ],
+                process: [
+                    "Identification of shared research or learning interests",
+                    "Development of collaboration framework",
+                    "Ethical review and approval processes",
+                    "Implementation with community engagement",
+                    "Dissemination of findings and learnings"
+                ]
+            }
+        };
+
+        // Track current partnership type for form pre-fill
+        let currentPartnershipType = '';
+
+        // Setup scroll effects
+        function setupScrollEffects() {
+            // Scroll progress bar
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('scrollProgress').style.width = scrolled + '%';
+                
+                // Navbar background on scroll
+                if (window.scrollY > 50) {
+                    document.getElementById('mainNav').classList.add('nav-scrolled');
+                } else {
+                    document.getElementById('mainNav').classList.remove('nav-scrolled');
+                }
+                
+                // Fade in elements on scroll
+                const fadeElements = document.querySelectorAll('.fade-in');
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuButton').addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.toggle('active');
+            });
+            
+            // Mobile dropdowns
+            document.querySelectorAll('.mobile-dropdown-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    content.classList.toggle('active');
+                    
+                    // Rotate arrow
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('fa-chevron-down')) {
+                        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                    } else {
+                        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                    }
+                });
+            });
+            
+            // Desktop dropdowns
+            document.querySelectorAll('.dropdown-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const dropdownId = this.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(`${dropdownId}-dropdown`);
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.matches('.dropdown-btn')) {
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+                
+                if (!e.target.matches('#mobileMenuButton') && !e.target.closest('#mobileMenu')) {
+                    document.getElementById('mobileMenu').classList.remove('active');
+                }
+            });
+            
+            // Partnership form submission
+            document.getElementById('partnershipForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitPartnershipInquiry();
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            setupScrollEffects();
+        });
+
+        // Open Learn More modal with specific partnership details
+        function openLearnMoreModal(partnershipType) {
+            const details = partnershipDetails[partnershipType];
+            if (!details) return;
+            
+            // Store current partnership type for form pre-fill
+            currentPartnershipType = partnershipType;
+            
+            // Set modal title
+            document.getElementById('learnMoreTitle').textContent = details.title;
+            
+            // Build modal content
+            const contentContainer = document.getElementById('learnMoreContent');
+            contentContainer.innerHTML = `
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-semibold text-lg text-blue-800 mb-2">Overview</h4>
+                    <p class="text-gray-700">${details.description}</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-3">Key Benefits</h4>
+                    <ul class="space-y-2">
+                        ${details.benefits.map(benefit => `
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-primary-green mt-1 mr-2"></i>
+                                <span>${benefit}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-3">Partnership Examples</h4>
+                    <ul class="space-y-2">
+                        ${details.examples.map(example => `
+                            <li class="flex items-start">
+                                <i class="fas fa-lightbulb text-primary-yellow mt-1 mr-2"></i>
+                                <span>${example}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-lg mb-3">Partnership Process</h4>
+                    <ol class="space-y-2 list-decimal list-inside">
+                        ${details.process.map(step => `
+                            <li class="text-gray-700">${step}</li>
+                        `).join('')}
+                    </ol>
+                </div>
+                
+                <div class="pt-4">
+                    <button onclick="startPartnershipDiscussion('${partnershipType}')" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center">
+                        <i class="fas fa-handshake mr-2"></i>Start Partnership Discussion
+                    </button>
+                </div>
+            `;
+            
+            // Open the modal
+            openModal('learnMoreModal');
+        }
+
+        // Start partnership discussion - enhanced function
+        function startPartnershipDiscussion(partnershipType) {
+            // Close the Learn More modal
+            closeModal('learnMoreModal');
+            
+            // Open the partnership form modal
+            openModal('partnershipModal');
+            
+            // Pre-fill the partnership type in the form
+            const partnershipTypeSelect = document.querySelector('select[name="partnershipType"]');
+            if (partnershipTypeSelect) {
+                let valueToSelect = '';
+                switch(partnershipType) {
+                    case 'corporate':
+                        valueToSelect = 'corporate';
+                        break;
+                    case 'ngo':
+                        valueToSelect = 'ngo';
+                        break;
+                    case 'academic':
+                        valueToSelect = 'academic';
+                        break;
+                    default:
+                        valueToSelect = 'not-sure';
+                }
+                
+                partnershipTypeSelect.value = valueToSelect;
+                
+                // Show confirmation message
+                setTimeout(() => {
+                    showNotification(`Partnership type pre-filled to "${partnershipTypeSelect.options[partnershipTypeSelect.selectedIndex].text}"`, 'success');
+                }, 300);
+            }
+        }
+
+        // Submit partnership inquiry
+        function submitPartnershipInquiry() {
+            // In a real application, you would send this data to a server
+            const formData = {
+                organizationName: document.querySelector('input[name="organizationName"]').value,
+                organizationType: document.querySelector('select[name="organizationType"]').value,
+                contactPerson: document.querySelector('input[name="contactPerson"]').value,
+                position: document.querySelector('input[name="position"]').value,
+                email: document.querySelector('input[name="email"]').value,
+                phone: document.querySelector('input[name="phone"]').value,
+                partnershipType: document.querySelector('select[name="partnershipType"]').value,
+                organizationInfo: document.querySelector('textarea[name="organizationInfo"]').value,
+                partnershipIdeas: document.querySelector('textarea[name="partnershipIdeas"]').value
+            };
+            
+            console.log('Partnership inquiry submitted:', formData);
+            
+            // Show success message
+            showNotification(`Thank you for your partnership inquiry, ${formData.contactPerson}! Our team will contact you shortly.`, 'success');
+            
+            // Close modal and reset form
+            closeModal('partnershipModal');
+            document.getElementById('partnershipForm').reset();
+            
+            // Reset current partnership type
+            currentPartnershipType = '';
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notificationMessage');
+            const icon = document.getElementById('notificationIcon');
+            
+            messageEl.textContent = message;
+            notification.className = 'notification';
+            notification.classList.add(type);
+            
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle mr-2';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle mr-2';
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

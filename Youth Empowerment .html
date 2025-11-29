@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youth Empowerment - HopeLink Mahama</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/[email protected]/dist/cdn.min.js"></script>
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -20,10 +19,17 @@
                         'growth-green': '#4CAF50',
                         'soft-purple': '#9C89B8',
                         'calm-teal': '#4FB0C6',
+                        primary: {
+                            blue: '#3B82F6',
+                            green: '#10B981',
+                            yellow: '#FBBF24',
+                            light: '#FEF3C7'
+                        }
                     },
                     fontFamily: {
                         'poppins': ['Poppins', 'sans-serif'],
                         'open-sans': ['Open Sans', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-in-out',
@@ -46,7 +52,14 @@
     <style>
         [x-cloak] { display: none !important; }
         .gradient-bg {
-            background: linear-gradient(135deg, #007BFF 0%, #4FB0C6 100%);
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.85) 0%, rgba(79, 176, 198, 0.85) 100%);
+        }
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 1;
         }
         .program-card {
             transition: all 0.3s ease;
@@ -55,79 +68,452 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        
+        /* Professional navigation styles */
+        .nav-professional {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .donate-btn {
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        /* Enhanced animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        .program-modal {
+            max-width: 800px;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        /* Loading states */
+        .btn-loading {
+            position: relative;
+            color: transparent;
+        }
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-right-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced hover effects */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            z-index: 1002;
+            transition: width 0.3s ease;
+        }
+        
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 12rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0;
+            z-index: 100;
+            animation: slideDown 0.2s ease-out;
+        }
+        .dropdown-content.active {
+            display: block;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        /* Mobile dropdown styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+        .mobile-dropdown-content.active {
+            display: block;
+        }
+        
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.success {
+            background-color: #10B981;
+        }
+        .notification.error {
+            background-color: #EF4444;
+        }
+        .notification.info {
+            background-color: #3B82F6;
+        }
+        
+        /* Payment fields */
+        .payment-fields {
+            display: none;
+        }
+        .payment-fields.active {
+            display: block;
+        }
+        
+        /* Professional button animations */
+        .btn-professional {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-professional::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-professional:hover::before {
+            left: 100%;
+        }
+        
+        /* Payment method styles */
+        .payment-method {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payment-method.active {
+            border-color: #3B82F6;
+            background-color: #f0f9ff;
+        }
+        .payment-method:hover {
+            border-color: #3B82F6;
+        }
+        
+        /* Button visibility enhancements */
+        button, .btn {
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        button:focus, .btn:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        
+        button:disabled, .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* Ensure all buttons are clearly visible */
+        .enroll-btn, .apply-job-btn, .internship-btn, .counseling-btn, 
+        .entrepreneurship-btn, .story-btn, .social-btn, .view-jobs-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* Make payment methods more clickable */
+        .payment-method {
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Improved mobile button sizing */
+        @media (max-width: 768px) {
+            button, .btn {
+                min-height: 48px;
+                font-size: 16px; /* Prevents iOS zoom on focus */
+            }
+        }
     </style>
 </head>
-<body class="font-open-sans bg-gray-50">
-    <!-- Navigation Bar -->
-    <nav x-data="{ mobileMenuOpen: false, dropdownOpen: false }" class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <!-- Logo -->
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="index.html" class="text-2xl font-poppins font-bold text-hope-blue">HopeLink Mahama</a>
-                    </div>
-                    <!-- Desktop Menu -->
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-1">
-                        <a href="index.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">Home</a>
-                        <a href="hunger-help.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">Hunger Help</a>
-                        <a href="education-access.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">Education Access</a>
-                        <a href="women-safety.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">Women Safety</a>
-                        <!-- Dropdown -->
-                        <div class="relative" x-data="{ open: false }">
-                            <button @click="open = !open" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue focus:outline-none">
-                                <span>Youth Empowerment</span>
-                                <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </button>
-                            <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-                                <div class="py-1">
-                                    <a href="#skills" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Skills Training</a>
-                                    <a href="#jobs" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Job Opportunities</a>
-                                    <a href="#entrepreneurship" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Entrepreneurship</a>
-                                </div>
-                            </div>
+<body class="font-sans">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation with professional background -->
+    <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <!-- Enhanced Logo -->
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white text-xl"></i>
                         </div>
-                        <a href="health-hygiene.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">Health & Hygiene</a>
-                        <a href="mental-wellness.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">Mental Wellness</a>
-                        <a href="about-us.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">About Us</a>
-                        <a href="get-involved.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">Get Involved</a>
-                        <a href="contact.html" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-hope-blue">Contact</a>
+                        <div>
+                            <div class="font-bold text-xl text-gray-800">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                        </div>
                     </div>
                 </div>
-                <!-- Mobile menu button -->
-                <div class="sm:hidden flex items-center">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-hope-blue focus:outline-none">
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path :class="{'hidden': mobileMenuOpen, 'inline-flex': !mobileMenuOpen}" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            <path :class="{'hidden': !mobileMenuOpen, 'inline-flex': mobileMenuOpen}" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
+                    
+                    <!-- Programs Dropdown -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
+                            Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="programs-dropdown">
+                            <a href="hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
+                            <a href="youth-empowerment.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
+                            <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                        </div>
+                    </div>
+                    
+                    <a href="about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">who we are</a>
+                    <a href="get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
+                    
+                    <!-- News & Updates -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
+                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="news-dropdown">
+                            <a href="news.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Latest News</a>
+                            <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">advertisement</a>
+                            <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
+                    
+                    <!-- Opportunities -->
+                    <div class="dropdown relative">
+                        <button class="nav-item dropdown-btn bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300 flex items-center" data-dropdown="opportunities">
+                            Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-content" id="opportunities-dropdown">
+                            <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
+                            <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
+                            <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button id="donateButton" class="donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
+                    </button>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-600 hover:text-primary-blue transition">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="mobile-menu">
+                <div class="px-4 py-2 space-y-3">
+                    <a href="index.html" class="block py-2 text-primary-blue font-semibold border-b border-gray-200 transition">Home</a>
+                    
+                    <!-- Programs Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            Programs <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="hunger-help.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Hunger Help</a>
+                            <a href="youth-empowerment.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
+                            <a href="mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
+                        </div>
+                    </div>
+                    
+                    <a href="about-us.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">About</a>
+                    <a href="get-involved.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Get Involved</a>
+                    
+                    <!-- News & Updates Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            News & Updates <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="news.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Latest News</a>
+                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">advertisement</a>
+                            <a href="stories.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Success Stories</a>
+                        </div>
+                    </div>
+                    
+                    <a href="contact.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Contact</a>
+                    
+                    <!-- Opportunities Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 bg-primary-yellow text-gray-800 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-between px-4">
+                            Opportunities <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        <div class="mobile-dropdown-content">
+                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Volunteer</a>
+                            <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Careers</a>
+                            <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Partnerships</a>
+                        </div>
+                    </div>
+                    
+                    <button id="mobileDonateButton" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition transform hover:scale-105 text-left flex items-center">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div x-show="mobileMenuOpen" class="sm:hidden">
-            <div class="pt-2 pb-3 space-y-1 bg-white border-t">
-                <a href="index.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Home</a>
-                <a href="hunger-help.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Hunger Help</a>
-                <a href="education-access.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Education Access</a>
-                <a href="women-safety.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Women Safety</a>
-                <a href="#skills" class="block pl-3 pr-4 py-2 text-base font-medium text-hope-blue border-l-4 border-hope-blue">Skills Training</a>
-                <a href="#jobs" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Job Opportunities</a>
-                <a href="#entrepreneurship" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Entrepreneurship</a>
-                <a href="health-hygiene.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Health & Hygiene</a>
-                <a href="mental-wellness.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Mental Wellness</a>
-                <a href="about-us.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">About Us</a>
-                <a href="get-involved.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Get Involved</a>
-                <a href="contact.html" class="block pl-3 pr-4 py-2 text-base font-medium text-gray-700 hover:text-hope-blue">Contact</a>
-            </div>
-        </div>
     </nav>
 
-    <!-- Page Hero -->
-    <section class="gradient-bg text-white py-16 md:py-24">
+    <!-- Page Hero with Professional Youth Empowerment Background Image -->
+    <section class="hero-bg gradient-bg text-white py-16 md:py-24 pt-32">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl md:text-5xl font-poppins font-bold mb-4 animate-fade-in">Youth Empowerment</h1>
             <p class="text-xl md:text-2xl max-w-3xl mx-auto animate-fade-in">Building skills, creating opportunities, and empowering the next generation in Mahama Camp</p>
@@ -138,6 +524,7 @@
         </div>
     </section>
 
+    <!-- Rest of the page content remains exactly the same -->
     <!-- Page Content -->
     <section class="py-12 md:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -164,7 +551,7 @@
                                 <p class="text-sm text-gray-700"><strong>Duration:</strong> 6 weeks</p>
                                 <p class="text-sm text-gray-700"><strong>Next Session:</strong> Starting March 15</p>
                             </div>
-                            <button @click="openModal('digital-skills')" class="w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300">Enroll Now</button>
+                            <button class="enroll-btn w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300" data-program="digital-skills">Enroll Now</button>
                         </div>
                     </div>
                     
@@ -183,7 +570,7 @@
                                 <p class="text-sm text-gray-700"><strong>Duration:</strong> 3-6 months</p>
                                 <p class="text-sm text-gray-700"><strong>Next Session:</strong> Ongoing enrollment</p>
                             </div>
-                            <button @click="openModal('vocational')" class="w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300">Enroll Now</button>
+                            <button class="enroll-btn w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300" data-program="vocational">Enroll Now</button>
                         </div>
                     </div>
                     
@@ -202,7 +589,7 @@
                                 <p class="text-sm text-gray-700"><strong>Duration:</strong> 8 weeks</p>
                                 <p class="text-sm text-gray-700"><strong>Next Session:</strong> Starting April 1</p>
                             </div>
-                            <button @click="openModal('business')" class="w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300">Enroll Now</button>
+                            <button class="enroll-btn w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300" data-program="business">Enroll Now</button>
                         </div>
                     </div>
                 </div>
@@ -227,7 +614,7 @@
                                 <h4 class="font-bold text-gray-900">Community Health Worker</h4>
                                 <p class="text-sm text-gray-700 mt-1"><strong>Location:</strong> Health Center</p>
                                 <p class="text-sm text-gray-700"><strong>Requirements:</strong> Basic education, training provided</p>
-                                <button @click="openModal('health-worker')" class="mt-3 bg-hope-blue text-white px-4 py-1 rounded text-sm hover:bg-blue-700 transition duration-300">Apply</button>
+                                <button class="apply-job-btn mt-3 bg-hope-blue text-white px-4 py-1 rounded text-sm hover:bg-blue-700 transition duration-300" data-job="health-worker">Apply</button>
                             </div>
                             
                             <!-- Job Item 2 -->
@@ -235,11 +622,11 @@
                                 <h4 class="font-bold text-gray-900">Teaching Assistant</h4>
                                 <p class="text-sm text-gray-700 mt-1"><strong>Location:</strong> Education Center</p>
                                 <p class="text-sm text-gray-700"><strong>Requirements:</strong> Secondary education</p>
-                                <button @click="openModal('teaching-assistant')" class="mt-3 bg-hope-blue text-white px-4 py-1 rounded text-sm hover:bg-blue-700 transition duration-300">Apply</button>
+                                <button class="apply-job-btn mt-3 bg-hope-blue text-white px-4 py-1 rounded text-sm hover:bg-blue-700 transition duration-300" data-job="teaching-assistant">Apply</button>
                             </div>
                         </div>
                         
-                        <button @click="openModal('all-jobs')" class="w-full border border-hope-blue text-hope-blue py-2 rounded-lg font-medium hover:bg-hope-blue hover:text-white transition duration-300">View All Jobs</button>
+                        <button class="view-jobs-btn w-full border border-hope-blue text-hope-blue py-2 rounded-lg font-medium hover:bg-hope-blue hover:text-white transition duration-300">View All Jobs</button>
                     </div>
                     
                     <!-- Internship Programs -->
@@ -252,14 +639,14 @@
                             <div class="border border-gray-200 rounded-lg p-4">
                                 <h4 class="font-bold text-gray-900">NGO Administration</h4>
                                 <p class="text-sm text-gray-700 mt-1">3-month internship with local organizations</p>
-                                <button @click="openModal('ngo-internship')" class="mt-3 border border-hope-blue text-hope-blue px-4 py-1 rounded text-sm hover:bg-hope-blue hover:text-white transition duration-300">Learn More</button>
+                                <button class="internship-btn mt-3 border border-hope-blue text-hope-blue px-4 py-1 rounded text-sm hover:bg-hope-blue hover:text-white transition duration-300" data-internship="ngo">Learn More</button>
                             </div>
                             
                             <!-- Internship Item 2 -->
                             <div class="border border-gray-200 rounded-lg p-4">
                                 <h4 class="font-bold text-gray-900">Community Development</h4>
                                 <p class="text-sm text-gray-700 mt-1">Work on community projects and initiatives</p>
-                                <button @click="openModal('community-internship')" class="mt-3 border border-hope-blue text-hope-blue px-4 py-1 rounded text-sm hover:bg-hope-blue hover:text-white transition duration-300">Learn More</button>
+                                <button class="internship-btn mt-3 border border-hope-blue text-hope-blue px-4 py-1 rounded text-sm hover:bg-hope-blue hover:text-white transition duration-300" data-internship="community">Learn More</button>
                             </div>
                         </div>
                     </div>
@@ -277,73 +664,8 @@
                         </div>
                         
                         <div class="space-y-3">
-                            <button @click="openModal('counseling')" class="w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300">Book Session</button>
-                            <button @click="openModal('assessment')" class="w-full border border-hope-blue text-hope-blue py-2 rounded-lg font-medium hover:bg-hope-blue hover:text-white transition duration-300">Take Career Assessment</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Image Gallery Section -->
-            <div class="mb-16">
-                <div class="text-center mb-8">
-                    <h2 class="text-3xl md:text-4xl font-poppins font-bold text-gray-900 mb-4">Youth Empowerment in Action</h2>
-                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Visual stories of transformation, skill development, and community impact</p>
-                </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                    <!-- Image 1 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Youth leadership training" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Leadership training session developing future community leaders</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 2 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Digital skills class" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Digital literacy class providing essential technology skills</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 3 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Vocational training workshop" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Vocational workshop teaching practical construction skills</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 4 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1551836026-d5cbcac8681b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Youth group discussion" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Collaborative problem-solving among youth community members</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 5 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Business skills training" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Entrepreneurship training for small business development</p>
+                            <button class="counseling-btn w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300" data-service="counseling">Book Session</button>
+                            <button class="counseling-btn w-full border border-hope-blue text-hope-blue py-2 rounded-lg font-medium hover:bg-hope-blue hover:text-white transition duration-300" data-service="assessment">Take Career Assessment</button>
                         </div>
                     </div>
                 </div>
@@ -367,7 +689,7 @@
                         </div>
                         <h3 class="text-xl font-poppins font-bold text-gray-900 mb-2">Start Your Business</h3>
                         <p class="text-gray-600 mb-4">Resources and support to start your own small business in the camp.</p>
-                        <button @click="openModal('business-plan')" class="w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300">Start Business Plan</button>
+                        <button class="entrepreneurship-btn w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300" data-service="business-plan">Start Business Plan</button>
                     </div>
                     
                     <!-- Youth Marketplace -->
@@ -381,8 +703,8 @@
                         <h3 class="text-xl font-poppins font-bold text-gray-900 mb-2">Youth Marketplace</h3>
                         <p class="text-gray-600 mb-4">Sell your products and services to the community through our platform.</p>
                         <div class="space-y-3">
-                            <button @click="openModal('marketplace')" class="w-full border border-hope-blue text-hope-blue py-2 rounded-lg font-medium hover:bg-hope-blue hover:text-white transition duration-300">Visit Marketplace</button>
-                            <button @click="openModal('add-listing')" class="w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300">Add Your Product</button>
+                            <button class="entrepreneurship-btn w-full border border-hope-blue text-hope-blue py-2 rounded-lg font-medium hover:bg-hope-blue hover:text-white transition duration-300" data-service="marketplace">Visit Marketplace</button>
+                            <button class="entrepreneurship-btn w-full bg-hope-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition duration-300" data-service="add-listing">Add Your Product</button>
                         </div>
                     </div>
                     
@@ -396,67 +718,7 @@
                         </div>
                         <h3 class="text-xl font-poppins font-bold text-gray-900 mb-2">Micro-finance</h3>
                         <p class="text-gray-600 mb-4">Access small loans and financial support for your business ideas.</p>
-                        <button @click="openModal('microfinance')" class="w-full border border-hope-blue text-hope-blue py-2 rounded-lg font-medium hover:bg-hope-blue hover:text-white transition duration-300">Learn About Loans</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- More Images Section -->
-            <div class="mb-16">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                    <!-- Image 6 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Team collaboration" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Youth collaborating on community development projects</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 7 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Student learning" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Focused learning environment for skill acquisition</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 8 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Group of diverse youth" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Diverse group of youth engaged in empowerment activities</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 9 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Creative workshop" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Creative skills development through hands-on workshops</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 10 -->
-                    <div class="rounded-lg overflow-hidden shadow-md group">
-                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                             alt="Youth celebration" 
-                             class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
-                             loading="lazy">
-                        <div class="p-3 bg-white">
-                            <p class="text-sm font-medium text-gray-900">Celebrating youth achievements and program completions</p>
-                        </div>
+                        <button class="entrepreneurship-btn w-full border border-hope-blue text-hope-blue py-2 rounded-lg font-medium hover:bg-hope-blue hover:text-white transition duration-300" data-service="microfinance">Learn About Loans</button>
                     </div>
                 </div>
             </div>
@@ -478,10 +740,10 @@
                                 <p class="text-sm text-gray-600">Jean, Age 22</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 italic mb-4">"The skills training program helped me start my tailoring business. Now I employ two other youth."</p>
+                        <p class="text-gray-600 italic mb-4">"The skills training program helped me start my tailoring business. Now I employ two other youth from the program."</p>
                         <div class="flex justify-between items-center">
                             <span class="text-xs text-gray-500">Tailoring Business</span>
-                            <button @click="openModal('story-1')" class="text-hope-blue text-sm font-medium hover:underline">Read full story</button>
+                            <button class="story-btn text-hope-blue text-sm font-medium hover:underline" data-story="story-1">Read full story</button>
                         </div>
                     </div>
                     
@@ -497,7 +759,7 @@
                         <p class="text-gray-600 italic mb-4">"Learning computer skills opened doors I never imagined. I now work as a data entry assistant."</p>
                         <div class="flex justify-between items-center">
                             <span class="text-xs text-gray-500">Data Entry Assistant</span>
-                            <button @click="openModal('story-2')" class="text-hope-blue text-sm font-medium hover:underline">Read full story</button>
+                            <button class="story-btn text-hope-blue text-sm font-medium hover:underline" data-story="story-2">Read full story</button>
                         </div>
                     </div>
                     
@@ -513,7 +775,7 @@
                         <p class="text-gray-600 italic mb-4">"The mentorship program connected me with opportunities I didn't know existed in the camp."</p>
                         <div class="flex justify-between items-center">
                             <span class="text-xs text-gray-500">Community Leader</span>
-                            <button @click="openModal('story-3')" class="text-hope-blue text-sm font-medium hover:underline">Read full story</button>
+                            <button class="story-btn text-hope-blue text-sm font-medium hover:underline" data-story="story-3">Read full story</button>
                         </div>
                     </div>
                 </div>
@@ -522,157 +784,1132 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white pt-12 pb-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-xl font-poppins font-bold mb-4">HopeLink Mahama</h3>
-                    <p class="text-gray-300">Connecting children, women, and youth in Mahama Camp to food, safety, education, and hope through technology.</p>
+                    <!-- Footer Logo -->
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-lg">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Empowering refugees through technology and innovation in Mahama Camp, Rwanda.
+                    </p>
                 </div>
+                
                 <div>
-                    <h4 class="text-lg font-poppins font-semibold mb-4">Quick Links</h4>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-white transition duration-300">Home</a></li>
-                        <li><a href="hunger-help.html" class="text-gray-300 hover:text-white transition duration-300">Hunger Help</a></li>
-                        <li><a href="education-access.html" class="text-gray-300 hover:text-white transition duration-300">Education Access</a></li>
-                        <li><a href="women-safety.html" class="text-gray-300 hover:text-white transition duration-300">Women Safety</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="about-us.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-info-circle mr-2 text-xs"></i>About</a></li>
+                        <li><a href="get-involved.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
                     </ul>
                 </div>
+                
                 <div>
-                    <h4 class="text-lg font-poppins font-semibold mb-4">Resources</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#skills" class="text-gray-300 hover:text-white transition duration-300">Youth Empowerment</a></li>
-                        <li><a href="health-hygiene.html" class="text-gray-300 hover:text-white transition duration-300">Health & Hygiene</a></li>
-                        <li><a href="mental-wellness.html" class="text-gray-300 hover:text-white transition duration-300">Mental Wellness</a></li>
-                        <li><a href="about-us.html" class="text-gray-300 hover:text-white transition duration-300">About Us</a></li>
-                    </ul>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            Mahama Camp, Kirehe District, Rwanda
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            hopelink.mahama@gmail.com
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-3"></i>
+                            +250 123 456 789
+                        </p>
+                    </div>
                 </div>
+                
                 <div>
-                    <h4 class="text-lg font-poppins font-semibold mb-4">Contact Us</h4>
-                    <address class="text-gray-300 not-italic">
-                        <p>Mahama Refugee Camp, Rwanda</p>
-                        <p class="mt-2">Email: info@hopelinkmahama.org</p>
-                        <p>Phone: +250 788 123 456</p>
-                    </address>
+                    <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <button class="social-btn w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110" data-platform="facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button class="social-btn w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110" data-platform="instagram">
+                            <i class="fab fa-instagram"></i>
+                        </button>
+                        <button class="social-btn w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition transform hover:scale-110" data-platform="linkedin">
+                            <i class="fab fa-linkedin-in"></i>
+                        </button>
+                        <button class="social-btn w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-red-500 transition transform hover:scale-110" data-platform="youtube">
+                            <i class="fab fa-youtube"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Newsletter Signup -->
+                    <div class="mt-6">
+                        <h5 class="text-sm font-semibold mb-2">Stay Updated</h5>
+                        <div class="flex">
+                            <input type="email" id="newsletterEmail" placeholder="Your email" class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none">
+                            <button id="newsletterBtn" class="bg-primary-green text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="pt-8 border-t border-gray-700 text-center text-gray-400">
-                <p>&copy; 2023 HopeLink Mahama. All rights reserved.</p>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 HopeLink Mahama — Empowering Refugees Through Innovation.</p>
+                <p class="text-xs mt-2">All rights reserved. Registered non-profit organization.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Modal Container -->
-    <div x-data="{ open: false, activeModal: '' }" x-show="open" x-cloak class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <!-- Background overlay -->
-            <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-
-            <!-- Modal panel -->
-            <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-start">
-                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title" x-text="getModalTitle(activeModal)"></h3>
-                            <div class="mt-4">
-                                <p class="text-sm text-gray-500" x-html="getModalContent(activeModal)"></p>
-                                <!-- Form for enrollment modals -->
-                                <div x-show="['digital-skills', 'vocational', 'business'].includes(activeModal)" class="mt-4">
-                                    <form @submit.prevent="submitForm">
-                                        <div class="space-y-4">
-                                            <div>
-                                                <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
-                                                <input type="text" id="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-hope-blue focus:border-hope-blue">
-                                            </div>
-                                            <div>
-                                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                                <input type="email" id="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-hope-blue focus:border-hope-blue">
-                                            </div>
-                                            <div>
-                                                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                                                <input type="tel" id="phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-hope-blue focus:border-hope-blue">
-                                            </div>
-                                        </div>
-                                    </form>
+    <!-- Donation Modal -->
+    <div id="donateModal" class="modal">
+        <div class="modal-content program-modal">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">Make a Donation</h3>
+                <button class="close-modal text-gray-500 hover:text-gray-700" data-modal="donateModal">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Donation Amount</label>
+                    <div class="grid grid-cols-3 gap-3 mb-4">
+                        <button class="donation-amount py-3 border border-gray-300 rounded-lg hover:border-hope-blue hover:bg-blue-50 transition" data-amount="25">$25</button>
+                        <button class="donation-amount py-3 border border-gray-300 rounded-lg hover:border-hope-blue hover:bg-blue-50 transition" data-amount="50">$50</button>
+                        <button class="donation-amount py-3 border border-gray-300 rounded-lg hover:border-hope-blue hover:bg-blue-50 transition" data-amount="100">$100</button>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500">$</span>
+                        </div>
+                        <input type="number" id="customAmount" placeholder="Other amount" class="pl-8 w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="payment-method" data-method="card">
+                            <div class="flex items-center">
+                                <i class="fas fa-credit-card text-hope-blue text-xl mr-3"></i>
+                                <div>
+                                    <div class="font-medium">Credit Card</div>
+                                    <div class="text-xs text-gray-500">Visa, Mastercard</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method" data-method="paypal">
+                            <div class="flex items-center">
+                                <i class="fab fa-paypal text-blue-500 text-xl mr-3"></i>
+                                <div>
+                                    <div class="font-medium">PayPal</div>
+                                    <div class="text-xs text-gray-500">Secure payment</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method" data-method="bank">
+                            <div class="flex items-center">
+                                <i class="fas fa-university text-green-500 text-xl mr-3"></i>
+                                <div>
+                                    <div class="font-medium">Bank Transfer</div>
+                                    <div class="text-xs text-gray-500">Direct transfer</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button x-show="['digital-skills', 'vocational', 'business'].includes(activeModal)" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-hope-blue text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hope-blue sm:ml-3 sm:w-auto sm:text-sm" @click="submitForm">Submit</button>
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hope-blue sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" @click="open = false">Close</button>
+                
+                <div id="cardFields" class="payment-fields">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label for="cardNumber" class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                        </div>
+                        <div>
+                            <label for="cardName" class="block text-sm font-medium text-gray-700 mb-1">Name on Card</label>
+                            <input type="text" id="cardName" placeholder="John Doe" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label for="expiryDate" class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                                <input type="text" id="expiryDate" placeholder="MM/YY" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                            </div>
+                            <div>
+                                <label for="cvv" class="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+                                <input type="text" id="cvv" placeholder="123" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="paypalFields" class="payment-fields">
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <p class="text-sm text-yellow-800">You will be redirected to PayPal to complete your payment securely.</p>
+                    </div>
+                </div>
+
+                <div id="bankFields" class="payment-fields">
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h4 class="font-medium text-green-800 mb-2">Bank Transfer Details</h4>
+                        <div class="text-sm text-green-700 space-y-1">
+                            <p><strong>Bank:</strong> HopeLink Community Bank</p>
+                            <p><strong>Account Name:</strong> HopeLink Mahama Refugee Camp</p>
+                            <p><strong>Account Number:</strong> 1234567890</p>
+                            <p><strong>Routing Number:</strong> 021000021</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-200">
+                    <button id="donateSubmit" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-300 flex items-center justify-center">
+                        <i class="fas fa-heart mr-2"></i>Complete Donation
+                    </button>
+                    <p class="text-xs text-gray-500 mt-2 text-center">Your donation is secure and tax-deductible</p>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Program Enrollment Modal -->
+    <div id="enrollmentModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold" id="enrollmentTitle">Program Enrollment</h3>
+                <button class="close-modal text-gray-500 hover:text-gray-700" data-modal="enrollmentModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="enrollmentContent">
+                <p>Program enrollment form will appear here.</p>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button class="close-modal px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition" data-modal="enrollmentModal">Close</button>
+                <button id="enrollmentSubmit" class="px-4 py-2 bg-hope-blue text-white rounded hover:bg-blue-700 transition">Enroll Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Modal -->
+    <div id="storyModal" class="modal">
+        <div class="modal-content program-modal">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900" id="storyTitle">Success Story</h3>
+                <button class="close-modal text-gray-500 hover:text-gray-700" data-modal="storyModal">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="storyContent">
+                <p>Full success story will appear here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="notificationText">Action completed successfully!</span>
+        </div>
+    </div>
+
     <script>
-        // Alpine.js component for the page
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('page', () => ({
-                // Modal management
-                openModal(modalType) {
-                    this.activeModal = modalType;
-                    this.open = true;
-                },
+        // Comprehensive Button Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize all button functionalities
+            initNavigation();
+            initDonationSystem();
+            initProgramEnrollment();
+            initJobApplications();
+            initInternshipPrograms();
+            initEntrepreneurshipSupport();
+            initCareerDevelopment();
+            initSuccessStories();
+            initNewsletterSignup();
+            initSocialMedia();
+            initScrollEffects();
+            initModalSystem();
+            
+            // Add focus styles to all buttons for better accessibility
+            document.querySelectorAll('button, .btn').forEach(button => {
+                button.addEventListener('focus', function() {
+                    this.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.5)';
+                });
                 
-                // Get modal title based on type
-                getModalTitle(modalType) {
-                    const titles = {
-                        'digital-skills': 'Enroll in Digital Skills Program',
-                        'vocational': 'Enroll in Vocational Training',
-                        'business': 'Enroll in Business Skills Program',
-                        'health-worker': 'Apply for Community Health Worker',
-                        'teaching-assistant': 'Apply for Teaching Assistant',
-                        'all-jobs': 'All Job Opportunities',
-                        'ngo-internship': 'NGO Administration Internship',
-                        'community-internship': 'Community Development Internship',
-                        'counseling': 'Book Career Counseling Session',
-                        'assessment': 'Take Career Assessment',
-                        'business-plan': 'Start Your Business Plan',
-                        'marketplace': 'Youth Marketplace',
-                        'add-listing': 'Add Your Product',
-                        'microfinance': 'Learn About Micro-finance',
-                        'story-1': 'Success Story: Jean',
-                        'story-2': 'Success Story: Marie',
-                        'story-3': 'Success Story: David'
-                    };
-                    return titles[modalType] || 'Information';
-                },
-                
-                // Get modal content based on type
-                getModalContent(modalType) {
-                    const content = {
-                        'digital-skills': 'Our Digital Skills program provides comprehensive training in computer basics, internet skills, and digital literacy. This 6-week program will equip you with essential skills for today\'s job market.',
-                        'vocational': 'Vocational training offers hands-on experience in carpentry, tailoring, construction, and other trades. Programs last 3-6 months with ongoing enrollment opportunities.',
-                        'business': 'Learn entrepreneurship, financial management, and small business development in our 8-week Business Skills program starting April 1.',
-                        'health-worker': 'Community Health Worker position at the Health Center. Requirements: Basic education, training provided.',
-                        'teaching-assistant': 'Teaching Assistant position at the Education Center. Requirements: Secondary education.',
-                        'all-jobs': 'Browse all available job opportunities in and around the camp. Check back regularly for new postings.',
-                        'ngo-internship': '3-month internship with local organizations focusing on NGO administration and operations.',
-                        'community-internship': 'Work on community projects and initiatives through our Community Development internship program.',
-                        'counseling': 'Book a personalized career counseling session to discuss your career path and job search strategies.',
-                        'assessment': 'Take our career assessment to discover your strengths and identify potential career paths that match your skills and interests.',
-                        'business-plan': 'Get resources and support to start your own small business in the camp. We\'ll help you develop a business plan and connect you with mentors.',
-                        'marketplace': 'Visit our Youth Marketplace to see products and services offered by young entrepreneurs in the community.',
-                        'add-listing': 'Add your product or service to our Youth Marketplace platform to reach more customers in the community.',
-                        'microfinance': 'Learn about our micro-finance options for small business ideas. We offer small loans and financial support for eligible youth entrepreneurs.',
-                        'story-1': 'Jean joined our tailoring program with no prior experience. After completing the training, he started his own tailoring business and now employs two other youth from the program. His business has become a community hub for clothing repairs and custom orders.',
-                        'story-2': 'Marie always had an interest in technology but no access to computers. After completing our Digital Skills program, she secured a position as a data entry assistant with a local organization. She now teaches basic computer skills to other youth in her community.',
-                        'story-3': 'David participated in our mentorship program which connected him with local leaders. Through these connections, he discovered opportunities he didn\'t know existed and is now a respected community leader organizing youth activities and advocacy efforts.'
-                    };
-                    return content[modalType] || 'More information about this opportunity.';
-                },
-                
-                // Form submission handler
-                submitForm() {
-                    // In a real application, this would submit the form data to a server
-                    alert('Thank you for your interest! We will contact you soon with more information.');
-                    this.open = false;
-                }
-            }))
+                button.addEventListener('blur', function() {
+                    this.style.boxShadow = '';
+                });
+            });
         });
+
+        // 1. Navigation System
+        function initNavigation() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    this.querySelector('i').classList.toggle('fa-bars');
+                    this.querySelector('i').classList.toggle('fa-times');
+                });
+            }
+
+            // Dropdown functionality
+            const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const dropdownId = this.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(dropdownId + '-dropdown');
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown-content.active').forEach(dd => {
+                        if (dd !== dropdown) dd.classList.remove('active');
+                    });
+                    
+                    if (dropdown) {
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            });
+
+            // Mobile dropdown functionality
+            const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-btn');
+            mobileDropdownButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const dropdownContent = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    if (dropdownContent && dropdownContent.classList.contains('mobile-dropdown-content')) {
+                        dropdownContent.classList.toggle('active');
+                        icon.classList.toggle('fa-chevron-down');
+                        icon.classList.toggle('fa-chevron-up');
+                    }
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.dropdown-content.active').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+                document.querySelectorAll('.mobile-dropdown-content.active').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+        }
+
+        // 2. Donation System with Payment Methods
+        function initDonationSystem() {
+            const donateButtons = document.querySelectorAll('#donateButton, #mobileDonateButton');
+            const donateModal = document.getElementById('donateModal');
+            const donationAmounts = document.querySelectorAll('.donation-amount');
+            const customAmount = document.getElementById('customAmount');
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            const paymentFields = document.querySelectorAll('.payment-fields');
+            const donateSubmit = document.getElementById('donateSubmit');
+
+            let selectedAmount = 0;
+            let selectedPaymentMethod = 'card';
+
+            // Open donation modal
+            donateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    openModal('donateModal');
+                    resetDonationForm();
+                });
+            });
+
+            // Donation amount selection
+            donationAmounts.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    donationAmounts.forEach(btn => {
+                        btn.classList.remove('border-hope-blue', 'bg-blue-50', 'text-hope-blue');
+                        btn.classList.add('border-gray-300', 'text-gray-700');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.remove('border-gray-300', 'text-gray-700');
+                    this.classList.add('border-hope-blue', 'bg-blue-50', 'text-hope-blue');
+                    
+                    // Set selected amount
+                    selectedAmount = parseFloat(this.getAttribute('data-amount'));
+                    customAmount.value = selectedAmount;
+                });
+            });
+
+            // Custom amount input
+            customAmount.addEventListener('input', function() {
+                selectedAmount = parseFloat(this.value) || 0;
+                
+                // Remove active class from preset amount buttons
+                donationAmounts.forEach(btn => {
+                    btn.classList.remove('border-hope-blue', 'bg-blue-50', 'text-hope-blue');
+                    btn.classList.add('border-gray-300', 'text-gray-700');
+                });
+            });
+
+            // Payment method selection
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    // Remove active class from all methods
+                    paymentMethods.forEach(m => {
+                        m.classList.remove('active');
+                    });
+                    
+                    // Add active class to selected method
+                    this.classList.add('active');
+                    
+                    // Get selected method
+                    selectedPaymentMethod = this.getAttribute('data-method');
+                    
+                    // Show corresponding payment fields
+                    paymentFields.forEach(field => {
+                        field.classList.remove('active');
+                    });
+                    
+                    const activeField = document.getElementById(selectedPaymentMethod + 'Fields');
+                    if (activeField) {
+                        activeField.classList.add('active');
+                    }
+                });
+            });
+
+            // Donation form submission
+            donateSubmit.addEventListener('click', function() {
+                if (validateDonationForm()) {
+                    processDonation();
+                }
+            });
+
+            function validateDonationForm() {
+                if (selectedAmount <= 0) {
+                    showNotification('Please select or enter a donation amount', 'error');
+                    return false;
+                }
+
+                if (selectedPaymentMethod === 'card') {
+                    const cardNumber = document.getElementById('cardNumber').value;
+                    const cardName = document.getElementById('cardName').value;
+                    const expiryDate = document.getElementById('expiryDate').value;
+                    const cvv = document.getElementById('cvv').value;
+
+                    if (!cardNumber || !cardName || !expiryDate || !cvv) {
+                        showNotification('Please fill in all card details', 'error');
+                        return false;
+                    }
+
+                    if (!/^\d{16}$/.test(cardNumber.replace(/\s/g, ''))) {
+                        showNotification('Please enter a valid 16-digit card number', 'error');
+                        return false;
+                    }
+
+                    if (!/^\d{3,4}$/.test(cvv)) {
+                        showNotification('Please enter a valid CVV', 'error');
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            function processDonation() {
+                // Show loading state
+                const originalText = donateSubmit.innerHTML;
+                donateSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+                donateSubmit.disabled = true;
+
+                // Simulate payment processing
+                setTimeout(() => {
+                    showNotification(`Thank you for your $${selectedAmount} donation! Your support makes a difference.`, 'success');
+                    closeModal('donateModal');
+                    
+                    // Reset button
+                    donateSubmit.innerHTML = originalText;
+                    donateSubmit.disabled = false;
+                    
+                    // Reset form
+                    resetDonationForm();
+                }, 2000);
+            }
+
+            function resetDonationForm() {
+                selectedAmount = 0;
+                selectedPaymentMethod = 'card';
+                
+                donationAmounts.forEach(btn => {
+                    btn.classList.remove('border-hope-blue', 'bg-blue-50', 'text-hope-blue');
+                    btn.classList.add('border-gray-300', 'text-gray-700');
+                });
+                
+                paymentMethods.forEach(m => {
+                    m.classList.remove('active');
+                    if (m.getAttribute('data-method') === 'card') {
+                        m.classList.add('active');
+                    }
+                });
+                
+                paymentFields.forEach(field => {
+                    field.classList.remove('active');
+                });
+                document.getElementById('cardFields').classList.add('active');
+                
+                customAmount.value = '';
+                document.getElementById('cardNumber').value = '';
+                document.getElementById('cardName').value = '';
+                document.getElementById('expiryDate').value = '';
+                document.getElementById('cvv').value = '';
+            }
+        }
+
+        // 3. Program Enrollment System
+        function initProgramEnrollment() {
+            const enrollButtons = document.querySelectorAll('.enroll-btn');
+            const enrollmentModal = document.getElementById('enrollmentModal');
+            const enrollmentTitle = document.getElementById('enrollmentTitle');
+            const enrollmentContent = document.getElementById('enrollmentContent');
+            const enrollmentSubmit = document.getElementById('enrollmentSubmit');
+
+            const programDetails = {
+                'digital-skills': {
+                    title: 'Digital Skills Program Enrollment',
+                    description: 'Join our 6-week Digital Skills program to learn computer basics, internet skills, and digital literacy.',
+                    duration: '6 weeks',
+                    startDate: 'March 15, 2024',
+                    requirements: 'Basic literacy skills'
+                },
+                'vocational': {
+                    title: 'Vocational Training Enrollment',
+                    description: 'Get hands-on training in carpentry, tailoring, construction, and other trades.',
+                    duration: '3-6 months',
+                    startDate: 'Ongoing enrollment',
+                    requirements: 'No prior experience needed'
+                },
+                'business': {
+                    title: 'Business Skills Program Enrollment',
+                    description: 'Learn entrepreneurship, financial management, and small business development.',
+                    duration: '8 weeks',
+                    startDate: 'April 1, 2024',
+                    requirements: 'Basic math skills'
+                }
+            };
+
+            enrollButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const program = this.getAttribute('data-program');
+                    const details = programDetails[program];
+                    
+                    if (details) {
+                        enrollmentTitle.textContent = details.title;
+                        enrollmentContent.innerHTML = `
+                            <div class="space-y-4">
+                                <p class="text-gray-600">${details.description}</p>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h4 class="font-semibold mb-2">Program Details:</h4>
+                                    <ul class="text-sm space-y-1">
+                                        <li><strong>Duration:</strong> ${details.duration}</li>
+                                        <li><strong>Start Date:</strong> ${details.startDate}</li>
+                                        <li><strong>Requirements:</strong> ${details.requirements}</li>
+                                    </ul>
+                                </div>
+                                <form id="enrollmentForm" class="space-y-4">
+                                    <div>
+                                        <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                        <input type="text" id="fullName" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue" required>
+                                    </div>
+                                    <div>
+                                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                        <input type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue" required>
+                                    </div>
+                                    <div>
+                                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                        <input type="tel" id="phone" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue" required>
+                                    </div>
+                                    <div>
+                                        <label for="background" class="block text-sm font-medium text-gray-700 mb-1">Background/Experience</label>
+                                        <textarea id="background" rows="3" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue" placeholder="Tell us about your background and why you're interested in this program"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        `;
+                        
+                        enrollmentSubmit.onclick = function() {
+                            submitEnrollment(program);
+                        };
+                        
+                        openModal('enrollmentModal');
+                    }
+                });
+            });
+
+            function submitEnrollment(program) {
+                const form = document.getElementById('enrollmentForm');
+                const formData = new FormData(form);
+                
+                if (!form.checkValidity()) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                // Show loading state
+                const originalText = enrollmentSubmit.innerHTML;
+                enrollmentSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
+                enrollmentSubmit.disabled = true;
+
+                // Simulate API call
+                setTimeout(() => {
+                    showNotification(`Successfully enrolled in ${programDetails[program].title}! We will contact you soon.`, 'success');
+                    closeModal('enrollmentModal');
+                    
+                    // Reset button
+                    enrollmentSubmit.innerHTML = originalText;
+                    enrollmentSubmit.disabled = false;
+                }, 1500);
+            }
+        }
+
+        // 4. Job Application System
+        function initJobApplications() {
+            const applyButtons = document.querySelectorAll('.apply-job-btn');
+            const viewJobsButton = document.querySelector('.view-jobs-btn');
+
+            const jobDetails = {
+                'health-worker': {
+                    title: 'Community Health Worker',
+                    description: 'Join our health center team to provide essential healthcare services to the community.',
+                    requirements: ['Basic education', 'Training provided', 'Compassionate attitude'],
+                    responsibilities: ['Patient care', 'Health education', 'Community outreach']
+                },
+                'teaching-assistant': {
+                    title: 'Teaching Assistant',
+                    description: 'Support our education programs by assisting teachers and working with students.',
+                    requirements: ['Secondary education', 'Patience with children', 'Good communication skills'],
+                    responsibilities: ['Classroom support', 'Student assistance', 'Material preparation']
+                }
+            };
+
+            applyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const job = this.getAttribute('data-job');
+                    const details = jobDetails[job];
+                    
+                    if (details) {
+                        showNotification(`Application process started for ${details.title}. Please visit our careers page for full details.`, 'info');
+                        
+                        // In a real application, this would redirect to a job application form
+                        setTimeout(() => {
+                            window.location.href = 'careers.html';
+                        }, 2000);
+                    }
+                });
+            });
+
+            if (viewJobsButton) {
+                viewJobsButton.addEventListener('click', function() {
+                    showNotification('Redirecting to full job listings...', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'careers.html';
+                    }, 1500);
+                });
+            }
+        }
+
+        // 5. Internship Programs
+        function initInternshipPrograms() {
+            const internshipButtons = document.querySelectorAll('.internship-btn');
+
+            const internshipDetails = {
+                'ngo': {
+                    title: 'NGO Administration Internship',
+                    description: '3-month internship focusing on NGO operations, administration, and community development.',
+                    benefits: ['Hands-on experience', 'Mentorship', 'Certificate of completion']
+                },
+                'community': {
+                    title: 'Community Development Internship',
+                    description: 'Work on community projects and initiatives while developing practical skills.',
+                    benefits: ['Project management experience', 'Community engagement', 'Skill development']
+                }
+            };
+
+            internshipButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const internship = this.getAttribute('data-internship');
+                    const details = internshipDetails[internship];
+                    
+                    if (details) {
+                        const modalContent = `
+                            <div class="space-y-4">
+                                <h4 class="text-lg font-semibold">${details.title}</h4>
+                                <p class="text-gray-600">${details.description}</p>
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <h5 class="font-semibold mb-2">Benefits:</h5>
+                                    <ul class="list-disc list-inside space-y-1 text-sm">
+                                        ${details.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <p class="text-sm text-gray-600">Interested in this internship? Contact our opportunities coordinator for more information.</p>
+                            </div>
+                        `;
+                        
+                        showCustomModal(details.title, modalContent, 'Get More Info', () => {
+                            showNotification('Our opportunities coordinator will contact you soon!', 'success');
+                        });
+                    }
+                });
+            });
+        }
+
+        // 6. Entrepreneurship Support
+        function initEntrepreneurshipSupport() {
+            const entrepreneurshipButtons = document.querySelectorAll('.entrepreneurship-btn');
+
+            const entrepreneurshipServices = {
+                'business-plan': {
+                    title: 'Start Your Business Plan',
+                    description: 'Get step-by-step guidance to create a comprehensive business plan for your venture.',
+                    steps: ['Market research', 'Financial planning', 'Resource identification', 'Implementation strategy']
+                },
+                'marketplace': {
+                    title: 'Youth Marketplace',
+                    description: 'Access our platform to showcase and sell your products and services to the community.',
+                    features: ['Online storefront', 'Payment processing', 'Marketing support', 'Customer management']
+                },
+                'add-listing': {
+                    title: 'Add Your Product',
+                    description: 'List your products on our Youth Marketplace platform.',
+                    process: ['Product registration', 'Quality check', 'Pricing guidance', 'Listing approval']
+                },
+                'microfinance': {
+                    title: 'Micro-finance Support',
+                    description: 'Learn about our small loan programs and financial support for business ideas.',
+                    options: ['Small business loans', 'Financial literacy training', 'Repayment plans', 'Business mentoring']
+                }
+            };
+
+            entrepreneurshipButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const service = this.getAttribute('data-service');
+                    const details = entrepreneurshipServices[service];
+                    
+                    if (details) {
+                        const modalContent = `
+                            <div class="space-y-4">
+                                <p class="text-gray-600">${details.description}</p>
+                                <div class="bg-green-50 p-4 rounded-lg">
+                                    <h5 class="font-semibold mb-2">${service === 'business-plan' ? 'Development Steps:' : service === 'microfinance' ? 'Available Options:' : 'Key Features:'}</h5>
+                                    <ul class="list-disc list-inside space-y-1 text-sm">
+                                        ${(details.steps || details.features || details.options || details.process).map(item => `<li>${item}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <p class="text-sm text-gray-600">Ready to get started? Our entrepreneurship team is here to help you succeed.</p>
+                            </div>
+                        `;
+                        
+                        showCustomModal(details.title, modalContent, 'Get Started', () => {
+                            showNotification('Our entrepreneurship team will contact you to discuss next steps!', 'success');
+                        });
+                    }
+                });
+            });
+        }
+
+        // 7. Career Development
+        function initCareerDevelopment() {
+            const counselingButtons = document.querySelectorAll('.counseling-btn');
+
+            counselingButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const service = this.getAttribute('data-service');
+                    
+                    if (service === 'counseling') {
+                        showCustomModal(
+                            'Career Counseling Session',
+                            `
+                            <div class="space-y-4">
+                                <p class="text-gray-600">Book a personalized career counseling session with our experienced advisors.</p>
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <h5 class="font-semibold mb-2">What to expect:</h5>
+                                    <ul class="list-disc list-inside space-y-1 text-sm">
+                                        <li>Career path assessment</li>
+                                        <li>Skill identification</li>
+                                        <li>Goal setting</li>
+                                        <li>Action plan development</li>
+                                    </ul>
+                                </div>
+                                <form class="space-y-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
+                                        <input type="date" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+                                        <select class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                                            <option>Morning (9 AM - 12 PM)</option>
+                                            <option>Afternoon (1 PM - 4 PM)</option>
+                                            <option>Evening (5 PM - 7 PM)</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            `,
+                            'Book Session',
+                            () => {
+                                showNotification('Career counseling session booked successfully! We will confirm your appointment soon.', 'success');
+                            }
+                        );
+                    } else if (service === 'assessment') {
+                        showCustomModal(
+                            'Career Assessment',
+                            `
+                            <div class="space-y-4">
+                                <p class="text-gray-600">Take our comprehensive career assessment to discover your strengths and identify potential career paths.</p>
+                                <div class="bg-yellow-50 p-4 rounded-lg">
+                                    <h5 class="font-semibold mb-2">Assessment includes:</h5>
+                                    <ul class="list-disc list-inside space-y-1 text-sm">
+                                        <li>Skills inventory</li>
+                                        <li>Interest assessment</li>
+                                        <li>Personality evaluation</li>
+                                        <li>Career matching</li>
+                                    </ul>
+                                </div>
+                                <p class="text-sm text-gray-600">The assessment takes approximately 30 minutes to complete.</p>
+                            </div>
+                            `,
+                            'Start Assessment',
+                            () => {
+                                showNotification('Career assessment started! Redirecting to assessment platform...', 'info');
+                                // In real implementation, redirect to assessment page
+                            }
+                        );
+                    }
+                });
+            });
+        }
+
+        // 8. Success Stories
+        function initSuccessStories() {
+            const storyButtons = document.querySelectorAll('.story-btn');
+            const storyModal = document.getElementById('storyModal');
+            const storyTitle = document.getElementById('storyTitle');
+            const storyContent = document.getElementById('storyContent');
+
+            const stories = {
+                'story-1': {
+                    title: 'From Trainee to Entrepreneur: Jean\'s Story',
+                    content: `
+                        <div class="space-y-4">
+                            <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Jean at his tailoring business" 
+                                 class="w-full h-48 object-cover rounded-lg">
+                            <p class="text-gray-600">Jean joined our tailoring program with no prior experience. After completing the training, he started his own tailoring business and now employs two other youth from the program.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Jean's Journey:</h4>
+                                <ul class="list-disc list-inside space-y-1 text-sm text-gray-600">
+                                    <li>Completed 3-month tailoring training program</li>
+                                    <li>Received small business startup grant</li>
+                                    <li>Now employs 2 other program graduates</li>
+                                    <li>Serves over 50 regular customers</li>
+                                </ul>
+                            </div>
+                            <blockquote class="border-l-4 border-hope-blue pl-4 italic text-gray-700">
+                                "The skills training program gave me more than just technical knowledge - it gave me confidence and a path to build a better future for myself and my community."
+                            </blockquote>
+                        </div>
+                    `
+                },
+                'story-2': {
+                    title: 'Digital Skills Changed My Life: Marie\'s Transformation',
+                    content: `
+                        <div class="space-y-4">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="Marie working on computer" 
+                                 class="w-full h-48 object-cover rounded-lg">
+                            <p class="text-gray-600">Marie always had an interest in technology but no access to computers. After completing our Digital Skills program, she secured a position as a data entry assistant with a local organization.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">Marie's Achievement:</h4>
+                                <ul class="list-disc list-inside space-y-1 text-sm text-gray-600">
+                                    <li>Mastered computer basics and office software</li>
+                                    <li>Developed data entry and management skills</li>
+                                    <li>Now works as data entry assistant</li>
+                                    <li>Teaches basic computer skills to other youth</li>
+                                </ul>
+                            </div>
+                            <blockquote class="border-l-4 border-hope-blue pl-4 italic text-gray-700">
+                                "Learning computer skills opened doors I never imagined. I went from having no computer experience to having a stable job in just a few months."
+                            </blockquote>
+                        </div>
+                    `
+                },
+                'story-3': {
+                    title: 'Building a Better Future: David\'s Leadership Journey',
+                    content: `
+                        <div class="space-y-4">
+                            <img src="https://images.unsplash.com/photo-1551836026-d5cbcac8681b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                                 alt="David leading community meeting" 
+                                 class="w-full h-48 object-cover rounded-lg">
+                            <p class="text-gray-600">David participated in our mentorship program which connected him with local leaders. Through these connections, he discovered opportunities he didn't know existed and is now a respected community leader.</p>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h4 class="font-semibold mb-2">David's Impact:</h4>
+                                <ul class="list-disc list-inside space-y-1 text-sm text-gray-600">
+                                    <li>Completed leadership and mentorship program</li>
+                                    <li>Organizes youth activities and advocacy efforts</li>
+                                    <li>Connects other youth with opportunities</li>
+                                    <li>Serves as community representative</li>
+                                </ul>
+                            </div>
+                            <blockquote class="border-l-4 border-hope-blue pl-4 italic text-gray-700">
+                                "The mentorship program connected me with opportunities I didn't know existed. Now I'm helping other young people discover their potential too."
+                            </blockquote>
+                        </div>
+                    `
+                }
+            };
+
+            storyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const story = this.getAttribute('data-story');
+                    const details = stories[story];
+                    
+                    if (details) {
+                        storyTitle.textContent = details.title;
+                        storyContent.innerHTML = details.content;
+                        openModal('storyModal');
+                    }
+                });
+            });
+        }
+
+        // 9. Newsletter Signup
+        function initNewsletterSignup() {
+            const newsletterBtn = document.getElementById('newsletterBtn');
+            const newsletterEmail = document.getElementById('newsletterEmail');
+
+            if (newsletterBtn) {
+                newsletterBtn.addEventListener('click', function() {
+                    const email = newsletterEmail.value.trim();
+                    
+                    if (!email) {
+                        showNotification('Please enter your email address', 'error');
+                        return;
+                    }
+                    
+                    if (!isValidEmail(email)) {
+                        showNotification('Please enter a valid email address', 'error');
+                        return;
+                    }
+
+                    // Show loading state
+                    const originalHTML = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    this.disabled = true;
+
+                    // Simulate API call
+                    setTimeout(() => {
+                        showNotification('Thank you for subscribing to our newsletter!', 'success');
+                        newsletterEmail.value = '';
+                        this.innerHTML = originalHTML;
+                        this.disabled = false;
+                    }, 1500);
+                });
+
+                // Allow Enter key to submit
+                newsletterEmail.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        newsletterBtn.click();
+                    }
+                });
+            }
+        }
+
+        // 10. Social Media Integration
+        function initSocialMedia() {
+            const socialButtons = document.querySelectorAll('.social-btn');
+
+            const socialPlatforms = {
+                'facebook': 'https://facebook.com/hopelink-mahama',
+                'instagram': 'https://instagram.com/hopelink-mahama',
+                'linkedin': 'https://linkedin.com/company/hopelink-mahama',
+                'youtube': 'https://youtube.com/hopelink-mahama'
+            };
+
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const platform = this.getAttribute('data-platform');
+                    const url = socialPlatforms[platform];
+                    
+                    if (url) {
+                        showNotification(`Redirecting to our ${platform} page...`, 'info');
+                        
+                        // In a real application, this would redirect to the actual social media page
+                        setTimeout(() => {
+                            window.open(url, '_blank');
+                        }, 1000);
+                    }
+                });
+            });
+        }
+
+        // Utility Functions
+        function initScrollEffects() {
+            // Scroll progress bar
+            window.onscroll = function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("scrollProgress").style.width = scrolled + "%";
+                
+                // Navbar scroll effect
+                const nav = document.getElementById('mainNav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            };
+
+            // Fade in animation on scroll
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const fadeInOnScroll = function() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', fadeInOnScroll);
+            fadeInOnScroll();
+        }
+
+        function initModalSystem() {
+            // Close modal buttons
+            const closeButtons = document.querySelectorAll('.close-modal');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    closeModal(modalId);
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        closeModal(modal.id);
+                    }
+                });
+            });
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const openModal = document.querySelector('.modal.active');
+                    if (openModal) {
+                        closeModal(openModal.id);
+                    }
+                }
+            });
+        }
+
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+
+        function showCustomModal(title, content, actionText, actionCallback) {
+            const modalContent = `
+                <div class="modal-content">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">${title}</h3>
+                        <button class="close-custom-modal text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="mb-6">${content}</div>
+                    <div class="flex justify-end space-x-3">
+                        <button class="close-custom-modal px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition">Close</button>
+                        <button class="custom-modal-action px-4 py-2 bg-hope-blue text-white rounded hover:bg-blue-700 transition">${actionText}</button>
+                    </div>
+                </div>
+            `;
+
+            const modalOverlay = document.createElement('div');
+            modalOverlay.className = 'modal active';
+            modalOverlay.innerHTML = modalContent;
+            document.body.appendChild(modalOverlay);
+
+            // Add event listeners
+            modalOverlay.querySelector('.close-custom-modal').addEventListener('click', function() {
+                document.body.removeChild(modalOverlay);
+                document.body.style.overflow = '';
+            });
+
+            modalOverlay.querySelector('.custom-modal-action').addEventListener('click', function() {
+                actionCallback();
+                document.body.removeChild(modalOverlay);
+                document.body.style.overflow = '';
+            });
+
+            // Close when clicking outside
+            modalOverlay.addEventListener('click', function(event) {
+                if (event.target === modalOverlay) {
+                    document.body.removeChild(modalOverlay);
+                    document.body.style.overflow = '';
+                }
+            });
+
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            // Set notification content and style
+            notificationText.textContent = message;
+            notification.className = 'notification';
+            notification.classList.add(type, 'show');
+            
+            // Update icon based on type
+            const icon = notification.querySelector('i');
+            icon.className = type === 'success' ? 'fas fa-check-circle mr-2' :
+                            type === 'error' ? 'fas fa-exclamation-circle mr-2' :
+                            'fas fa-info-circle mr-2';
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
     </script>
 </body>
 </html>

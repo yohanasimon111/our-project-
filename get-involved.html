@@ -39,31 +39,39 @@
         html {
             scroll-behavior: smooth;
         }
+        
+        /* Custom animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="font-sans bg-white">
-    <!-- Navigation -->
+    <!-- Navigation - Single Line Layout -->
     <nav class="bg-white shadow-lg fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
+            <div class="flex justify-between items-center py-3">
+                <!-- Logo -->
                 <div class="flex items-center">
-                    <!-- Professional Logo -->
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary-blue to-primary-green rounded-lg flex items-center justify-center mr-3">
-                            <i class="fas fa-hands-helping text-white text-lg"></i>
-                        </div>
-                        <div class="text-2xl font-bold bg-gradient-to-br from-primary-blue to-primary-green bg-clip-text text-transparent">
-                            HopeLink Mahama
-                        </div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-blue to-primary-green rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas fa-hands-helping text-white text-lg"></i>
+                    </div>
+                    <div class="text-2xl font-bold bg-gradient-to-br from-primary-blue to-primary-green bg-clip-text text-transparent">
+                        HopeLink Mahama
                     </div>
                 </div>
                 
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
+                <!-- Navigation Links - Single Line -->
+                <div class="hidden lg:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-blue transition duration-300 text-sm font-medium">Home</a>
                     
                     <!-- Programs Dropdown -->
                     <div class="dropdown relative">
-                        <button class="text-gray-600 hover:text-primary-blue transition duration-300 flex items-center">
+                        <button class="text-gray-600 hover:text-primary-blue transition duration-300 flex items-center text-sm font-medium">
                             Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
                         <div class="dropdown-content absolute top-full left-0 bg-white min-w-48 shadow-xl rounded-lg py-2 z-10 hidden">
@@ -73,26 +81,25 @@
                         </div>
                     </div>
                     
-                    <a href="about-us.html" class="text-gray-600 hover:text-primary-blue transition duration-300">About</a>
-                    <a href="get-involved.html" class="text-primary-blue font-semibold border-b-2 border-primary-blue">Get Involved</a>
+                    <a href="about-us.html" class="text-gray-600 hover:text-primary-blue transition duration-300 text-sm font-medium">Who We Are</a>
+                    <a href="get-involved.html" class="text-primary-blue font-semibold border-b-2 border-primary-blue text-sm font-medium">Get Involved</a>
                     
-                    <!-- News & Updates -->
+                    <!-- News & Updates Dropdown -->
                     <div class="dropdown relative">
-                        <button class="text-gray-600 hover:text-primary-blue transition duration-300 flex items-center">
-                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        <button class="text-gray-600 hover:text-primary-blue transition duration-300 flex items-center text-sm font-medium">
+                           Latest News <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
                         <div class="dropdown-content absolute top-full left-0 bg-white min-w-48 shadow-xl rounded-lg py-2 z-10 hidden">
                             <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Advertisement</a>
-                            <!-- <a href="events.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Upcoming Events</a> -->
                             <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
                         </div>
                     </div>
                     
-                    <a href="contact.html" class="text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-primary-blue transition duration-300 text-sm font-medium">Contact</a>
                     
-                    <!-- Opportunities -->
+                    <!-- Opportunities Dropdown -->
                     <div class="dropdown relative">
-                        <button class="bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300 flex items-center">
+                        <button class="bg-primary-yellow text-gray-800 px-3 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300 flex items-center text-sm">
                             Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
                         <div class="dropdown-content absolute top-full left-0 bg-white min-w-48 shadow-xl rounded-lg py-2 z-10 hidden">
@@ -103,18 +110,19 @@
                     </div>
                 </div>
 
+                <!-- CTA Button and Mobile Menu -->
                 <div class="flex items-center space-x-4">
-                    <button onclick="openModal('donateModal')" class="bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300 font-semibold">
+                    <button onclick="openModal('donateModal')" class="bg-primary-green text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300 font-semibold text-sm">
                         Donate Now
                     </button>
-                    <button id="mobileMenuButton" class="md:hidden text-gray-600 text-xl">
+                    <button id="mobileMenuButton" class="lg:hidden text-gray-600 text-xl">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Mobile Menu -->
-            <div id="mobileMenu" class="mobile-menu md:hidden bg-white border-t border-gray-200 hidden">
+            <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-gray-200 hidden">
                 <div class="px-4 py-4 space-y-4">
                     <a href="index.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Home</a>
                     
@@ -125,12 +133,12 @@
                         </button>
                         <div class="pl-4 mt-2 space-y-2 hidden" id="mobileProgramsMenu">
                             <a href="hunger-help.html" class="block py-1 text-gray-600 hover:text-primary-blue transition">Hunger Help</a>
-                            <a href="Youth Empowerment .html" class="block py-1 text-gray-600 hover:text-primary-blue transition">Youth Empowerment</a>
+                            <a href="youth-empowerment.html" class="block py-1 text-gray-600 hover:text-primary-blue transition">Youth Empowerment</a>
                             <a href="mental-wellness.html" class="block py-1 text-gray-600 hover:text-primary-blue transition">Mental Wellness</a>
                         </div>
                     </div>
                     
-                    <a href="about.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">who we are</a>
+                    <a href="about.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Who We Are</a>
                     <a href="get-involved.html" class="block py-2 text-primary-blue font-semibold border-l-4 border-primary-blue pl-2">Get Involved</a>
                     
                     <div class="py-2">
@@ -140,7 +148,6 @@
                         </button>
                         <div class="pl-4 mt-2 space-y-2 hidden" id="mobileNewsMenu">
                             <a href="./advertisement.html" class="block py-1 text-gray-600 hover:text-primary-blue transition">Advertisement</a>
-                            <a href="events.html" class="block py-1 text-gray-600 hover:text-primary-blue transition">Upcoming Events</a>
                             <a href="stories.html" class="block py-1 text-gray-600 hover:text-primary-blue transition">Success Stories</a>
                         </div>
                     </div>
@@ -211,6 +218,46 @@
                         <i class="fas fa-hands-helping mr-3"></i>
                         Become a Volunteer
                     </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Action Cards -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center group cursor-pointer" onclick="scrollToSection('donate')">
+                    <div class="bg-blue-50 rounded-2xl p-8 group-hover:bg-blue-100 transition duration-300">
+                        <div class="w-20 h-20 bg-primary-blue rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fas fa-donate text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Donate</h3>
+                        <p class="text-gray-600 mb-4">Support our mission with financial contributions or essential items</p>
+                        <span class="text-primary-blue font-semibold">Learn More →</span>
+                    </div>
+                </div>
+                
+                <div class="text-center group cursor-pointer" onclick="scrollToSection('volunteer')">
+                    <div class="bg-green-50 rounded-2xl p-8 group-hover:bg-green-100 transition duration-300">
+                        <div class="w-20 h-20 bg-primary-green rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fas fa-hands-helping text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Volunteer</h3>
+                        <p class="text-gray-600 mb-4">Share your time and skills to make a direct impact</p>
+                        <span class="text-primary-green font-semibold">Learn More →</span>
+                    </div>
+                </div>
+                
+                <div class="text-center group cursor-pointer" onclick="scrollToSection('partnerships')">
+                    <div class="bg-yellow-50 rounded-2xl p-8 group-hover:bg-yellow-100 transition duration-300">
+                        <div class="w-20 h-20 bg-primary-yellow rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fas fa-handshake text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Partner</h3>
+                        <p class="text-gray-600 mb-4">Collaborate with us to create sustainable change</p>
+                        <span class="text-primary-yellow font-semibold">Learn More →</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -488,7 +535,7 @@
     </section>
 
     <!-- Partnerships Section -->
-    <section class="py-20 bg-gray-50">
+    <section id="partnerships" class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-gray-800 mb-4">Organization Partnerships</h2>
@@ -950,6 +997,19 @@
                 mobileMenu.classList.add('hidden');
             }
         });
+
+        // ========== SMOOTH SCROLLING ==========
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const headerHeight = document.querySelector('nav').offsetHeight;
+                const elementPosition = element.offsetTop - headerHeight;
+                window.scrollTo({
+                    top: elementPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
 
         // ========== NOTIFICATION SYSTEM ==========
         function showNotification(title, message, type = 'success') {
