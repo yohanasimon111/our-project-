@@ -11,168 +11,681 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        primary: {
+                            blue: '#3B82F6',
+                            green: '#10B981',
+                            yellow: '#FBBF24',
+                            light: '#FEF3C7'
+                        }
+                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
+                    screens: {
+                        'xs': '475px',
+                        'lg-md': '1100px', // Custom breakpoint for small desktops
+                    },
                     animation: {
-                        'bounce-slow': 'bounce 2s infinite',
-                        'slide-down': 'slideDown 0.3s ease-out',
+                        'fade-in': 'fadeIn 0.6s ease forwards',
+                        'modal-slide-in': 'modalSlideIn 0.3s ease-out forwards',
+                        'slide-down': 'slideDown 0.3s ease-out forwards',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'breathe': 'breathe 8s infinite ease-in-out',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin': 'spin 0.8s linear infinite',
+                        'bounce-slow': 'bounce 2s infinite'
                     },
                     keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        modalSlideIn: {
+                            'from': { opacity: '0', transform: 'scale(0.9) translateY(-20px)' },
+                            'to': { opacity: '1', transform: 'scale(1) translateY(0)' }
+                        },
                         slideDown: {
-                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                            'from': { opacity: '0', transform: 'translateY(-10px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translate(0, 0px)' },
+                            '50%': { transform: 'translate(0, 15px)' }
+                        },
+                        breathe: {
+                            '0%, 100%': { transform: 'scale(0.8)', opacity: '0.7' },
+                            '50%': { transform: 'scale(1.2)', opacity: '1' }
+                        },
+                        pulse: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' }
+                        },
+                        spin: {
+                            'from': { transform: 'rotate(0deg)' },
+                            'to': { transform: 'rotate(360deg)' }
                         }
                     }
                 }
             }
         }
     </script>
+    <style>
+        /* Professional navigation styles */
+        .nav-professional {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .donate-btn {
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+       
+        /* Login and Signup button styles */
+        .login-btn {
+            background: transparent;
+            border: 2px solid #3B82F6;
+            color: #3B82F6;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .login-btn:hover {
+            background: #3B82F6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .signup-btn {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+       
+        /* Opportunities button specific styling */
+        .opportunities-btn {
+            background: #FBBF24;
+            color: #1F2937;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .opportunities-btn:hover {
+            background: #F59E0B;
+        }
+       
+        /* Logo text sizing */
+        .logo-main {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .logo-sub {
+            font-size: 11px;
+            font-weight: 600;
+        }
+       
+        /* Mobile navigation font sizes */
+        .mobile-nav-item {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .mobile-nav-item-active {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        /* Enhanced animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        .program-modal {
+            max-width: 800px;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        /* Loading states */
+        .btn-loading {
+            position: relative;
+            color: transparent;
+        }
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-right-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced hover effects */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            z-index: 1002;
+            transition: width 0.3s ease;
+        }
+        
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 12rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0;
+            z-index: 100;
+            animation: slideDown 0.2s ease-out;
+        }
+        .dropdown-content.active {
+            display: block;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        /* Mobile dropdown styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+        .mobile-dropdown-content.active {
+            display: block;
+        }
+        
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.success {
+            background-color: #10B981;
+        }
+        .notification.error {
+            background-color: #EF4444;
+        }
+        
+        /* Counter styles */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Professional button animations */
+        .btn-professional {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-professional::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-professional:hover::before {
+            left: 100%;
+        }
+        
+        /* Active dropdown button styles */
+        .dropdown-btn.active {
+            color: #3B82F6;
+        }
+        .dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+        
+        /* Mobile dropdown active styles */
+        .mobile-dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+        
+        /* Logo hover effects */
+        .logo-container {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+        .logo-container:hover .logo-gradient {
+            transform: scale(1.1);
+        }
+        .logo-gradient {
+            transition: all 0.3s ease;
+        }
+
+        /* Education specific styles */
+        .education-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 1280px) {
+            .desktop-nav {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: block !important;
+            }
+        }
+
+        @media (min-width: 1024px) and (max-width: 1280px) {
+            .lg-md\:flex {
+                display: flex !important;
+            }
+            .lg-md\:hidden {
+                display: none !important;
+            }
+            .desktop-nav {
+                display: flex !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-background {
+                background-attachment: scroll;
+            }
+            .hero-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+            }
+            .hero-subtitle {
+                font-size: 1.25rem !important;
+            }
+            .section-title {
+                font-size: 2rem !important;
+            }
+            .section-subtitle {
+                font-size: 1.125rem !important;
+            }
+            .program-card {
+                margin-bottom: 1.5rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            .btn-responsive {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (max-width: 475px) {
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            .hero-subtitle {
+                font-size: 1.125rem !important;
+            }
+            .section-title {
+                font-size: 1.75rem !important;
+            }
+            .logo-main {
+                font-size: 18px;
+            }
+            .logo-sub {
+                font-size: 10px;
+            }
+            .btn-text {
+                font-size: 0.875rem;
+            }
+            .counter {
+                font-size: 2rem !important;
+            }
+            .grid-responsive {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .hover-lift:hover {
+                transform: none;
+            }
+            .nav-item:hover::after {
+                width: 0;
+            }
+            .btn-professional:hover::before {
+                left: -100%;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-50 font-sans scroll-smooth">
     <!-- Scroll Progress Bar -->
-    <div class="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-green-500 z-50 transition-all duration-300" id="scrollProgress"></div>
+    <div class="scroll-progress" id="scrollProgress"></div>
 
     <!-- Navigation with professional background -->
-    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm border-b border-black/10 shadow-lg" id="mainNav">
-        <div class="max-w-7xl mx-auto px-4">
+    <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
+        <div class="max-w-full mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <!-- Enhanced Logo -->
+                <!-- Logo Section -->
+                <div class="flex items-center flex-shrink-0">
                     <div class="flex items-center">
-                        <div class="bg-gradient-to-r from-blue-600 to-green-500 p-2 rounded-lg mr-3">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
                             <i class="fas fa-hands-helping text-white text-xl"></i>
                         </div>
                         <div>
-                            <div class="font-bold text-xl text-gray-800">HopeLink</div>
-                            <div class="text-xs text-green-500 font-semibold">Mahama Refugee Camp</div>
+                            <div class="logo-main text-gray-800">HopeLink</div>
+                            <div class="logo-sub text-primary-green">Mahama Refugee Camp</div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="./index.html" class="relative text-gray-600 hover:text-blue-600 transition duration-300 group">
-                        Home
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
-                    </a>
-                    
-                    <!-- Programs Dropdown -->
-                    <div class="relative group">
-                        <button class="relative text-gray-600 hover:text-blue-600 transition duration-300 flex items-center group">
-                            Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                            <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
-                        </button>
-                        <div class="absolute top-full left-0 hidden group-hover:block bg-white min-w-48 rounded-lg shadow-lg py-2 z-50 animate-slide-down">
-                            <a href="./hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Hunger Help</a>
-                            <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Youth Empowerment</a>
-                            <a href="./mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Mental Wellness</a>
+               
+                <!-- Desktop Navigation - All in one line with consistent spacing -->
+                <div class="desktop-nav hidden lg-md:flex items-center flex-1 justify-center">
+                    <div class="flex items-center space-x-3 lg-md:space-x-4 xl:space-x-5">
+                        <a href="./index.html" class="nav-item text-primary-blue font-semibold transition duration-300">Home</a>
+                       
+                        <!-- Programs Dropdown -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
+                                Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="programs-dropdown">
+                                <a href="./hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
+                                <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
+                                <a href="./mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <a href="./about-us.html" class="relative text-gray-600 hover:text-blue-600 transition duration-300 group">
-                        who we are
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
-                    </a>
-                    
-                    <a href="./get-involved.html" class="relative text-gray-600 hover:text-blue-600 transition duration-300 group">
-                        Get Involved
-                        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
-                    </a>
-                    
-                    <!-- News & Updates -->
-                    <div class="relative group">
-                        <button class="relative text-gray-600 hover:text-blue-600 transition duration-300 flex items-center group">
-                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                            <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-green-500 transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
-                        </button>
-                        <div class="absolute top-full left-0 hidden group-hover:block bg-white min-w-48 rounded-lg shadow-lg py-2 z-50 animate-slide-down">
-                            <a href="news.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Latest News</a>
-                            <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Advertisement</a>
-                            <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Success Stories</a>
+                       
+                        <a href="./about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">who we are</a>
+                        <a href="./get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
+                       
+                        <!-- News & Updates -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
+                                News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="news-dropdown">
+                                <a href="news.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Latest News</a>
+                                <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">advertisement</a>
+                                <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <a href="./contact.html" class="text-blue-600 font-semibold border-b-2 border-blue-600">Contact</a>
-                    
-                    <!-- Opportunities -->
-                    <div class="relative group">
-                        <button class="relative bg-yellow-400 text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition duration-300 flex items-center group">
-                            Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="absolute top-full left-0 hidden group-hover:block bg-white min-w-48 rounded-lg shadow-lg py-2 z-50 animate-slide-down">
-                            <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Volunteer</a>
-                            <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Careers</a>
-                            <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition">Partnerships</a>
+                       
+                        <a href="./contact.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
+                       
+                        <!-- Opportunities -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn opportunities-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition duration-300 flex items-center" data-dropdown="opportunities">
+                                Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="opportunities-dropdown">
+                                <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
+                                <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
+                                <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-4">
-                    <button class="relative overflow-hidden bg-gradient-to-br from-green-500 to-green-600 text-white px-6 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl">
-                        <i class="fas fa-heart mr-2"></i>Donate Now
-                        <span class="absolute inset-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:left-full"></span>
-                    </button>
-                    <button id="mobileMenuButton" class="md:hidden text-gray-600 hover:text-blue-600 transition">
-                        <i class="fas fa-bars text-xl"></i>
+                <!-- Right Section with Login, Signup, and Donate -->
+                <div class="desktop-nav hidden lg-md:flex items-center space-x-2 lg-md:space-x-3 flex-shrink-0">
+                    <a href="login.html" class="login-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                    <a href="signup.html" class="signup-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-user-plus mr-2"></i>Sign Up
+                    </a>
+                    <button onclick="openModal('donateModal')" class="donate-btn btn-professional bg-primary-green text-white px-4 py-2 lg-md:px-5 lg-md:py-2 rounded-lg transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-heart mr-2"></i>Donate
                     </button>
                 </div>
+
+                <!-- Mobile and Tablet Menu Button -->
+                <button id="mobileMenuButton" class="mobile-menu-btn lg-md:hidden text-gray-600 hover:text-primary-blue transition flex-shrink-0">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
-            
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="absolute top-full left-0 w-full bg-white shadow-lg hidden md:hidden z-50 animate-slide-down">
+           
+            <!-- Mobile and Tablet Menu -->
+            <div id="mobileMenu" class="mobile-menu lg-md:hidden">
                 <div class="px-4 py-2 space-y-3">
-                    <a href="./index.html" class="block py-2 text-blue-600 font-semibold border-b border-gray-200 transition">Home</a>
-                    
+                    <a href="./index.html" class="block mobile-nav-item text-primary-blue font-semibold border-l-4 border-primary-blue pl-2 transition">Home</a>
+                   
                     <!-- Programs Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-blue-600 transition flex items-center justify-between">
-                            Programs <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            Programs <i class="fas fa-chevron-down text-xs"></i>
                         </button>
-                        <div class="mobile-dropdown-content hidden pl-4 mt-2">
-                            <a href="./hunger-help.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Hunger Help</a>
-                            <a href="./Youth Empowerment .html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Youth Empowerment</a>
-                            <a href="./mental-wellness.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Mental Wellness</a>
+                        <div class="mobile-dropdown-content">
+                            <a href="./hunger-help.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Hunger Help</a>
+                            <a href="./Youth Empowerment .html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
+                            <a href="./mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
                         </div>
                     </div>
-                    
-                    <a href="./about-us.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">About</a>
-                    <a href="./get-involved.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Get Involved</a>
-                    
+                   
+                    <a href="./about-us.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">About</a>
+                    <a href="./get-involved.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">Get Involved</a>
+                   
                     <!-- News & Updates Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-blue-600 transition flex items-center justify-between">
-                            News & Updates <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            News & Updates <i class="fas fa-chevron-down text-xs"></i>
                         </button>
-                        <div class="mobile-dropdown-content hidden pl-4 mt-2">
-                            <a href="news.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Latest News</a>
-                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Advertisement</a>
-                            <a href="stories.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Success Stories</a>
+                        <div class="mobile-dropdown-content">
+                            <a href="news.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Latest News</a>
+                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">advertisement</a>
+                            <a href="stories.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Success Stories</a>
                         </div>
                     </div>
-                    
-                    <a href="./contact.html" class="block py-2 text-blue-600 font-semibold border-b-2 border-blue-600 transition">Contact</a>
-                    
+                   
+                    <a href="./contact.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">Contact</a>
+                   
                     <!-- Opportunities Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 bg-yellow-400 text-gray-800 rounded-lg font-semibold hover:bg-yellow-300 transition flex items-center justify-between px-4">
-                            Opportunities <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        <button class="mobile-dropdown-btn w-full text-left py-2 opportunities-btn rounded-lg transition flex items-center justify-between px-4">
+                            Opportunities <i class="fas fa-chevron-down text-xs"></i>
                         </button>
-                        <div class="mobile-dropdown-content hidden pl-4 mt-2">
-                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Volunteer</a>
-                            <a href="careers.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Careers</a>
-                            <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-blue-600 transition">Partnerships</a>
+                        <div class="mobile-dropdown-content">
+                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Volunteer</a>
+                            <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Careers</a>
+                            <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Partnerships</a>
                         </div>
                     </div>
-                    
-                    <button class="w-full relative overflow-hidden bg-gradient-to-br from-green-500 to-green-600 text-white px-6 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl text-left flex items-center">
+                   
+                    <!-- Login and Signup buttons for mobile -->
+                    <div class="flex flex-col space-y-2 pt-2">
+                        <a href="login.html" class="login-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        </a>
+                        <a href="signup.html" class="signup-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-user-plus mr-2"></i>Sign Up
+                        </a>
+                    </div>
+                   
+                    <button onclick="openModal('donateModal')" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg transition transform hover:scale-105 text-left flex items-center">
                         <i class="fas fa-heart mr-2"></i>Donate Now
-                        <span class="absolute inset-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 group-hover:left-full"></span>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Notification System -->
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <i id="notificationIcon" class="fas fa-check-circle mr-2"></i>
+            <span id="notificationMessage">Action completed successfully!</span>
+        </div>
+    </div>
 
     <!-- Hero Section with Background Video -->
     <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative">
@@ -184,8 +697,8 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white">Mahama Refugee Camp Information Portal</h1>
             <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 text-white">Your central source for events, announcements, and essential services in the camp</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <a href="#events" class="bg-white text-blue-700 px-8 py-4 rounded-lg font-medium hover:bg-blue-50 transition text-lg">View Upcoming Events</a>
-                <a href="#announcements" class="bg-blue-500 text-white px-8 py-4 rounded-lg font-medium hover:bg-blue-400 transition text-lg">Important Announcements</a>
+                <a href="#events" class="bg-white text-primary-blue px-8 py-4 rounded-lg font-medium hover:bg-blue-50 transition text-lg">View Upcoming Events</a>
+                <a href="#announcements" class="bg-primary-blue text-white px-8 py-4 rounded-lg font-medium hover:bg-blue-400 transition text-lg">Important Announcements</a>
             </div>
         </div>
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
@@ -200,7 +713,7 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-2xl font-bold text-gray-800">Important Announcements</h2>
-                <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">View All</a>
+                <a href="#" class="text-primary-blue hover:text-blue-800 font-medium">View All</a>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -219,10 +732,10 @@
                 </div>
                 
                 <!-- Announcement 2 -->
-                <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg">
+                <div class="bg-blue-50 border-l-4 border-primary-blue p-5 rounded-r-lg">
                     <div class="flex items-start">
                         <div class="bg-blue-100 p-2 rounded-lg">
-                            <i class="fas fa-info-circle text-blue-600"></i>
+                            <i class="fas fa-info-circle text-primary-blue"></i>
                         </div>
                         <div class="ml-4">
                             <h3 class="font-bold text-gray-800">Food Distribution Schedule</h3>
@@ -233,10 +746,10 @@
                 </div>
                 
                 <!-- Announcement 3 -->
-                <div class="bg-green-50 border-l-4 border-green-500 p-5 rounded-r-lg">
+                <div class="bg-green-50 border-l-4 border-primary-green p-5 rounded-r-lg">
                     <div class="flex items-start">
                         <div class="bg-green-100 p-2 rounded-lg">
-                            <i class="fas fa-calendar-check text-green-600"></i>
+                            <i class="fas fa-calendar-check text-primary-green"></i>
                         </div>
                         <div class="ml-4">
                             <h3 class="font-bold text-gray-800">Education Program Registration</h3>
@@ -254,7 +767,7 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-2xl font-bold text-gray-800">Community News</h2>
-                <button id="addNewsBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                <button id="addNewsBtn" class="bg-primary-blue text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                     Add News
                 </button>
             </div>
@@ -266,22 +779,22 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-gray-700 mb-2">Title</label>
-                            <input type="text" id="newsTitle" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <input type="text" id="newsTitle" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue" required>
                         </div>
                         <div>
                             <label class="block text-gray-700 mb-2">Your Name</label>
-                            <input type="text" id="newsAuthor" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <input type="text" id="newsAuthor" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue" required>
                         </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 mb-2">Content</label>
-                        <textarea id="newsContent" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                        <textarea id="newsContent" rows="4" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue" required></textarea>
                     </div>
                     <div class="flex justify-end space-x-3">
                         <button type="button" id="cancelNewsBtn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">
                             Cancel
                         </button>
-                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                        <button type="submit" class="bg-primary-blue text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
                             Submit
                         </button>
                     </div>
@@ -299,9 +812,9 @@
                         </div>
                         <p class="text-gray-600 mb-4">Our community garden has produced its first harvest! Fresh vegetables are now available for families in need.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-blue-600 font-medium">By: John D.</span>
+                            <span class="text-sm text-primary-blue font-medium">By: John D.</span>
                             <div class="flex space-x-2">
-                                <button class="text-gray-400 hover:text-blue-500 transition">
+                                <button class="text-gray-400 hover:text-primary-blue transition">
                                     <i class="far fa-thumbs-up"></i>
                                 </button>
                                 <button class="text-gray-400 hover:text-red-500 transition">
@@ -321,9 +834,9 @@
                         </div>
                         <p class="text-gray-600 mb-4">The youth football tournament was a great success! Over 50 young people participated and showed amazing sportsmanship.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-blue-600 font-medium">By: Sarah M.</span>
+                            <span class="text-sm text-primary-blue font-medium">By: Sarah M.</span>
                             <div class="flex space-x-2">
-                                <button class="text-gray-400 hover:text-blue-500 transition">
+                                <button class="text-gray-400 hover:text-primary-blue transition">
                                     <i class="far fa-thumbs-up"></i>
                                 </button>
                                 <button class="text-gray-400 hover:text-red-500 transition">
@@ -342,13 +855,13 @@
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center mb-8">
                 <h2 class="text-2xl font-bold text-gray-800">Upcoming Events</h2>
-                <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">View Calendar</a>
+                <a href="#" class="text-primary-blue hover:text-blue-800 font-medium">View Calendar</a>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Event 1 -->
                 <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
-                    <div class="bg-blue-600 text-white p-4">
+                    <div class="bg-primary-blue text-white p-4">
                         <div class="text-center">
                             <div class="text-2xl font-bold">15</div>
                             <div class="text-sm">OCT</div>
@@ -370,7 +883,7 @@
                 
                 <!-- Event 2 -->
                 <div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
-                    <div class="bg-green-600 text-white p-4">
+                    <div class="bg-primary-green text-white p-4">
                         <div class="text-center">
                             <div class="text-2xl font-bold">18</div>
                             <div class="text-sm">OCT</div>
@@ -446,21 +959,21 @@
                 <!-- Service 1 -->
                 <div class="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition">
                     <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-stethoscope text-blue-600 text-xl"></i>
+                        <i class="fas fa-stethoscope text-primary-blue text-xl"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-lg mb-2">Health Services</h3>
                     <p class="text-gray-600">Medical consultations, emergency care, maternal health, and immunization services.</p>
-                    <a href="./healthcore.html" class="inline-block mt-4 text-blue-600 font-medium hover:text-blue-700 transition">Learn More →</a>
+                    <a href="./healthcore.html" class="inline-block mt-4 text-primary-blue font-medium hover:text-blue-700 transition">Learn More →</a>
                 </div>
                 
                 <!-- Service 2 -->
                 <div class="bg-white p-6 rounded-lg border border-gray-200 hover:shadow-md transition">
                     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                        <i class="fas fa-graduation-cap text-green-600 text-xl"></i>
+                        <i class="fas fa-graduation-cap text-primary-green text-xl"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 text-lg mb-2">Education</h3>
                     <p class="text-gray-600">Primary education, adult literacy programs, and vocational training opportunities.</p>
-                    <a href="./Education-core.html" class="inline-block mt-4 text-blue-600 font-medium hover:text-blue-700 transition">Learn More →</a>
+                    <a href="./Education-core.html" class="inline-block mt-4 text-primary-blue font-medium hover:text-blue-700 transition">Learn More →</a>
                 </div>
                 
                 <!-- Service 3 -->
@@ -470,7 +983,7 @@
                     </div>
                     <h3 class="font-bold text-gray-800 text-lg mb-2">Food Distribution</h3>
                     <p class="text-gray-600">Regular food distribution points and nutrition support for vulnerable groups.</p>
-                    <a href="./food-distribution.html" class="inline-block mt-4 text-blue-600 font-medium hover:text-blue-700 transition">Learn More →</a>
+                    <a href="./food-distribution.html" class="inline-block mt-4 text-primary-blue font-medium hover:text-blue-700 transition">Learn More →</a>
                 </div>
             </div>
         </div>
@@ -495,31 +1008,31 @@
                 <!-- Contact 2 -->
                 <div class="bg-white p-5 rounded-lg shadow-sm border border-blue-200 text-center">
                     <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-shield-alt text-blue-600 text-2xl"></i>
+                        <i class="fas fa-shield-alt text-primary-blue text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 mb-2">Security</h3>
                     <p class="text-gray-600 mb-4">Camp security and protection</p>
-                    <a href="tel:+250788654321" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium inline-block hover:bg-blue-700 transition">Call Now</a>
+                    <a href="tel:+250788654321" class="bg-primary-blue text-white px-4 py-2 rounded-lg font-medium inline-block hover:bg-blue-700 transition">Call Now</a>
                 </div>
                 
                 <!-- Contact 3 -->
                 <div class="bg-white p-5 rounded-lg shadow-sm border border-green-200 text-center">
                     <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-fire-extinguisher text-green-600 text-2xl"></i>
+                        <i class="fas fa-fire-extinguisher text-primary-green text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 mb-2">Fire Emergency</h3>
                     <p class="text-gray-600 mb-4">In case of fire outbreak</p>
-                    <a href="tel:+250788987654" class="bg-green-600 text-white px-4 py-2 rounded-lg font-medium inline-block hover:bg-green-700 transition">Call Now</a>
+                    <a href="tel:+250788987654" class="bg-primary-green text-white px-4 py-2 rounded-lg font-medium inline-block hover:bg-green-700 transition">Call Now</a>
                 </div>
                 
                 <!-- Contact 4 -->
                 <div class="bg-white p-5 rounded-lg shadow-sm border border-yellow-200 text-center">
                     <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-life-ring text-yellow-600 text-2xl"></i>
+                        <i class="fas fa-life-ring text-primary-yellow text-2xl"></i>
                     </div>
                     <h3 class="font-bold text-gray-800 mb-2">Camp Management</h3>
                     <p class="text-gray-600 mb-4">Administrative issues</p>
-                    <a href="tel:+250788456789" class="bg-yellow-600 text-white px-4 py-2 rounded-lg font-medium inline-block hover:bg-yellow-700 transition">Call Now</a>
+                    <a href="tel:+250788456789" class="bg-primary-yellow text-white px-4 py-2 rounded-lg font-medium inline-block hover:bg-yellow-700 transition">Call Now</a>
                 </div>
             </div>
         </div>
@@ -532,12 +1045,12 @@
                 <div>
                     <!-- Footer Logo -->
                     <div class="flex items-center mb-4">
-                        <div class="bg-gradient-to-r from-blue-600 to-green-500 p-2 rounded-lg mr-3">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
                             <i class="fas fa-hands-helping text-white"></i>
                         </div>
                         <div>
                             <div class="font-bold text-lg">HopeLink</div>
-                            <div class="text-xs text-green-500 font-semibold">Mahama Refugee Camp</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
                         </div>
                     </div>
                     <p class="text-gray-400 text-sm">
@@ -547,10 +1060,10 @@
                 
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="./index.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="./get-involved.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
+                        <li><a href="./contact.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
                     </ul>
                 </div>
                 
@@ -575,7 +1088,7 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition transform hover:scale-110">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110">
                             <i class="fab fa-facebook-f"></i>
                         </a>
                         <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110">
@@ -593,8 +1106,8 @@
                     <div class="mt-6">
                         <h5 class="text-sm font-semibold mb-2">Stay Updated</h5>
                         <div class="flex">
-                            <input type="email" placeholder="Your email" class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
-                            <button class="bg-green-500 text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
+                            <input type="email" placeholder="Your email" class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-primary-green">
+                            <button class="bg-primary-green text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
                         </div>
@@ -609,79 +1122,255 @@
         </div>
     </footer>
 
+    <!-- Donate Modal -->
+    <div id="donateModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Make a Donation</h3>
+                <button class="close-modal text-gray-500 hover:text-gray-700" data-modal="donateModal">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <form id="donationForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 mb-2">Donation Amount (RWF)</label>
+                    <div class="grid grid-cols-3 gap-2 mb-2">
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="5000">5,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="10000">10,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="25000">25,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="50000">50,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="100000">100,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="250000">250,000</button>
+                    </div>
+                    <input type="number" id="customAmount" placeholder="Custom Amount" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-green">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 mb-2">Full Name</label>
+                    <input type="text" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-green">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-green">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 mb-2">Payment Method</label>
+                    <select class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-green">
+                        <option value="mobile">Mobile Money</option>
+                        <option value="bank">Bank Transfer</option>
+                        <option value="card">Credit Card</option>
+                    </select>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Enhanced Navigation Functionality
+        // ========== NAVIGATION FUNCTIONALITY ==========
         document.addEventListener('DOMContentLoaded', function() {
             // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobileMenuButton');
             const mobileMenu = document.getElementById('mobileMenu');
             
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('hidden');
-                // Toggle icon between bars and times
-                const icon = mobileMenuButton.querySelector('i');
-                if (icon.classList.contains('fa-bars')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
-                } else {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    if (mobileMenu.classList.contains('active')) {
+                        icon.className = 'fas fa-times text-xl';
+                    } else {
+                        icon.className = 'fas fa-bars text-xl';
+                        // Close all mobile dropdowns when closing mobile menu
+                        document.querySelectorAll('.mobile-dropdown-content').forEach(dropdown => {
+                            dropdown.classList.remove('active');
+                        });
+                        document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                    }
+                });
+            }
+
+            // Desktop dropdown functionality - CLICK TO OPEN
+            const dropdownButtons = document.querySelectorAll('.dropdown-btn');
             
-            // Mobile dropdown functionality
-            const mobileDropdowns = document.querySelectorAll('.mobile-dropdown');
-            
-            mobileDropdowns.forEach(dropdown => {
-                const button = dropdown.querySelector('.mobile-dropdown-btn');
-                const content = dropdown.querySelector('.mobile-dropdown-content');
-                const icon = button.querySelector('i');
-                
-                button.addEventListener('click', function() {
-                    content.classList.toggle('hidden');
-                    // Rotate chevron icon
-                    icon.classList.toggle('fa-chevron-down');
-                    icon.classList.toggle('fa-chevron-up');
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const dropdownId = this.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(`${dropdownId}-dropdown`);
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        if (dropdown.id !== `${dropdownId}-dropdown`) {
+                            dropdown.classList.remove('active');
+                        }
+                    });
+                    
+                    // Remove active class from all dropdown buttons
+                    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+                        if (btn !== this) {
+                            btn.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('active');
+                    this.classList.toggle('active');
                 });
             });
+
+            // Mobile dropdown functionality
+            const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-btn');
             
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
-                    mobileMenu.classList.add('hidden');
-                    const icon = mobileMenuButton.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
+            mobileDropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     
-                    // Close all mobile dropdowns
-                    mobileDropdowns.forEach(dropdown => {
-                        const content = dropdown.querySelector('.mobile-dropdown-content');
-                        const icon = dropdown.querySelector('.mobile-dropdown-btn i');
-                        content.classList.add('hidden');
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
+                    const dropdownContent = this.nextElementSibling;
+                    
+                    // Toggle dropdown content
+                    dropdownContent.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                // Close desktop dropdowns
+                if (!event.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                }
+                
+                // Close mobile dropdowns
+                if (!event.target.closest('.mobile-dropdown')) {
+                    document.querySelectorAll('.mobile-dropdown-content').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                    document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                        btn.classList.remove('active');
                     });
                 }
             });
-            
-            // Nav scroll effect
-            window.addEventListener('scroll', function() {
-                const nav = document.getElementById('mainNav');
-                if (window.scrollY > 50) {
-                    nav.classList.add('shadow-xl', 'bg-white');
-                    nav.classList.remove('bg-white/95');
-                } else {
-                    nav.classList.remove('shadow-xl', 'bg-white');
-                    nav.classList.add('bg-white/95');
-                }
-                
-                // Scroll progress bar
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                document.getElementById('scrollProgress').style.width = scrolled + '%';
+
+            // Donation form functionality
+            const donationForm = document.getElementById('donationForm');
+            if (donationForm) {
+                donationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showNotification('Thank you for your donation! Your support makes a difference.', 'success');
+                    closeModal('donateModal');
+                });
+
+                // Donation amount buttons
+                document.querySelectorAll('.donation-amount').forEach(button => {
+                    button.addEventListener('click', function() {
+                        document.querySelectorAll('.donation-amount').forEach(btn => {
+                            btn.classList.remove('bg-primary-blue', 'text-white');
+                        });
+                        this.classList.add('bg-primary-blue', 'text-white');
+                        document.getElementById('customAmount').value = this.getAttribute('data-amount');
+                    });
+                });
+            }
+
+            // Modal close buttons
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    closeModal(modalId);
+                });
             });
+
+            // Footer social media buttons
+            document.querySelectorAll('footer a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.querySelector('i').className.split(' ')[1].split('-')[1];
+                    showNotification(`Redirecting to our ${platform} page...`);
+                });
+            });
+
+            // News Form Functionality
+            const addNewsBtn = document.getElementById('addNewsBtn');
+            const newsForm = document.getElementById('newsForm');
+            const cancelNewsBtn = document.getElementById('cancelNewsBtn');
+            const communityNewsForm = document.getElementById('communityNewsForm');
             
+            if (addNewsBtn) {
+                addNewsBtn.addEventListener('click', function() {
+                    newsForm.classList.remove('hidden');
+                });
+            }
+            
+            if (cancelNewsBtn) {
+                cancelNewsBtn.addEventListener('click', function() {
+                    newsForm.classList.add('hidden');
+                    communityNewsForm.reset();
+                });
+            }
+            
+            if (communityNewsForm) {
+                communityNewsForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const title = document.getElementById('newsTitle').value;
+                    const author = document.getElementById('newsAuthor').value;
+                    const content = document.getElementById('newsContent').value;
+                    
+                    // Create new news item
+                    const newsItem = document.createElement('div');
+                    newsItem.className = 'bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200';
+                    newsItem.innerHTML = `
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-bold text-gray-800 text-lg">${title}</h3>
+                                <span class="text-xs text-gray-500">Just now</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">${content}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-primary-blue font-medium">By: ${author}</span>
+                                <div class="flex space-x-2">
+                                    <button class="text-gray-400 hover:text-primary-blue transition">
+                                        <i class="far fa-thumbs-up"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-red-500 transition">
+                                        <i class="far fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add to news feed
+                    document.getElementById('newsFeed').prepend(newsItem);
+                    
+                    // Reset and hide form
+                    communityNewsForm.reset();
+                    newsForm.classList.add('hidden');
+                    
+                    // Show success message
+                    showNotification('News submitted successfully!', 'success');
+                });
+            }
+
             // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -695,67 +1384,125 @@
                         });
                         
                         // Close mobile menu after clicking a link
-                        if (!mobileMenu.classList.contains('hidden')) {
-                            mobileMenu.classList.add('hidden');
+                        if (mobileMenu && mobileMenu.classList.contains('active')) {
+                            mobileMenu.classList.remove('active');
                             const icon = mobileMenuButton.querySelector('i');
-                            icon.classList.remove('fa-times');
-                            icon.classList.add('fa-bars');
+                            icon.className = 'fas fa-bars text-xl';
                         }
                     }
                 });
             });
+        });
+
+        // ========== MODAL FUNCTIONALITY ==========
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
+            }
+        });
+
+        // ========== NOTIFICATION SYSTEM ==========
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationIcon = document.getElementById('notificationIcon');
+            const notificationMessage = document.getElementById('notificationMessage');
+
+            if (!notification) return;
+
+            // Set notification content and style
+            notificationMessage.textContent = message;
             
-            // News Form Functionality
-            document.getElementById('addNewsBtn').addEventListener('click', function() {
-                document.getElementById('newsForm').classList.remove('hidden');
-            });
+            // Remove all color classes
+            notification.className = 'notification';
             
-            document.getElementById('cancelNewsBtn').addEventListener('click', function() {
-                document.getElementById('newsForm').classList.add('hidden');
-                document.getElementById('communityNewsForm').reset();
+            if (type === 'success') {
+                notification.classList.add('success');
+                notificationIcon.className = 'fas fa-check-circle mr-2';
+            } else {
+                notification.classList.add('error');
+                notificationIcon.className = 'fas fa-exclamation-circle mr-2';
+            }
+
+            // Show notification
+            notification.classList.add('show');
+
+            // Hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // ========== SMOOTH SCROLLING ==========
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offsetTop = element.offsetTop - 80; // Account for fixed header
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // ========== SCROLL PROGRESS BAR ==========
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const scrollProgress = document.getElementById('scrollProgress');
+            if (scrollProgress) {
+                scrollProgress.style.width = scrolled + '%';
+            }
+
+            // Navbar background on scroll
+            const nav = document.getElementById('mainNav');
+            if (nav) {
+                if (window.scrollY > 100) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            }
+        });
+
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize fade-in animations
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                fadeInObserver.observe(element);
             });
-            
-            document.getElementById('communityNewsForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const title = document.getElementById('newsTitle').value;
-                const author = document.getElementById('newsAuthor').value;
-                const content = document.getElementById('newsContent').value;
-                
-                // Create new news item
-                const newsItem = document.createElement('div');
-                newsItem.className = 'bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200';
-                newsItem.innerHTML = `
-                    <div class="p-5">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="font-bold text-gray-800 text-lg">${title}</h3>
-                            <span class="text-xs text-gray-500">Just now</span>
-                        </div>
-                        <p class="text-gray-600 mb-4">${content}</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-blue-600 font-medium">By: ${author}</span>
-                            <div class="flex space-x-2">
-                                <button class="text-gray-400 hover:text-blue-500 transition">
-                                    <i class="far fa-thumbs-up"></i>
-                                </button>
-                                <button class="text-gray-400 hover:text-red-500 transition">
-                                    <i class="far fa-comment"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                // Add to news feed
-                document.getElementById('newsFeed').prepend(newsItem);
-                
-                // Reset and hide form
-                document.getElementById('communityNewsForm').reset();
-                document.getElementById('newsForm').classList.add('hidden');
-                
-                // Show success message
-                alert('News submitted successfully!');
-            });
+        });
+
+        // Show welcome notification after page loads
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                showNotification('Welcome to the Mahama Refugee Camp Information Portal!', 'success');
+            }, 1000);
         });
     </script>
 </body>

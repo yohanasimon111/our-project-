@@ -21,6 +21,49 @@
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                    },
+                    screens: {
+                        'xs': '475px',
+                        'lg-md': '1100px', // Custom breakpoint for small desktops
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease forwards',
+                        'modal-slide-in': 'modalSlideIn 0.3s ease-out forwards',
+                        'slide-down': 'slideDown 0.3s ease-out forwards',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'breathe': 'breathe 8s infinite ease-in-out',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin': 'spin 0.8s linear infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        modalSlideIn: {
+                            'from': { opacity: '0', transform: 'scale(0.9) translateY(-20px)' },
+                            'to': { opacity: '1', transform: 'scale(1) translateY(0)' }
+                        },
+                        slideDown: {
+                            'from': { opacity: '0', transform: 'translateY(-10px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translate(0, 0px)' },
+                            '50%': { transform: 'translate(0, 15px)' }
+                        },
+                        breathe: {
+                            '0%, 100%': { transform: 'scale(0.8)', opacity: '0.7' },
+                            '50%': { transform: 'scale(1.2)', opacity: '1' }
+                        },
+                        pulse: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' }
+                        },
+                        spin: {
+                            'from': { transform: 'rotate(0deg)' },
+                            'to': { transform: 'rotate(360deg)' }
+                        }
                     }
                 }
             }
@@ -41,6 +84,9 @@
         .nav-item {
             position: relative;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 500;
         }
         .nav-item::after {
             content: '';
@@ -60,10 +106,73 @@
             background: linear-gradient(135deg, #10B981, #059669);
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
             transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
         }
         .donate-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+       
+        /* Login and Signup button styles */
+        .login-btn {
+            background: transparent;
+            border: 2px solid #3B82F6;
+            color: #3B82F6;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .login-btn:hover {
+            background: #3B82F6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .signup-btn {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+       
+        /* Opportunities button specific styling */
+        .opportunities-btn {
+            background: #FBBF24;
+            color: #1F2937;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .opportunities-btn:hover {
+            background: #F59E0B;
+        }
+       
+        /* Logo text sizing */
+        .logo-main {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .logo-sub {
+            font-size: 11px;
+            font-weight: 600;
+        }
+       
+        /* Mobile navigation font sizes */
+        .mobile-nav-item {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .mobile-nav-item-active {
+            font-size: 15px;
+            font-weight: 600;
         }
         
         /* Enhanced animations */
@@ -274,6 +383,34 @@
         .btn-professional:hover::before {
             left: 100%;
         }
+        
+        /* Active dropdown button styles */
+        .dropdown-btn.active {
+            color: #3B82F6;
+        }
+        .dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+        
+        /* Mobile dropdown active styles */
+        .mobile-dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+        
+        /* Logo hover effects */
+        .logo-container {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+        .logo-container:hover .logo-gradient {
+            transform: scale(1.1);
+        }
+        .logo-gradient {
+            transition: all 0.3s ease;
+        }
 
         /* Health Services Specific Styles */
         .health-service-card {
@@ -284,124 +421,237 @@
         .service-stat {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
+
+        /* Responsive improvements */
+        @media (max-width: 1280px) {
+            .desktop-nav {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: block !important;
+            }
+        }
+
+        @media (min-width: 1024px) and (max-width: 1280px) {
+            .lg-md\:flex {
+                display: flex !important;
+            }
+            .lg-md\:hidden {
+                display: none !important;
+            }
+            .desktop-nav {
+                display: flex !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-background {
+                background-attachment: scroll;
+            }
+            .hero-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+            }
+            .hero-subtitle {
+                font-size: 1.25rem !important;
+            }
+            .section-title {
+                font-size: 2rem !important;
+            }
+            .section-subtitle {
+                font-size: 1.125rem !important;
+            }
+            .program-card {
+                margin-bottom: 1.5rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr !important;
+                gap: 2rem !important;
+            }
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            .btn-responsive {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (max-width: 475px) {
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            .hero-subtitle {
+                font-size: 1.125rem !important;
+            }
+            .section-title {
+                font-size: 1.75rem !important;
+            }
+            .logo-main {
+                font-size: 18px;
+            }
+            .logo-sub {
+                font-size: 10px;
+            }
+            .btn-text {
+                font-size: 0.875rem;
+            }
+            .counter {
+                font-size: 2rem !important;
+            }
+            .grid-responsive {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .hover-lift:hover {
+                transform: none;
+            }
+            .nav-item:hover::after {
+                width: 0;
+            }
+            .btn-professional:hover::before {
+                left: -100%;
+            }
+        }
     </style>
 </head>
+
 <body class="font-sans bg-gray-50">
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- Navigation -->
+    <!-- Enhanced Navigation -->
     <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
-        <div class="max-w-7xl mx-auto px-4">
+        <div class="max-w-full mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <!-- Enhanced Logo -->
+                <!-- Logo Section -->
+                <div class="flex items-center flex-shrink-0">
                     <div class="flex items-center">
                         <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
                             <i class="fas fa-hands-helping text-white text-xl"></i>
                         </div>
                         <div>
-                            <div class="font-bold text-xl text-gray-800">HopeLink</div>
-                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                            <div class="logo-main text-gray-800">HopeLink</div>
+                            <div class="logo-sub text-primary-green">Mahama Refugee Camp</div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
-                    
-                    <!-- Programs Dropdown -->
-                    <div class="dropdown relative">
-                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
-                            Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content" id="programs-dropdown">
-                            <a href="hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
-                            <a href="youth-empowerment.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
-                            <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
-                            <!-- <a href="./advertisement.html" class="block px-4 py-2 text-primary-blue font-semibold bg-blue-50">Advertisement</a> -->
+               
+                <!-- Desktop Navigation - All in one line with consistent spacing -->
+                <div class="desktop-nav hidden lg-md:flex items-center flex-1 justify-center">
+                    <div class="flex items-center space-x-3 lg-md:space-x-4 xl:space-x-5">
+                        <a href="index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
+                       
+                        <!-- Programs Dropdown -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
+                                Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="programs-dropdown">
+                                <a href="hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
+                                <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
+                                <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <a href="about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">who we are</a>
-                    <a href="get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
-                    
-                    <!-- News & Updates -->
-                    <div class="dropdown relative">
-                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
-                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content" id="news-dropdown">
-                            <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Advertisement</a>
-                            <!-- <a href="events.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Upcoming Events</a> -->
-                            <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                       
+                        <a href="about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">who we are</a>
+                        <a href="get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
+                       
+                        <!-- News & Updates -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
+                                News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="news-dropdown">
+                                <a href="news.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Latest News</a>
+                                <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">advertisement</a>
+                                <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <a href="contact.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
-                    
-                    <!-- Opportunities -->
-                    <div class="dropdown relative">
-                        <button class="nav-item dropdown-btn bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300 flex items-center" data-dropdown="opportunities">
-                            Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content" id="opportunities-dropdown">
-                            <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
-                            <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
-                            <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                       
+                        <a href="contact.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
+                       
+                        <!-- Opportunities -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn opportunities-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition duration-300 flex items-center" data-dropdown="opportunities">
+                                Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="opportunities-dropdown">
+                                <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
+                                <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
+                                <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-4">
-                    <button onclick="openModal('donateModal')" class="donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-heart mr-2"></i>Donate Now
-                    </button>
-                    <button id="mobileMenuButton" class="md:hidden text-gray-600 hover:text-primary-blue transition">
-                        <i class="fas fa-bars text-xl"></i>
+                <!-- Right Section with Login, Signup, and Donate -->
+                <div class="desktop-nav hidden lg-md:flex items-center space-x-2 lg-md:space-x-3 flex-shrink-0">
+                    <a href="login.html" class="login-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                    <a href="signup.html" class="signup-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-user-plus mr-2"></i>Sign Up
+                    </a>
+                    <button onclick="openModal('donateModal')" class="donate-btn btn-professional bg-primary-green text-white px-4 py-2 lg-md:px-5 lg-md:py-2 rounded-lg transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-heart mr-2"></i>Donate
                     </button>
                 </div>
+
+                <!-- Mobile and Tablet Menu Button -->
+                <button id="mobileMenuButton" class="mobile-menu-btn lg-md:hidden text-gray-600 hover:text-primary-blue transition flex-shrink-0">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
-            
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="mobile-menu">
+           
+            <!-- Mobile and Tablet Menu -->
+            <div id="mobileMenu" class="mobile-menu lg-md:hidden">
                 <div class="px-4 py-2 space-y-3">
-                    <a href="index.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Home</a>
-                    
+                    <a href="index.html" class="block mobile-nav-item text-gray-600 hover:text-primary-blue transition">Home</a>
+                   
                     <!-- Programs Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
                             Programs <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
                             <a href="hunger-help.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Hunger Help</a>
-                            <a href="youth-empowerment.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
+                            <a href="./Youth Empowerment .html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
                             <a href="mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
-                            <!-- <a href="./advertisement.html" class="block py-2 text-primary-blue font-semibold pl-4">Advertisement</a> -->
                         </div>
                     </div>
-                    
-                    <a href="about-us.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">About</a>
-                    <a href="get-involved.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Get Involved</a>
-                    
+                   
+                    <a href="about-us.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">About</a>
+                    <a href="get-involved.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">Get Involved</a>
+                   
                     <!-- News & Updates Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
                             News & Updates <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
-                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Advertisement</a>
-                            <!-- <a href="events.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Upcoming Events</a> -->
+                            <a href="news.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Latest News</a>
+                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">advertisement</a>
                             <a href="stories.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Success Stories</a>
                         </div>
                     </div>
-                    
-                    <a href="contact.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Contact</a>
-                    
+                   
+                    <a href="contact.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">Contact</a>
+                   
                     <!-- Opportunities Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 bg-primary-yellow text-gray-800 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-between px-4">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 opportunities-btn rounded-lg transition flex items-center justify-between px-4">
                             Opportunities <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
@@ -410,8 +660,18 @@
                             <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Partnerships</a>
                         </div>
                     </div>
-                    
-                    <button onclick="openModal('donateModal')" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition transform hover:scale-105 text-left flex items-center">
+                   
+                    <!-- Login and Signup buttons for mobile -->
+                    <div class="flex flex-col space-y-2 pt-2">
+                        <a href="login.html" class="login-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        </a>
+                        <a href="signup.html" class="signup-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-user-plus mr-2"></i>Sign Up
+                        </a>
+                    </div>
+                   
+                    <button onclick="openModal('donateModal')" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg transition transform hover:scale-105 text-left flex items-center">
                         <i class="fas fa-heart mr-2"></i>Donate Now
                     </button>
                 </div>
@@ -419,8 +679,16 @@
         </div>
     </nav>
 
+    <!-- Notification System -->
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <i id="notificationIcon" class="fas fa-check-circle mr-2"></i>
+            <span id="notificationMessage">Action completed successfully!</span>
+        </div>
+    </div>
+
     <!-- Main Health Services Content -->
-    <main class="pt-20">
+    <main class="pt-32">
         <!-- Header Section -->
         <section class="bg-gradient-to-r from-primary-blue to-primary-green py-20 text-white">
             <div class="max-w-7xl mx-auto px-4">
@@ -884,53 +1152,99 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- Enhanced JavaScript -->
     <script>
-        // Navigation functionality
+        // ========== NAVIGATION FUNCTIONALITY ==========
         document.addEventListener('DOMContentLoaded', function() {
-            // Scroll progress bar
-            window.addEventListener('scroll', function() {
-                const scrollProgress = document.getElementById('scrollProgress');
-                const scrollTop = document.documentElement.scrollTop;
-                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrollPercent = (scrollTop / scrollHeight) * 100;
-                scrollProgress.style.width = scrollPercent + '%';
-            });
-
-            // Navbar scroll effect
-            const nav = document.getElementById('mainNav');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 100) {
-                    nav.classList.add('nav-scrolled');
-                } else {
-                    nav.classList.remove('nav-scrolled');
-                }
-            });
-
             // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobileMenuButton');
             const mobileMenu = document.getElementById('mobileMenu');
             
-            mobileMenuButton.addEventListener('click', function() {
-                mobileMenu.classList.toggle('active');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    if (mobileMenu.classList.contains('active')) {
+                        icon.className = 'fas fa-times text-xl';
+                    } else {
+                        icon.className = 'fas fa-bars text-xl';
+                        // Close all mobile dropdowns when closing mobile menu
+                        document.querySelectorAll('.mobile-dropdown-content').forEach(dropdown => {
+                            dropdown.classList.remove('active');
+                        });
+                        document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                    }
+                });
+            }
+
+            // Desktop dropdown functionality - CLICK TO OPEN
+            const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+            
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const dropdownId = this.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(`${dropdownId}-dropdown`);
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        if (dropdown.id !== `${dropdownId}-dropdown`) {
+                            dropdown.classList.remove('active');
+                        }
+                    });
+                    
+                    // Remove active class from all dropdown buttons
+                    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+                        if (btn !== this) {
+                            btn.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
             });
 
-            // Dropdown functionality
-            const dropdownButtons = document.querySelectorAll('.dropdown-btn');
-            dropdownButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const dropdownId = this.getAttribute('data-dropdown') + '-dropdown';
-                    const dropdown = document.getElementById(dropdownId);
-                    dropdown.classList.toggle('active');
+            // Mobile dropdown functionality
+            const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-btn');
+            
+            mobileDropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const dropdownContent = this.nextElementSibling;
+                    
+                    // Toggle dropdown content
+                    dropdownContent.classList.toggle('active');
+                    this.classList.toggle('active');
                 });
             });
 
             // Close dropdowns when clicking outside
             document.addEventListener('click', function(event) {
-                if (!event.target.matches('.dropdown-btn')) {
-                    const dropdowns = document.querySelectorAll('.dropdown-content');
-                    dropdowns.forEach(dropdown => {
+                // Close desktop dropdowns
+                if (!event.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
                         dropdown.classList.remove('active');
+                    });
+                    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                }
+                
+                // Close mobile dropdowns
+                if (!event.target.closest('.mobile-dropdown')) {
+                    document.querySelectorAll('.mobile-dropdown-content').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                    document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                        btn.classList.remove('active');
                     });
                 }
             });
@@ -986,26 +1300,99 @@
             });
         });
 
-        // Modal functions
+        // ========== MODAL FUNCTIONALITY ==========
         function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
         }
 
         // Close modal when clicking outside
         document.addEventListener('click', function(event) {
             if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
+                closeModal(event.target.id);
             }
+        });
+
+        // ========== NOTIFICATION SYSTEM ==========
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationIcon = document.getElementById('notificationIcon');
+            const notificationMessage = document.getElementById('notificationMessage');
+
+            if (!notification) return;
+
+            // Set notification content and style
+            notificationMessage.textContent = message;
+            
+            // Remove all color classes
+            notification.className = 'notification';
+            
+            if (type === 'success') {
+                notification.classList.add('success');
+                notificationIcon.className = 'fas fa-check-circle mr-2';
+            } else {
+                notification.classList.add('error');
+                notificationIcon.className = 'fas fa-exclamation-circle mr-2';
+            }
+
+            // Show notification
+            notification.classList.add('show');
+
+            // Hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+
+        // ========== SMOOTH SCROLLING ==========
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const offsetTop = element.offsetTop - 80; // Account for fixed header
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // ========== SCROLL PROGRESS BAR ==========
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const scrollProgress = document.getElementById('scrollProgress');
+            if (scrollProgress) {
+                scrollProgress.style.width = scrolled + '%';
+            }
+
+            // Navbar background on scroll
+            const nav = document.getElementById('mainNav');
+            if (nav) {
+                if (window.scrollY > 100) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+            }
+        });
+
+        // Show welcome notification after page loads
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                showNotification('Welcome to our Health Services Analysis page.', 'success');
+            }, 1000);
         });
     </script>
 </body>

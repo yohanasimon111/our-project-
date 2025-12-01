@@ -5,19 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About HopeLink Mahama - Empowering Refugees Through Technology</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-blue': '#3B82F6',
-                        'primary-green': '#10B981',
-                        'primary-yellow': '#F59E0B',
+                        primary: {
+                            blue: '#3B82F6',
+                            green: '#10B981',
+                            yellow: '#FBBF24',
+                            light: '#FEF3C7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    screens: {
+                        'xs': '475px',
+                        'lg-md': '1100px', // Custom breakpoint for small desktops
                     },
                     animation: {
+                        'fade-in': 'fadeIn 0.6s ease forwards',
+                        'modal-slide-in': 'modalSlideIn 0.3s ease-out forwards',
+                        'slide-down': 'slideDown 0.3s ease-out forwards',
+                        'floating': 'floating 3s ease-in-out infinite',
+                        'breathe': 'breathe 8s infinite ease-in-out',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin': 'spin 0.8s linear infinite',
+                        'bounce-slow': 'bounce 2s infinite',
                         'pulse-custom': 'pulse 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        modalSlideIn: {
+                            'from': { opacity: '0', transform: 'scale(0.9) translateY(-20px)' },
+                            'to': { opacity: '1', transform: 'scale(1) translateY(0)' }
+                        },
+                        slideDown: {
+                            'from': { opacity: '0', transform: 'translateY(-10px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        floating: {
+                            '0%, 100%': { transform: 'translate(0, 0px)' },
+                            '50%': { transform: 'translate(0, 15px)' }
+                        },
+                        breathe: {
+                            '0%, 100%': { transform: 'scale(0.8)', opacity: '0.7' },
+                            '50%': { transform: 'scale(1.2)', opacity: '1' }
+                        },
+                        pulse: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' }
+                        },
+                        spin: {
+                            'from': { transform: 'rotate(0deg)' },
+                            'to': { transform: 'rotate(360deg)' }
+                        }
                     }
                 }
             }
@@ -26,6 +74,111 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+        }
+        
+        /* Professional navigation styles */
+        .nav-professional {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        .donate-btn {
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .donate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+       
+        /* Login and Signup button styles */
+        .login-btn {
+            background: transparent;
+            border: 2px solid #3B82F6;
+            color: #3B82F6;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .login-btn:hover {
+            background: #3B82F6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .signup-btn {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+       
+        /* Opportunities button specific styling */
+        .opportunities-btn {
+            background: #FBBF24;
+            color: #1F2937;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .opportunities-btn:hover {
+            background: #F59E0B;
+        }
+       
+        /* Logo text sizing */
+        .logo-main {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .logo-sub {
+            font-size: 11px;
+            font-weight: 600;
+        }
+       
+        /* Mobile navigation font sizes */
+        .mobile-nav-item {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .mobile-nav-item-active {
+            font-size: 15px;
+            font-weight: 600;
         }
         
         /* Animation Styles */
@@ -72,6 +225,12 @@
         .notification.show {
             transform: translateX(0);
         }
+        .notification.success {
+            background-color: #10B981;
+        }
+        .notification.error {
+            background-color: #EF4444;
+        }
         
         /* Mobile Menu Styles */
         .mobile-menu {
@@ -82,6 +241,7 @@
             width: 100%;
             background: white;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.3s ease-out;
         }
         .mobile-menu.active {
             display: block;
@@ -96,138 +256,325 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            z-index: 1;
+            background: white;
+            min-width: 12rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             border-radius: 0.5rem;
-            overflow: hidden;
+            padding: 0.5rem 0;
+            z-index: 100;
+            animation: slideDown 0.2s ease-out;
         }
-        .dropdown:hover .dropdown-content {
+        .dropdown-content.active {
             display: block;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile dropdown styles */
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+        .mobile-dropdown-content.active {
+            display: block;
+        }
+        
+        /* Scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            z-index: 1002;
+            transition: width 0.3s ease;
+        }
+        
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Professional button animations */
+        .btn-professional {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-professional::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-professional:hover::before {
+            left: 100%;
+        }
+        
+        /* Active dropdown button styles */
+        .dropdown-btn.active {
+            color: #3B82F6;
+        }
+        .dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+        
+        /* Mobile dropdown active styles */
+        .mobile-dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+        
+        /* Logo hover effects */
+        .logo-container {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Responsive improvements */
+        @media (max-width: 1280px) {
+            .desktop-nav {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: block !important;
+            }
+        }
+
+        @media (min-width: 1024px) and (max-width: 1280px) {
+            .lg-md\:flex {
+                display: flex !important;
+            }
+            .lg-md\:hidden {
+                display: none !important;
+            }
+            .desktop-nav {
+                display: flex !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+            }
+            .section-title {
+                font-size: 2rem !important;
+            }
+            .section-subtitle {
+                font-size: 1.125rem !important;
+            }
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            .btn-responsive {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (max-width: 475px) {
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            .section-title {
+                font-size: 1.75rem !important;
+            }
+            .logo-main {
+                font-size: 18px;
+            }
+            .logo-sub {
+                font-size: 10px;
+            }
+            .btn-text {
+                font-size: 0.875rem;
+            }
+            .counter {
+                font-size: 2rem !important;
+            }
+            .grid-responsive {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .nav-item:hover::after {
+                width: 0;
+            }
+            .btn-professional:hover::before {
+                left: -100%;
+            }
         }
     </style>
 </head>
-<body class="font-sans bg-white">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4">
+<body class="bg-white font-sans scroll-smooth">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation with professional background -->
+    <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
+        <div class="max-w-full mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <!-- Professional Logo -->
+                <!-- Logo Section -->
+                <div class="flex items-center flex-shrink-0">
                     <div class="flex items-center">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary-blue to-primary-green rounded-lg flex items-center justify-center mr-3">
-                            <i class="fas fa-hands-helping text-white text-lg"></i>
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white text-xl"></i>
                         </div>
-                        <div class="font-bold text-xl bg-gradient-to-br from-primary-blue to-primary-green bg-clip-text text-transparent">
-                            HopeLink Mahama
+                        <div>
+                            <div class="logo-main text-gray-800">HopeLink</div>
+                            <div class="logo-sub text-primary-green">Mahama Refugee Camp</div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-gray-600 hover:text-primary-blue transition-colors">Home</a>
-                    
-                    <!-- Programs Dropdown -->
-                    <div class="dropdown">
-                        <button class="text-gray-600 hover:text-primary-blue transition-colors flex items-center">
-                            Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="hunger-help.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Hunger Help</a>
-                            <a href="youth-empowerment.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Youth Empowerment</a>
-                            <a href="mental-wellness.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Mental Wellness</a>
+               
+                <!-- Desktop Navigation - All in one line with consistent spacing -->
+                <div class="desktop-nav hidden lg-md:flex items-center flex-1 justify-center">
+                    <div class="flex items-center space-x-3 lg-md:space-x-4 xl:space-x-5">
+                        <a href="./index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
+                       
+                        <!-- Programs Dropdown -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
+                                Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="programs-dropdown">
+                                <a href="./hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
+                                <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
+                                <a href="./mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <a href="about-us.html" class="text-primary-blue font-semibold border-b-2 border-primary-blue">who we are</a>
-                    <a href="get-involved.html" class="text-gray-600 hover:text-primary-blue transition-colors">Get Involved</a>
-                    
-                    <!-- News & Updates -->
-                    <div class="dropdown">
-                        <button class="text-gray-600 hover:text-primary-blue transition-colors flex items-center">
-                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="./advertisement.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Advertisement</a>
-                            <!-- <a href="events.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Upcoming Events</a> -->
-                            <a href="stories.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Success Stories</a>
+                       
+                        <a href="./about-us.html" class="nav-item text-primary-blue font-semibold transition duration-300">who we are</a>
+                        <a href="./get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
+                       
+                        <!-- News & Updates -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
+                                News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="news-dropdown">
+                                <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">advertisement</a>
+                                <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <a href="contact.html" class="text-gray-600 hover:text-primary-blue transition-colors">Contact</a>
-                    
-                    <!-- Advertisement -->
-                    <div class="dropdown">
-                        <button class="bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition-colors flex items-center">
-                            Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="volunteer.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Volunteer</a>
-                            <a href="careers.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Careers</a>
-                            <a href="partnerships.html" class="block px-4 py-3 text-gray-600 hover:bg-gray-100 hover:text-primary-blue transition-colors">Partnerships</a>
+                       
+                        <a href="./contact.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
+                       
+                        <!-- Opportunities -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn opportunities-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition duration-300 flex items-center" data-dropdown="opportunities">
+                                Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="opportunities-dropdown">
+                                <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
+                                <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
+                                <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-4">
-                    <button onclick="openModal('donateModal')" class="bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">
-                        Donate Now
-                    </button>
-                    <button id="mobileMenuButton" class="md:hidden text-gray-600">
-                        <i class="fas fa-bars text-xl"></i>
+                <!-- Right Section with Login, Signup, and Donate -->
+                <div class="desktop-nav hidden lg-md:flex items-center space-x-2 lg-md:space-x-3 flex-shrink-0">
+                    <a href="login.html" class="login-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                    <a href="signup.html" class="signup-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-user-plus mr-2"></i>Sign Up
+                    </a>
+                    <button onclick="openModal('donateModal')" class="donate-btn btn-professional bg-primary-green text-white px-4 py-2 lg-md:px-5 lg-md:py-2 rounded-lg transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-heart mr-2"></i>Donate
                     </button>
                 </div>
+
+                <!-- Mobile and Tablet Menu Button -->
+                <button id="mobileMenuButton" class="mobile-menu-btn lg-md:hidden text-gray-600 hover:text-primary-blue transition flex-shrink-0">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
-            
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="mobile-menu">
+           
+            <!-- Mobile and Tablet Menu -->
+            <div id="mobileMenu" class="mobile-menu lg-md:hidden">
                 <div class="px-4 py-2 space-y-3">
-                    <a href="index.html" class="block py-2 text-gray-600 hover:text-primary-blue transition-colors">Home</a>
-                    
-                    <div class="py-2">
-                        <button class="flex items-center justify-between w-full text-gray-600 hover:text-primary-blue transition-colors" onclick="toggleMobileMenu('mobileProgramsMenu')">
-                            <span>Programs</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
+                    <a href="./index.html" class="block mobile-nav-item text-gray-600 hover:text-primary-blue transition">Home</a>
+                   
+                    <!-- Programs Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            Programs <i class="fas fa-chevron-down text-xs"></i>
                         </button>
-                        <div class="pl-4 mt-2 space-y-2 hidden" id="mobileProgramsMenu">
-                            <a href="hunger-help.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Hunger Help</a>
-                            <a href="youth-empowerment.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Youth Empowerment</a>
-                            <a href="mental-wellness.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Mental Wellness</a>
+                        <div class="mobile-dropdown-content">
+                            <a href="./hunger-help.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Hunger Help</a>
+                            <a href="./Youth Empowerment .html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
+                            <a href="./mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
                         </div>
                     </div>
-                    
-                    <a href="about.html" class="block py-2 text-primary-blue font-semibold border-l-4 border-primary-blue pl-2">About</a>
-                    <a href="get-involved.html" class="block py-2 text-gray-600 hover:text-primary-blue transition-colors">Get Involved</a>
-                    
-                    <div class="py-2">
-                        <button class="flex items-center justify-between w-full text-gray-600 hover:text-primary-blue transition-colors" onclick="toggleMobileMenu('mobileNewsMenu')">
-                            <span>News & Updates</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
+                   
+                    <a href="./about-us.html" class="block py-2 mobile-nav-item text-primary-blue font-semibold border-l-4 border-primary-blue pl-2 transition">who we are</a>
+                    <a href="./get-involved.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">Get Involved</a>
+                   
+                    <!-- News & Updates Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                            News & Updates <i class="fas fa-chevron-down text-xs"></i>
                         </button>
-                        <div class="pl-4 mt-2 space-y-2 hidden" id="mobileNewsMenu">
-                            <a href="./advertisement.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Advertisement</a>
-                            <!-- <a href="events.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Upcoming Events</a> -->
-                            <a href="stories.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Success Stories</a>
+                        <div class="mobile-dropdown-content">
+                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">advertisement</a>
+                            <a href="stories.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Success Stories</a>
                         </div>
                     </div>
-                    
-                    <a href="contact.html" class="block py-2 text-gray-600 hover:text-primary-blue transition-colors">Contact</a>
-                    
-                    <div class="py-2">
-                        <button class="flex items-center justify-between w-full text-gray-600 hover:text-primary-blue transition-colors" onclick="toggleMobileMenu('mobileOpportunitiesMenu')">
-                            <span>Opportunities</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
+                   
+                    <a href="./contact.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">Contact</a>
+                   
+                    <!-- Opportunities Mobile Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 opportunities-btn rounded-lg transition flex items-center justify-between px-4">
+                            Opportunities <i class="fas fa-chevron-down text-xs"></i>
                         </button>
-                        <div class="pl-4 mt-2 space-y-2 hidden" id="mobileOpportunitiesMenu">
-                            <a href="volunteer.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Volunteer</a>
-                            <a href="careers.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Careers</a>
-                            <a href="partnerships.html" class="block py-1 text-gray-600 hover:text-primary-blue transition-colors">Partnerships</a>
+                        <div class="mobile-dropdown-content">
+                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Volunteer</a>
+                            <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Careers</a>
+                            <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Partnerships</a>
                         </div>
                     </div>
-                    
-                    <button onclick="openModal('donateModal')" class="w-full bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors text-left">
-                        Donate Now
+                   
+                    <!-- Login and Signup buttons for mobile -->
+                    <div class="flex flex-col space-y-2 pt-2">
+                        <a href="login.html" class="login-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        </a>
+                        <a href="signup.html" class="signup-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-user-plus mr-2"></i>Sign Up
+                        </a>
+                    </div>
+                   
+                    <button onclick="openModal('donateModal')" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg transition transform hover:scale-105 text-left flex items-center">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
                     </button>
                 </div>
             </div>
@@ -235,7 +582,7 @@
     </nav>
 
     <!-- Hero Section with Text on Left and Image on Right -->
-    <section class="relative min-h-screen flex items-center pt-16 bg-white">
+    <section class="relative min-h-screen flex items-center pt-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 w-full">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <!-- Text Content on Left -->
@@ -253,19 +600,19 @@
                     <!-- Impact Stats -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 max-w-2xl">
                         <div class="text-center">
-                            <div class="text-2xl md:text-3xl font-bold text-primary-green">1,250+</div>
+                            <div class="text-2xl md:text-3xl font-bold text-primary-green impact-counter" data-target="1250">0</div>
                             <div class="text-sm md:text-base text-gray-600">Youth Trained</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-2xl md:text-3xl font-bold text-primary-blue">680+</div>
+                            <div class="text-2xl md:text-3xl font-bold text-primary-blue impact-counter" data-target="680">0</div>
                             <div class="text-sm md:text-base text-gray-600">Families Supported</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-2xl md:text-3xl font-bold text-primary-yellow">420+</div>
+                            <div class="text-2xl md:text-3xl font-bold text-primary-yellow impact-counter" data-target="420">0</div>
                             <div class="text-sm md:text-base text-gray-600">Community Members</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-2xl md:text-3xl font-bold text-purple-500">3,200+</div>
+                            <div class="text-2xl md:text-3xl font-bold text-purple-500 impact-counter" data-target="3200">0</div>
                             <div class="text-sm md:text-base text-gray-600">Lives Touched</div>
                         </div>
                     </div>
@@ -301,7 +648,7 @@
         </div>
         
         <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
             <button onclick="document.getElementById('our-story').scrollIntoView({behavior: 'smooth'})" class="text-gray-600 text-2xl">
                 <i class="fas fa-chevron-down"></i>
             </button>
@@ -309,7 +656,7 @@
     </section>
 
     <!-- Our Story Section -->
-    <section id="our-story" class="py-20 bg-gray-50">
+    <section id="our-story" class="py-20 bg-gray-50 scroll-mt-20">
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="fade-in">
@@ -516,26 +863,28 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
+                    <!-- Footer Logo -->
                     <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary-blue to-primary-green rounded-lg flex items-center justify-center mr-3">
-                            <i class="fas fa-hands-helping text-white text-lg"></i>
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white"></i>
                         </div>
-                        <div class="font-bold text-xl bg-gradient-to-br from-primary-blue to-primary-green bg-clip-text text-transparent">
-                            HopeLink Mahama
+                        <div>
+                            <div class="font-bold text-lg">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
                         </div>
                     </div>
-                    <p class="text-gray-400">
+                    <p class="text-gray-400 text-sm">
                         Empowering refugees through technology and innovation in Mahama Camp, Rwanda.
                     </p>
                 </div>
                 
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
-                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About</a></li>
-                        <li><a href="get-involved.html" class="text-gray-400 hover:text-white transition-colors">Get Involved</a></li>
-                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="./index.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="./about-us.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-info-circle mr-2 text-xs"></i>About</a></li>
+                        <li><a href="./get-involved.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
+                        <li><a href="./contact.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
                     </ul>
                 </div>
                 
@@ -550,27 +899,46 @@
                             <i class="fas fa-envelope mr-3"></i>
                             hopelink.mahama@gmail.com
                         </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-3"></i>
+                            +250 123 456 789
+                        </p>
                     </div>
                 </div>
                 
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition-colors">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition-colors">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition transform hover:scale-110">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-red-500 transition transform hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Newsletter Signup -->
+                    <div class="mt-6">
+                        <h5 class="text-sm font-semibold mb-2">Stay Updated</h5>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-primary-green">
+                            <button class="bg-primary-green text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
                 <p>&copy; 2025 HopeLink Mahama — Empowering Refugees Through Innovation.</p>
+                <p class="text-xs mt-2">All rights reserved. Registered non-profit organization.</p>
             </div>
         </div>
     </footer>
@@ -583,53 +951,52 @@
         </div>
     </div>
 
-    <!-- Modals -->
     <!-- Donation Modal -->
     <div id="donateModal" class="modal">
-        <div class="bg-white p-8 rounded-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div class="modal-content">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-2xl font-bold text-gray-800">Make a Donation</h3>
-                <button onclick="closeModal('donateModal')" class="text-gray-500 hover:text-gray-700">
+                <button class="close-modal text-gray-500 hover:text-gray-700" data-modal="donateModal">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
-            
+
             <form id="donationForm" class="space-y-4">
                 <div>
-                    <label class="block text-gray-700 mb-2">Donation Amount</label>
+                    <label class="block text-gray-700 mb-2">Donation Amount (RWF)</label>
                     <div class="grid grid-cols-3 gap-2 mb-2">
-                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="10">$10</button>
-                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="25">$25</button>
-                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="50">$50</button>
-                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="100">$100</button>
-                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="250">$250</button>
-                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="500">$500</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="5000">5,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="10000">10,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="25000">25,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="50000">50,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="100000">100,000</button>
+                        <button type="button" class="donation-amount border border-gray-300 py-2 rounded hover:bg-gray-50 transition" data-amount="250000">250,000</button>
                     </div>
-                    <input type="number" id="customAmount" placeholder="Custom Amount" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                    <input type="number" id="customAmount" placeholder="Custom Amount" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-green">
                 </div>
-                
+
                 <div>
                     <label class="block text-gray-700 mb-2">Full Name</label>
-                    <input type="text" id="donorName" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                    <input type="text" id="donorName" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-green">
                 </div>
-                
+
                 <div>
                     <label class="block text-gray-700 mb-2">Email</label>
-                    <input type="email" id="donorEmail" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                    <input type="email" id="donorEmail" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-green">
                 </div>
-                
+
                 <div>
                     <label class="block text-gray-700 mb-2">Payment Method</label>
-                    <select id="paymentMethod" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
-                        <option value="credit">Credit Card</option>
-                        <option value="paypal">PayPal</option>
+                    <select id="paymentMethod" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-green">
+                        <option value="mobile">Mobile Money</option>
                         <option value="bank">Bank Transfer</option>
+                        <option value="card">Credit Card</option>
                     </select>
                 </div>
-                
+
                 <div class="pt-4">
-                    <button type="submit" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors">
-                        Process Donation
+                    <button type="submit" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
                     </button>
                 </div>
             </form>
@@ -690,51 +1057,256 @@
     </div>
 
     <script>
-        // ========== MODAL MANAGEMENT ==========
+        // ========== NAVIGATION FUNCTIONALITY ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    if (mobileMenu.classList.contains('active')) {
+                        icon.className = 'fas fa-times text-xl';
+                    } else {
+                        icon.className = 'fas fa-bars text-xl';
+                        // Close all mobile dropdowns when closing mobile menu
+                        document.querySelectorAll('.mobile-dropdown-content').forEach(dropdown => {
+                            dropdown.classList.remove('active');
+                        });
+                        document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                    }
+                });
+            }
+
+            // Desktop dropdown functionality - CLICK TO OPEN
+            const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+            
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const dropdownId = this.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(`${dropdownId}-dropdown`);
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        if (dropdown.id !== `${dropdownId}-dropdown`) {
+                            dropdown.classList.remove('active');
+                        }
+                    });
+                    
+                    // Remove active class from all dropdown buttons
+                    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+                        if (btn !== this) {
+                            btn.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Mobile dropdown functionality
+            const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-btn');
+            
+            mobileDropdownButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const dropdownContent = this.nextElementSibling;
+                    
+                    // Toggle dropdown content
+                    dropdownContent.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                // Close desktop dropdowns
+                if (!event.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                    document.querySelectorAll('.dropdown-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                }
+                
+                // Close mobile dropdowns
+                if (!event.target.closest('.mobile-dropdown')) {
+                    document.querySelectorAll('.mobile-dropdown-content').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                    document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                }
+            });
+
+            // ========== DONATION FORM FUNCTIONALITY (FROM OTHER CODE) ==========
+            const donationForm = document.getElementById('donationForm');
+            if (donationForm) {
+                donationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get donation amount
+                    let amount = document.getElementById('customAmount').value;
+                    if (!amount) {
+                        // Check if a preset amount was selected
+                        const selectedAmount = document.querySelector('.donation-amount.bg-primary-blue');
+                        if (selectedAmount) {
+                            amount = selectedAmount.getAttribute('data-amount');
+                        }
+                    }
+                    
+                    if (!amount || amount <= 0) {
+                        showNotification('Please select or enter a valid donation amount', 'error');
+                        return;
+                    }
+                    
+                    const name = document.getElementById('donorName').value;
+                    const email = document.getElementById('donorEmail').value;
+                    const paymentMethod = document.getElementById('paymentMethod').value;
+                    
+                    if (!name || !email) {
+                        showNotification('Please fill in all required fields', 'error');
+                        return;
+                    }
+                    
+                    if (!isValidEmail(email)) {
+                        showNotification('Please enter a valid email address', 'error');
+                        return;
+                    }
+                    
+                    // Show loading state
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    const originalText = submitButton.innerHTML;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                    submitButton.disabled = true;
+                    
+                    // Simulate payment processing
+                    setTimeout(() => {
+                        // In a real application, you would integrate with a payment processor here
+                        showNotification(`Thank you for your donation of RWF ${amount}! A receipt has been sent to ${email}.`);
+                        closeModal('donateModal');
+                        
+                        // Reset form
+                        document.getElementById('donationForm').reset();
+                        document.querySelectorAll('.donation-amount').forEach(btn => {
+                            btn.classList.remove('bg-primary-blue', 'text-white');
+                        });
+                        
+                        // Reset button state
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
+                    }, 2000);
+                });
+
+                // Donation amount buttons
+                document.querySelectorAll('.donation-amount').forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        document.querySelectorAll('.donation-amount').forEach(btn => {
+                            btn.classList.remove('bg-primary-blue', 'text-white');
+                        });
+                        
+                        // Add active class to clicked button
+                        this.classList.add('bg-primary-blue', 'text-white');
+                        
+                        // Set custom amount value
+                        document.getElementById('customAmount').value = this.getAttribute('data-amount');
+                    });
+                });
+
+                // Clear preset amount when custom amount is entered
+                document.getElementById('customAmount').addEventListener('input', function() {
+                    document.querySelectorAll('.donation-amount').forEach(btn => {
+                        btn.classList.remove('bg-primary-blue', 'text-white');
+                    });
+                });
+            }
+
+            // Volunteer form functionality
+            const volunteerForm = document.getElementById('volunteerForm');
+            if (volunteerForm) {
+                volunteerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    showNotification('Thank you for your volunteer application! We will contact you soon.', 'success');
+                    closeModal('volunteerModal');
+                    this.reset();
+                });
+            }
+
+            // Modal close buttons
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    closeModal(modalId);
+                });
+            });
+
+            // Footer social media buttons
+            document.querySelectorAll('footer a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.querySelector('i').className.split(' ')[1].split('-')[1];
+                    showNotification(`Redirecting to our ${platform} page...`);
+                });
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Close mobile menu after clicking a link
+                        if (mobileMenu && mobileMenu.classList.contains('active')) {
+                            mobileMenu.classList.remove('active');
+                            const icon = mobileMenuButton.querySelector('i');
+                            icon.className = 'fas fa-bars text-xl';
+                        }
+                    }
+                });
+            });
+        });
+
+        // ========== MODAL FUNCTIONALITY ==========
         function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden';
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal when clicking outside content
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
-        });
-
-        // ========== MOBILE MENU ==========
-        document.getElementById('mobileMenuButton').addEventListener('click', function() {
-            document.getElementById('mobileMenu').classList.toggle('active');
-        });
-
-        function toggleMobileMenu(menuId) {
-            const menu = document.getElementById(menuId);
-            menu.classList.toggle('hidden');
-            
-            // Toggle the chevron icon
-            const button = menu.parentElement.querySelector('button');
-            const icon = button.querySelector('i');
-            if (icon.classList.contains('fa-chevron-down')) {
-                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-            } else {
-                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-            }
         }
 
-        // Close mobile menu when clicking outside
+        // Close modal when clicking outside
         document.addEventListener('click', function(event) {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            
-            if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
-                mobileMenu.classList.remove('active');
+            if (event.target.classList.contains('modal')) {
+                closeModal(event.target.id);
             }
         });
 
@@ -743,141 +1315,61 @@
             const notification = document.getElementById('notification');
             const notificationIcon = document.getElementById('notificationIcon');
             const notificationMessage = document.getElementById('notificationMessage');
-            
+
+            if (!notification) return;
+
             // Set notification content and style
             notificationMessage.textContent = message;
-            notification.className = 'notification ' + type;
+            
+            // Remove all color classes
+            notification.className = 'notification';
             
             if (type === 'success') {
+                notification.classList.add('success');
                 notificationIcon.className = 'fas fa-check-circle mr-2';
-                notification.classList.add('bg-primary-green');
             } else {
+                notification.classList.add('error');
                 notificationIcon.className = 'fas fa-exclamation-circle mr-2';
-                notification.classList.add('bg-red-500');
             }
-            
+
             // Show notification
             notification.classList.add('show');
-            
+
             // Hide after 5 seconds
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 5000);
         }
 
-        // ========== FORM HANDLING ==========
-        // Donation form
-        document.getElementById('donationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get donation amount
-            let amount = document.getElementById('customAmount').value;
-            if (!amount) {
-                // Check if a preset amount was selected
-                const selectedAmount = document.querySelector('.donation-amount.active');
-                if (selectedAmount) {
-                    amount = selectedAmount.getAttribute('data-amount');
+        // ========== SCROLL PROGRESS BAR ==========
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            const scrollProgress = document.getElementById('scrollProgress');
+            if (scrollProgress) {
+                scrollProgress.style.width = scrolled + '%';
+            }
+
+            // Navbar background on scroll
+            const nav = document.getElementById('mainNav');
+            if (nav) {
+                if (window.scrollY > 100) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
                 }
             }
-            
-            if (!amount || amount <= 0) {
-                showNotification('Please select or enter a valid donation amount', 'error');
-                return;
-            }
-            
-            const name = document.getElementById('donorName').value;
-            const email = document.getElementById('donorEmail').value;
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            
-            if (!name || !email) {
-                showNotification('Please fill in all required fields', 'error');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showNotification('Please enter a valid email address', 'error');
-                return;
-            }
-            
-            // Show loading state
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
-            submitButton.disabled = true;
-            
-            // Simulate payment processing
-            setTimeout(() => {
-                // In a real application, you would integrate with a payment processor here
-                showNotification(`Thank you for your donation of $${amount}! A receipt has been sent to ${email}.`);
-                closeModal('donateModal');
-                
-                // Reset form
-                document.getElementById('donationForm').reset();
-                document.querySelectorAll('.donation-amount').forEach(btn => {
-                    btn.classList.remove('active', 'bg-primary-blue', 'text-white');
-                });
-                
-                // Reset button state
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-            }, 2000);
         });
 
-        // Volunteer form
-        document.getElementById('volunteerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // In a real application, you would send this data to a server
-            showNotification('Thank you for your volunteer application! We will contact you soon.');
-            closeModal('volunteerModal');
-            
-            // Reset form
-            this.reset();
-        });
-
-        // Donation amount buttons
-        document.querySelectorAll('.donation-amount').forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                document.querySelectorAll('.donation-amount').forEach(btn => {
-                    btn.classList.remove('active', 'bg-primary-blue', 'text-white');
-                });
-                
-                // Add active class to clicked button
-                this.classList.add('active', 'bg-primary-blue', 'text-white');
-                
-                // Clear custom amount
-                document.getElementById('customAmount').value = '';
-            });
-        });
-
-        // Clear preset amount when custom amount is entered
-        document.getElementById('customAmount').addEventListener('input', function() {
-            document.querySelectorAll('.donation-amount').forEach(btn => {
-                btn.classList.remove('active', 'bg-primary-blue', 'text-white');
-            });
-        });
-
-        // ========== ANIMATIONS ==========
-        // Intersection Observer for fade-in animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        // Counter animation
+        // ========== COUNTER ANIMATION ==========
         function animateCounter(element, target) {
             let current = 0;
             const increment = target / 100;
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
-                    element.textContent = target;
+                    element.textContent = target + '+';
                     clearInterval(timer);
                 } else {
                     element.textContent = Math.floor(current);
@@ -893,12 +1385,20 @@
 
         // ========== INITIALIZATION ==========
         document.addEventListener('DOMContentLoaded', function() {
-            // Observe fade-in elements
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
+            // Initialize fade-in animations
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(element => {
+                fadeInObserver.observe(element);
             });
 
-            // Observe counter elements and animate when visible
+            // Counter animation
             const counterObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -913,69 +1413,37 @@
                 counterObserver.observe(counter);
             });
 
-            // Add click handlers for social media links in footer
-            document.querySelectorAll('footer a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === '#') {
-                        e.preventDefault();
-                        showNotification('This would open the social media page in a real application', 'success');
+            // Real-time form validation
+            document.querySelectorAll('form input, form textarea').forEach(field => {
+                field.addEventListener('blur', function() {
+                    if (this.hasAttribute('required') && !this.value) {
+                        this.classList.add('border-red-500');
+                    } else {
+                        this.classList.remove('border-red-500');
+                    }
+                    
+                    if (this.type === 'email' && this.value && !isValidEmail(this.value)) {
+                        this.classList.add('border-red-500');
+                    }
+                });
+                
+                field.addEventListener('input', function() {
+                    if (this.value) {
+                        this.classList.remove('border-red-500');
                     }
                 });
             });
 
-            // Initialize all forms with validation
-            const allForms = document.querySelectorAll('form');
-            allForms.forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    // Additional form validation could be added here
-                });
-            });
-
-            // Add smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        const headerHeight = document.querySelector('nav').offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
+            // Show welcome notification after page loads
+            setTimeout(() => {
+                showNotification('Welcome to HopeLink Mahama - Empowering Refugees Through Technology!', 'success');
+            }, 1000);
         });
 
         // ========== ADDITIONAL FEATURES ==========
         // Page view tracking
         window.addEventListener('load', function() {
-            // In a real app, this would send page view data to analytics
-            console.log('HopeLink Mahama about page loaded');
-        });
-
-        // Real-time form validation
-        document.querySelectorAll('form input, form textarea').forEach(field => {
-            field.addEventListener('blur', function() {
-                if (this.hasAttribute('required') && !this.value) {
-                    this.classList.add('border-red-500');
-                } else {
-                    this.classList.remove('border-red-500');
-                }
-                
-                if (this.type === 'email' && this.value && !isValidEmail(this.value)) {
-                    this.classList.add('border-red-500');
-                }
-            });
-            
-            field.addEventListener('input', function() {
-                if (this.value) {
-                    this.classList.remove('border-red-500');
-                }
-            });
+            console.log('HopeLink Mahama about page loaded with enhanced navigation');
         });
     </script>
 </body>

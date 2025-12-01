@@ -1,0 +1,3672 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HopeLink — Complete Admin Dashboard</title>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Chart.js for analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Custom styles for enhanced UI */
+    .sidebar-item.active {
+      background-color: #3b82f6;
+      color: white;
+    }
+    .sidebar-item.active:hover {
+      background-color: #2563eb;
+    }
+    .sidebar-subitem.active {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+    .table-row:hover {
+      background-color: #f9fafb;
+    }
+    .dark .table-row:hover {
+      background-color: #374151;
+    }
+    .fade-in {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .toast {
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .editor-toolbar button.active {
+      background-color: #e5e7eb;
+    }
+    .dark .editor-toolbar button.active {
+      background-color: #4b5563;
+    }
+    .file-dashed {
+      border: 2px dashed #d1d5db;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      text-align:center;
+    }
+    .table-fixed-header thead th { 
+      position: sticky; 
+      top: 0; 
+      background: white; 
+      z-index: 10; 
+    }
+    .dark .table-fixed-header thead th {
+      background: #1f2937;
+    }
+    /* accessible focus ring */
+    :focus { 
+      outline: 3px solid rgba(59,130,246,0.18); 
+      outline-offset: 2px; 
+    }
+    .editor-toolbar button.active { 
+      background:#f3f4f6; 
+    }
+    .editor { 
+      min-height:220px; 
+      padding:1rem; 
+      border-radius:0.5rem; 
+      border:1px solid #e5e7eb; 
+      background:white; 
+      overflow:auto; 
+    }
+    .editor:focus { 
+      box-shadow:0 0 0 4px rgba(59,130,246,0.06); 
+      outline:none; 
+      border-color:#93c5fd; 
+    }
+    .hidden { 
+      display:none; 
+    }
+    
+    /* Mobile responsive improvements */
+    @media (max-width: 768px) {
+      .mobile-stack { flex-direction: column; }
+      .mobile-full { width: 100%; }
+      .mobile-p-2 { padding: 0.5rem; }
+      .mobile-text-sm { font-size: 0.875rem; }
+      .mobile-hidden { display: none; }
+    }
+    
+    /* Dark mode support */
+    .dark .dark\:bg-gray-900 { background-color: #111827; }
+    .dark .dark\:bg-gray-800 { background-color: #1f2937; }
+    .dark .dark\:text-white { color: white; }
+    .dark .dark\:text-gray-300 { color: #d1d5db; }
+    .dark .dark\:border-gray-700 { border-color: #374151; }
+  </style>
+</head>
+<body class="antialiased bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-white">
+
+  <!-- ===========================
+       Header
+       =========================== -->
+  <header class="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 border-b dark:border-gray-700 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <button id="sidebarToggle" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-md bg-gradient-to-r from-blue-600 to-emerald-500 flex items-center justify-center text-white">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <div>
+            <div class="font-bold">HopeLink — Admin</div>
+            <div class="text-xs text-gray-500 dark:text-gray-400">Mahama Refugee Camp</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-1 max-w-2xl mx-4 hidden md:block">
+        <div class="relative">
+          <input id="globalSearch" class="w-full border dark:border-gray-700 dark:bg-gray-800 rounded-lg pl-10 pr-4 py-2" placeholder="Search posts, users, donations..." />
+          <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button id="themeToggle" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+
+        <div class="relative">
+          <button id="notiBtn" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 relative">
+            <i class="fas fa-bell"></i>
+            <span id="notiCount" class="absolute -top-1 -right-1 bg-red-500 text-white w-4 h-4 rounded-full text-xs flex items-center justify-center">0</span>
+          </button>
+          <div id="notiDrop" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow p-2">
+            <div class="text-sm font-semibold px-2 py-1">Notifications</div>
+            <div id="notiList" class="divide-y dark:divide-gray-700 max-h-60 overflow-auto"></div>
+            <div class="text-center mt-2"><button id="clearNoti" class="text-xs text-blue-600">Clear</button></div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <button id="profileBtn" class="flex items-center gap-2 p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+            <img id="adminAvatar" src="https://picsum.photos/seed/admin/40/40" class="w-8 h-8 rounded-full" alt="admin"/>
+            <div id="adminName" class="hidden md:block font-medium">Admin</div>
+            <i class="fas fa-chevron-down text-xs"></i>
+          </button>
+          <div id="profileDrop" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow p-2">
+            <div class="px-2 py-2 border-b dark:border-gray-700">
+              <div id="profileEmail" class="text-sm font-medium">admin@demo.local</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">Administrator</div>
+            </div>
+            <button id="openProfileEditor" class="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700">Edit Profile</button>
+            <button id="logoutBtn" class="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700">Log out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===========================
+       Page (sidebar + main)
+       =========================== -->
+  <div class="pt-16">
+    <div class="max-w-7xl mx-auto px-4 flex gap-6">
+
+      <!-- Sidebar -->
+      <aside id="sidebar" class="w-64 hidden md:block sticky top-16 self-start">
+        <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded p-3 shadow">
+          <nav class="space-y-1">
+            <button data-view="overview" class="sidebar-item w-full text-left px-3 py-2 rounded bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-400">
+              <i class="fas fa-chart-pie mr-2"></i> Overview
+            </button>
+            
+            <!-- Website Pages Section -->
+            <div class="mt-4">
+              <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Website Pages</h3>
+              <div class="space-y-1">
+                <button data-view="page-manager" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-file-alt mr-2"></i> Page Manager
+                </button>
+                <button id="pagesToggle" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex justify-between items-center">
+                  <div class="flex items-center">
+                    <i class="fas fa-sitemap mr-2"></i> All Pages
+                  </div>
+                  <i class="fas fa-chevron-down text-xs transition-transform" id="pagesArrow"></i>
+                </button>
+                <div id="pagesSubmenu" class="ml-4 mt-1 space-y-1 hidden">
+                  <button data-page="home" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-home mr-2 text-xs w-4"></i> Home
+                  </button>
+                  <button data-page="programs" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-project-diagram mr-2 text-xs w-4"></i> Programs
+                  </button>
+                  <button data-page="hunger-help" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-utensils mr-2 text-xs w-4"></i> Hunger Help
+                  </button>
+                  <button data-page="youth-empowerment" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-graduation-cap mr-2 text-xs w-4"></i> Youth Empowerment
+                  </button>
+                  <button data-page="mental-wellness" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-brain mr-2 text-xs w-4"></i> Mental Wellness
+                  </button>
+                  <button data-page="who-we-are" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-users mr-2 text-xs w-4"></i> Who We Are
+                  </button>
+                  <button data-page="get-involved" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-handshake mr-2 text-xs w-4"></i> Get Involved
+                  </button>
+                  <button data-page="news-updates" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-newspaper mr-2 text-xs w-4"></i> News & Updates
+                  </button>
+                  <button data-page="success-stories" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-book-open mr-2 text-xs w-4"></i> Success Stories
+                  </button>
+                  <button data-page="contact" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-envelope mr-2 text-xs w-4"></i> Contact
+                  </button>
+                  <button data-page="opportunities" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-briefcase mr-2 text-xs w-4"></i> Opportunities
+                  </button>
+                  <button data-page="donate-now" class="sidebar-subitem w-full text-left px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-700 flex items-center">
+                    <i class="fas fa-donate mr-2 text-xs w-4"></i> Donate Now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Modules Section -->
+            <div class="mt-4">
+              <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Modules</h3>
+              <div class="space-y-1">
+                <button data-view="donations" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-hand-holding-heart mr-2"></i> Donations
+                </button>
+                <button data-view="volunteers" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-hands-helping mr-2"></i> Volunteers
+                </button>
+                <button data-view="programs-module" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-lightbulb mr-2"></i> Programs
+                </button>
+                <button data-view="success-stories-module" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-book-open mr-2"></i> Success Stories
+                </button>
+                <button data-view="partners" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-handshake mr-2"></i> Partners
+                </button>
+                <button data-view="users" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-users-cog mr-2"></i> Users
+                </button>
+                <button data-view="contacts" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-inbox mr-2"></i> Contacts
+                </button>
+              </div>
+            </div>
+
+            <!-- System Section -->
+            <div class="mt-4">
+              <h3 class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">System</h3>
+              <div class="space-y-1">
+                <button data-view="media" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-images mr-2"></i> Media Library
+                </button>
+                <button data-view="settings" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-cog mr-2"></i> Settings
+                </button>
+                <button data-view="api" class="sidebar-item w-full text-left px-3 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <i class="fas fa-code mr-2"></i> API Integration
+                </button>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main id="main" class="flex-1">
+        <!-- main content rendered here by JS -->
+      </main>
+    </div>
+  </div>
+
+  <!-- ===========================
+       Modals & shared UI (in DOM)
+       =========================== -->
+  <div id="modals"></div>
+
+  <!-- toasts -->
+  <div id="toastContainer" class="fixed top-20 right-6 space-y-2 z-50"></div>
+
+  <!-- activity log (hidden area) -->
+  <div id="activityLog" class="hidden"></div>
+
+  <!-- ===========================
+       JavaScript: Complete Dashboard Functionality
+       =========================== -->
+  <script>
+// ============================================================================
+// HOPELINK ADMIN DASHBOARD - COMPLETE JAVASCRIPT FUNCTIONALITY
+// ============================================================================
+
+(function(){
+  // ============================================================================
+  // 1. GLOBAL STATE & CONFIGURATION
+  // ============================================================================
+  const STORAGE_KEY = 'hopelink_dashboard_v4';
+  const ACTIVITY_KEY = 'hopelink_activity_v4';
+  const NOTI_KEY = 'hopelink_noti_v4';
+  const SESSION_KEY = 'hopelink_session_v4';
+
+  const config = {
+    defaultPageSize: 10,
+    maxFileSize: 5 * 1024 * 1024, // 5MB
+    supportedImageTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+    chartColors: {
+      primary: '#3b82f6',
+      secondary: '#10b981',
+      accent: '#f59e0b',
+      danger: '#ef4444',
+      warning: '#f59e0b',
+      info: '#06b6d4',
+      light: '#6b7280',
+      dark: '#1f2937'
+    },
+    currencies: ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'CNY', 'INR', 'RWF'],
+    paymentMethods: ['Card', 'PayPal', 'Mobile Money', 'Bank Transfer', 'Cash'],
+    programTypes: ['Education', 'Healthcare', 'Food Aid', 'Shelter', 'Livelihood', 'Emergency', 'Other'],
+    volunteerRoles: ['Teacher', 'Doctor', 'Nurse', 'Coordinator', 'Driver', 'Cook', 'Cleaner', 'Other'],
+    storyStatuses: ['Draft', 'Published', 'Featured', 'Archived'],
+    partnerTypes: ['Corporate', 'NGO', 'Government', 'Individual', 'Foundation'],
+    postCategories: ['News', 'Update', 'Story', 'Event', 'Announcement', 'Campaign'],
+    userRoles: ['Admin', 'Editor', 'Moderator', 'Guest']
+  };
+
+  // ============================================================================
+  // 2. UTILITY FUNCTIONS
+  // ============================================================================
+  function uid(prefix = 'id') {
+    return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  function nowISO() {
+    return new Date().toISOString();
+  }
+
+  function formatDate(dateString, options = {}) {
+    const date = new Date(dateString);
+    const defaultOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString(undefined, { ...defaultOptions, ...options });
+  }
+
+  function formatCurrency(amount, currency = 'USD') {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency
+    }).format(amount);
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  function downloadFile(filename, content, type = 'application/json') {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function generateRandomData(count, generator) {
+    return Array.from({ length: count }, generator);
+  }
+
+  // ============================================================================
+  // 3. STORAGE MANAGER
+  // ============================================================================
+  class StorageManager {
+    static save(data) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        return true;
+      } catch (e) {
+        console.error('Failed to save data:', e);
+        return false;
+      }
+    }
+
+    static load() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || null;
+      } catch (e) {
+        console.error('Failed to load data:', e);
+        return null;
+      }
+    }
+
+    static clear() {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(ACTIVITY_KEY);
+      localStorage.removeItem(NOTI_KEY);
+      localStorage.removeItem(SESSION_KEY);
+    }
+
+    static exportData() {
+      const data = this.load();
+      return JSON.stringify(data, null, 2);
+    }
+
+    static importData(jsonString) {
+      try {
+        const data = JSON.parse(jsonString);
+        if (this.validateDataStructure(data)) {
+          localStorage.setItem(STORAGE_KEY, jsonString);
+          return true;
+        }
+        return false;
+      } catch (e) {
+        console.error('Invalid JSON data:', e);
+        return false;
+      }
+    }
+
+    static validateDataStructure(data) {
+      const requiredKeys = ['pages', 'donations', 'volunteers', 'programs', 'stories', 'partners', 'users', 'contacts', 'settings'];
+      return requiredKeys.every(key => key in data);
+    }
+  }
+
+  // ============================================================================
+  // 4. ACTIVITY LOG MANAGER
+  // ============================================================================
+  class ActivityManager {
+    static load() {
+      try {
+        return JSON.parse(localStorage.getItem(ACTIVITY_KEY)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    static push(activity) {
+      const logs = this.load();
+      logs.unshift({
+        id: uid('act'),
+        timestamp: nowISO(),
+        ...activity
+      });
+      // Keep only the last 500 activities
+      const trimmedLogs = logs.slice(0, 500);
+      localStorage.setItem(ACTIVITY_KEY, JSON.stringify(trimmedLogs));
+      return trimmedLogs;
+    }
+
+    static getRecent(limit = 10) {
+      const logs = this.load();
+      return logs.slice(0, limit);
+    }
+
+    static clear() {
+      localStorage.removeItem(ACTIVITY_KEY);
+    }
+
+    static filterByAction(action) {
+      const logs = this.load();
+      return logs.filter(log => log.action === action);
+    }
+
+    static filterByActor(actor) {
+      const logs = this.load();
+      return logs.filter(log => log.actor === actor);
+    }
+
+    static filterByDateRange(startDate, endDate) {
+      const logs = this.load();
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      return logs.filter(log => {
+        const logDate = new Date(log.timestamp);
+        return logDate >= start && logDate <= end;
+      });
+    }
+  }
+
+  // ============================================================================
+  // 5. NOTIFICATION MANAGER
+  // ============================================================================
+  class NotificationManager {
+    static load() {
+      try {
+        return JSON.parse(localStorage.getItem(NOTI_KEY)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    static push(notification) {
+      const notis = this.load();
+      notis.unshift({
+        id: uid('noti'),
+        timestamp: nowISO(),
+        read: false,
+        ...notification
+      });
+      // Keep only the last 100 notifications
+      const trimmedNotis = notis.slice(0, 100);
+      localStorage.setItem(NOTI_KEY, JSON.stringify(trimmedNotis));
+      this.updateBadge();
+      return trimmedNotis;
+    }
+
+    static markAsRead(id) {
+      const notis = this.load();
+      const notification = notis.find(n => n.id === id);
+      if (notification) {
+        notification.read = true;
+        localStorage.setItem(NOTI_KEY, JSON.stringify(notis));
+        this.updateBadge();
+      }
+    }
+
+    static markAllAsRead() {
+      const notis = this.load();
+      notis.forEach(n => n.read = true);
+      localStorage.setItem(NOTI_KEY, JSON.stringify(notis));
+      this.updateBadge();
+    }
+
+    static getUnreadCount() {
+      const notis = this.load();
+      return notis.filter(n => !n.read).length;
+    }
+
+    static updateBadge() {
+      const badge = document.getElementById('notiCount');
+      if (badge) {
+        const count = this.getUnreadCount();
+        badge.textContent = count;
+        badge.style.display = count > 0 ? 'flex' : 'none';
+      }
+    }
+
+    static clear() {
+      localStorage.removeItem(NOTI_KEY);
+      this.updateBadge();
+    }
+
+    static getRecent(limit = 20) {
+      const notis = this.load();
+      return notis.slice(0, limit);
+    }
+  }
+
+  // ============================================================================
+  // 6. SESSION MANAGER
+  // ============================================================================
+  class SessionManager {
+    static load() {
+      try {
+        return JSON.parse(localStorage.getItem(SESSION_KEY)) || { user: null, theme: 'light' };
+      } catch (e) {
+        return { user: null, theme: 'light' };
+      }
+    }
+
+    static save(session) {
+      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    }
+
+    static getCurrentUser() {
+      const session = this.load();
+      return session.user;
+    }
+
+    static setCurrentUser(user) {
+      const session = this.load();
+      session.user = user;
+      this.save(session);
+    }
+
+    static getTheme() {
+      const session = this.load();
+      return session.theme || 'light';
+    }
+
+    static setTheme(theme) {
+      const session = this.load();
+      session.theme = theme;
+      this.save(session);
+      document.documentElement.className = theme === 'dark' ? 'dark' : '';
+    }
+
+    static clear() {
+      localStorage.removeItem(SESSION_KEY);
+    }
+  }
+
+  // ============================================================================
+  // 7. TOAST MANAGER
+  // ============================================================================
+  class ToastManager {
+    static show(message, type = 'info', duration = 3000) {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `toast p-4 rounded-lg shadow-lg border-l-4 flex items-center gap-3 max-w-sm`;
+
+      // Set background and border colors based on type
+      const typeStyles = {
+        success: 'bg-green-50 border-green-500 text-green-800 dark:bg-green-900 dark:text-green-200',
+        error: 'bg-red-50 border-red-500 text-red-800 dark:bg-red-900 dark:text-red-200',
+        warning: 'bg-yellow-50 border-yellow-500 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+        info: 'bg-blue-50 border-blue-500 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+      };
+
+      toast.classList.add(...typeStyles[type].split(' '));
+
+      // Set icon based on type
+      const icons = {
+        success: 'fas fa-check-circle',
+        error: 'fas fa-exclamation-circle',
+        warning: 'fas fa-exclamation-triangle',
+        info: 'fas fa-info-circle'
+      };
+
+      toast.innerHTML = `
+        <i class="${icons[type]} text-lg"></i>
+        <div class="flex-1">
+          <div class="font-medium">${message}</div>
+        </div>
+        <button class="toast-close text-gray-400 hover:text-gray-600">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      // Close button
+      const closeBtn = toast.querySelector('.toast-close');
+      closeBtn.addEventListener('click', () => {
+        this.hide(toast);
+      });
+
+      // Auto hide
+      if (duration > 0) {
+        setTimeout(() => {
+          this.hide(toast);
+        }, duration);
+      }
+
+      return toast;
+    }
+
+    static hide(toast) {
+      toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+      setTimeout(() => {
+        if (toast.parentNode) {
+          toast.parentNode.removeChild(toast);
+        }
+      }, 300);
+    }
+
+    static clearAll() {
+      const container = document.getElementById('toastContainer');
+      if (container) {
+        container.innerHTML = '';
+      }
+    }
+  }
+
+  // ============================================================================
+  // 8. MODAL MANAGER
+  // ============================================================================
+  class ModalManager {
+    static open(options) {
+      const {
+        title = 'Modal',
+        body = '',
+        wide = false,
+        onConfirm = null,
+        onCancel = null,
+        confirmText = 'Save',
+        cancelText = 'Cancel',
+        showFooter = true
+      } = options;
+
+      const modalId = uid('modal');
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 z-50 flex items-start md:items-center justify-center p-4 bg-black bg-opacity-50';
+      modal.innerHTML = `
+        <div class="absolute inset-0" data-modal-backdrop></div>
+        <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full ${wide ? 'max-w-5xl' : 'max-w-2xl'} max-h-[90vh] overflow-hidden flex flex-col">
+          <div class="flex items-center justify-between p-4 border-b dark:border-gray-700">
+            <h3 class="text-lg font-semibold">${escapeHtml(title)}</h3>
+            <button class="modal-close p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700" data-modal-close>
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="flex-1 overflow-auto p-4" data-modal-body>
+            ${body}
+          </div>
+          ${showFooter ? `
+            <div class="flex justify-end gap-2 p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+              <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700" data-modal-cancel>
+                ${cancelText}
+              </button>
+              <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" data-modal-confirm>
+                ${confirmText}
+              </button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+
+      // Focus trap
+      const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      const trapFocus = (e) => {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            if (document.activeElement === firstElement) {
+              e.preventDefault();
+              lastElement.focus();
+            }
+          } else {
+            if (document.activeElement === lastElement) {
+              e.preventDefault();
+              firstElement.focus();
+            }
+          }
+        }
+      };
+
+      modal.addEventListener('keydown', trapFocus);
+
+      // Close handlers
+      const closeModal = () => {
+        modal.removeEventListener('keydown', trapFocus);
+        document.body.removeChild(modal);
+        if (onCancel) onCancel();
+      };
+
+      modal.querySelector('[data-modal-backdrop]').addEventListener('click', closeModal);
+      modal.querySelector('[data-modal-close]').addEventListener('click', closeModal);
+      modal.querySelector('[data-modal-cancel]')?.addEventListener('click', closeModal);
+
+      // Confirm handler
+      modal.querySelector('[data-modal-confirm]')?.addEventListener('click', async () => {
+        if (onConfirm) {
+          const result = await onConfirm();
+          if (result !== false) {
+            closeModal();
+          }
+        } else {
+          closeModal();
+        }
+      });
+
+      // ESC key to close
+      const escHandler = (e) => {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      };
+      modal.addEventListener('keydown', escHandler);
+
+      // Focus first element
+      if (firstElement) {
+        firstElement.focus();
+      }
+
+      return modal;
+    }
+
+    static closeAll() {
+      document.querySelectorAll('[data-modal]').forEach(modal => {
+        modal.remove();
+      });
+    }
+  }
+
+  // ============================================================================
+  // 9. DATA MODELS & GENERATORS
+  // ============================================================================
+  class DataGenerator {
+    static generatePage(overrides = {}) {
+      const titles = [
+        'Home - HopeLink Refugee Support',
+        'Programs - Community Initiatives',
+        'Hunger Help - Food Assistance',
+        'Youth Empowerment - Education & Skills',
+        'Mental Wellness - Psychological Support',
+        'Who We Are - About HopeLink',
+        'Get Involved - Join Our Mission',
+        'News & Updates - Latest Stories',
+        'Success Stories - Impact & Transformation',
+        'Contact - Get In Touch',
+        'Opportunities - Careers & Volunteering',
+        'Donate Now - Support Our Work'
+      ];
+
+      return {
+        id: uid('page'),
+        title: titles[Math.floor(Math.random() * titles.length)],
+        slug: 'page-' + Math.random().toString(36).substr(2, 5),
+        content: '<h1>Welcome to Our Page</h1><p>This is sample content that can be edited in the dashboard.</p>',
+        metaTitle: 'Page Meta Title',
+        metaDescription: 'Page meta description for SEO',
+        status: 'published',
+        featuredImage: `https://picsum.photos/seed/${Math.random()}/800/400`,
+        sections: [
+          {
+            id: uid('section'),
+            type: 'hero',
+            title: 'Hero Section',
+            content: '<h2>Welcome to Our Organization</h2><p>We are dedicated to making a difference.</p>',
+            image: `https://picsum.photos/seed/${Math.random()}/600/400`
+          }
+        ],
+        createdAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+        updatedAt: new Date().toISOString(),
+        ...overrides
+      };
+    }
+
+    static generateDonation(overrides = {}) {
+      const donors = ['John Smith', 'Jane Doe', 'ABC Corporation', 'Community Foundation', 'Anonymous Donor'];
+      const statuses = ['Pending', 'Completed', 'Failed', 'Refunded'];
+
+      return {
+        id: uid('don'),
+        donor: donors[Math.floor(Math.random() * donors.length)],
+        email: 'donor@example.com',
+        amount: Math.floor(Math.random() * 1000) + 10,
+        currency: 'USD',
+        paymentMethod: config.paymentMethods[Math.floor(Math.random() * config.paymentMethods.length)],
+        status: statuses[Math.floor(Math.random() * statuses.length)],
+        createdAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+        notes: 'Thank you for your generous donation',
+        ...overrides
+      };
+    }
+
+    static generateVolunteer(overrides = {}) {
+      const names = ['Alice Johnson', 'Bob Wilson', 'Carol Davis', 'David Brown', 'Eva Martinez'];
+      const statuses = ['Active', 'Inactive', 'Pending'];
+
+      return {
+        id: uid('vol'),
+        name: names[Math.floor(Math.random() * names.length)],
+        email: 'volunteer@example.com',
+        phone: '+1234567890',
+        role: config.volunteerRoles[Math.floor(Math.random() * config.volunteerRoles.length)],
+        status: statuses[Math.floor(Math.random() * statuses.length)],
+        joinDate: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        hours: Math.floor(Math.random() * 200),
+        skills: ['Communication', 'Teamwork', 'Problem Solving'],
+        ...overrides
+      };
+    }
+
+    static generateProgram(overrides = {}) {
+      const titles = [
+        'Education for All Children',
+        'Healthcare Access Program',
+        'Food Security Initiative',
+        'Shelter and Housing Support',
+        'Livelihood Training',
+        'Emergency Response',
+        'Women Empowerment',
+        'Youth Development'
+      ];
+
+      return {
+        id: uid('prog'),
+        title: titles[Math.floor(Math.random() * titles.length)],
+        description: 'A comprehensive program designed to support community development and individual growth.',
+        type: config.programTypes[Math.floor(Math.random() * config.programTypes.length)],
+        status: 'Active',
+        startDate: new Date(Date.now() - Math.random() * 180 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        endDate: new Date(Date.now() + Math.random() * 180 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        budget: Math.floor(Math.random() * 50000) + 5000,
+        participants: Math.floor(Math.random() * 500) + 50,
+        ...overrides
+      };
+    }
+
+    static generateSuccessStory(overrides = {}) {
+      const titles = [
+        'From Refugee to Community Leader',
+        'Education Transforms Lives',
+        'Healthcare Access Saves Family',
+        'New Skills, New Opportunities',
+        'Overcoming Adversity Together'
+      ];
+
+      return {
+        id: uid('story'),
+        title: titles[Math.floor(Math.random() * titles.length)],
+        author: 'Community Member',
+        content: 'This inspiring story demonstrates the positive impact of our programs on individual lives and the broader community.',
+        status: 'Published',
+        featured: Math.random() > 0.7,
+        image: `https://picsum.photos/seed/${Math.random()}/600/400`,
+        createdAt: new Date(Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000).toISOString(),
+        ...overrides
+      };
+    }
+
+    static generatePartner(overrides = {}) {
+      const names = [
+        'Global Aid Foundation',
+        'Community First Corp',
+        'Hope International',
+        'Better World NGO',
+        'Future Builders Inc'
+      ];
+
+      return {
+        id: uid('part'),
+        name: names[Math.floor(Math.random() * names.length)],
+        type: config.partnerTypes[Math.floor(Math.random() * config.partnerTypes.length)],
+        contact: 'partner@example.com',
+        website: 'https://example.com',
+        status: 'Active',
+        since: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        contribution: `$${Math.floor(Math.random() * 100000) + 10000}`,
+        ...overrides
+      };
+    }
+
+    static generateUser(overrides = {}) {
+      const names = ['Admin User', 'Manager One', 'Editor Two', 'Viewer Three'];
+      const roles = ['Admin', 'Editor', 'Moderator', 'Guest'];
+
+      return {
+        id: uid('user'),
+        name: names[Math.floor(Math.random() * names.length)],
+        email: 'user@example.com',
+        role: roles[Math.floor(Math.random() * roles.length)],
+        status: 'Active',
+        avatar: `https://picsum.photos/seed/${Math.random()}/100/100`,
+        lastLogin: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+        createdAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
+        ...overrides
+      };
+    }
+
+    static generateContact(overrides = {}) {
+      const names = ['Visitor One', 'Inquirer Two', 'Supporter Three', 'Question Four'];
+      const subjects = ['General Inquiry', 'Volunteer Opportunity', 'Donation Question', 'Partnership Interest', 'Program Information'];
+
+      return {
+        id: uid('cont'),
+        name: names[Math.floor(Math.random() * names.length)],
+        email: 'contact@example.com',
+        subject: subjects[Math.floor(Math.random() * subjects.length)],
+        message: 'I would like to get more information about your programs and how I can help.',
+        status: 'New',
+        createdAt: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
+        ...overrides
+      };
+    }
+  }
+
+  // ============================================================================
+  // 10. CHART MANAGER
+  // ============================================================================
+  class ChartManager {
+    static charts = new Map();
+
+    static createTrafficChart(ctx) {
+      const labels = Array.from({ length: 7 }, (_, i) => {
+        const d = new Date();
+        d.setDate(d.getDate() - (6 - i));
+        return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      });
+
+      const visitors = Array.from({ length: 7 }, () => Math.floor(Math.random() * 400) + 100);
+      const pageviews = visitors.map(v => Math.floor(v * (1 + Math.random() * 0.7)));
+
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            {
+              label: 'Visitors',
+              data: visitors,
+              borderColor: config.chartColors.primary,
+              backgroundColor: 'rgba(59, 130, 246, 0.08)',
+              tension: 0.3,
+              pointRadius: 4,
+              pointBackgroundColor: config.chartColors.primary,
+              borderWidth: 2
+            },
+            {
+              label: 'Page Views',
+              data: pageviews,
+              borderColor: config.chartColors.secondary,
+              backgroundColor: 'rgba(16, 185, 129, 0.06)',
+              tension: 0.3,
+              pointRadius: 4,
+              pointBackgroundColor: config.chartColors.secondary,
+              borderWidth: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              mode: 'index',
+              intersect: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                drawBorder: false
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+
+      this.charts.set('traffic', chart);
+      return chart;
+    }
+
+    static createSourcesChart(ctx) {
+      const sources = ['Direct', 'Referral', 'Social', 'Organic', 'Email'];
+      const data = Array.from({ length: sources.length }, () => Math.floor(Math.random() * 100) + 10);
+      const total = data.reduce((a, b) => a + b, 0);
+      const percentages = data.map(value => ((value / total) * 100).toFixed(1));
+
+      const chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: sources.map((source, i) => `${source} (${percentages[i]}%)`),
+          datasets: [{
+            data,
+            backgroundColor: [
+              config.chartColors.primary,
+              config.chartColors.secondary,
+              config.chartColors.accent,
+              config.chartColors.info,
+              config.chartColors.warning
+            ],
+            borderWidth: 2,
+            borderColor: '#fff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          },
+          cutout: '65%'
+        }
+      });
+
+      this.charts.set('sources', chart);
+      return chart;
+    }
+
+    static createDeviceChart(ctx) {
+      const devices = ['Desktop', 'Mobile', 'Tablet'];
+      const data = Array.from({ length: devices.length }, () => Math.floor(Math.random() * 100) + 20);
+
+      const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: devices,
+          datasets: [{
+            label: 'Visitors by Device',
+            data,
+            backgroundColor: [
+              config.chartColors.primary,
+              config.chartColors.secondary,
+              config.chartColors.accent
+            ],
+            borderWidth: 0,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                drawBorder: false
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+
+      this.charts.set('devices', chart);
+      return chart;
+    }
+
+    static createDonationTrendsChart(ctx) {
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const donations = Array.from({ length: 12 }, () => Math.floor(Math.random() * 10000) + 5000);
+
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: months,
+          datasets: [{
+            label: 'Donation Amount ($)',
+            data: donations,
+            borderColor: config.chartColors.primary,
+            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 3,
+            pointBackgroundColor: config.chartColors.primary
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top'
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                drawBorder: false
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+
+      this.charts.set('donations', chart);
+      return chart;
+    }
+
+    static createProgramDistributionChart(ctx) {
+      const programs = config.programTypes;
+      const participants = Array.from({ length: programs.length }, () => Math.floor(Math.random() * 500) + 50);
+
+      const chart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+          labels: programs,
+          datasets: [{
+            data: participants,
+            backgroundColor: [
+              config.chartColors.primary,
+              config.chartColors.secondary,
+              config.chartColors.accent,
+              config.chartColors.info,
+              config.chartColors.warning,
+              config.chartColors.danger,
+              config.chartColors.light
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right'
+            }
+          }
+        }
+      });
+
+      this.charts.set('programs', chart);
+      return chart;
+    }
+
+    static refreshAllCharts() {
+      this.charts.forEach(chart => {
+        if (chart.data && chart.data.datasets) {
+          chart.data.datasets.forEach(dataset => {
+            if (dataset.data) {
+              dataset.data = dataset.data.map(() => Math.floor(Math.random() * 100) + 10);
+            }
+          });
+          chart.update();
+        }
+      });
+      ToastManager.show('Charts updated with fresh data', 'success');
+    }
+
+    static destroyAllCharts() {
+      this.charts.forEach(chart => {
+        chart.destroy();
+      });
+      this.charts.clear();
+    }
+  }
+
+  // ============================================================================
+  // 11. DASHBOARD STATE MANAGEMENT
+  // ============================================================================
+  class DashboardState {
+    constructor() {
+      this.currentView = 'overview';
+      this.entityStates = {
+        pages: { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' },
+        donations: { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' },
+        volunteers: { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' },
+        programs: { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' },
+        stories: { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' },
+        partners: { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' },
+        users: { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' },
+        contacts: { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' }
+      };
+      this.selectedItems = new Map(); // entity -> Set of selected IDs
+      this.searchQuery = '';
+    }
+
+    getEntityState(entity) {
+      return this.entityStates[entity] || { page: 1, pageSize: 10, filter: '', status: 'All', sort: 'Newest' };
+    }
+
+    setEntityState(entity, state) {
+      this.entityStates[entity] = { ...this.entityStates[entity], ...state };
+    }
+
+    toggleItemSelection(entity, id) {
+      if (!this.selectedItems.has(entity)) {
+        this.selectedItems.set(entity, new Set());
+      }
+      const entitySelection = this.selectedItems.get(entity);
+      if (entitySelection.has(id)) {
+        entitySelection.delete(id);
+      } else {
+        entitySelection.add(id);
+      }
+    }
+
+    selectAllItems(entity, itemIds) {
+      if (!this.selectedItems.has(entity)) {
+        this.selectedItems.set(entity, new Set());
+      }
+      const entitySelection = this.selectedItems.get(entity);
+      itemIds.forEach(id => entitySelection.add(id));
+    }
+
+    clearSelection(entity) {
+      if (this.selectedItems.has(entity)) {
+        this.selectedItems.get(entity).clear();
+      }
+    }
+
+    getSelectedCount(entity) {
+      return this.selectedItems.has(entity) ? this.selectedItems.get(entity).size : 0;
+    }
+
+    getSelectedIds(entity) {
+      return this.selectedItems.has(entity) ? Array.from(this.selectedItems.get(entity)) : [];
+    }
+  }
+
+  // ============================================================================
+  // 12. DATA MANAGER
+  // ============================================================================
+  class DataManager {
+    static data = null;
+
+    static initialize() {
+      this.data = StorageManager.load();
+      if (!this.data) {
+        this.seedDemoData();
+        this.save();
+      }
+      this.ensureDataStructure();
+    }
+
+    static ensureDataStructure() {
+      const requiredEntities = ['pages', 'donations', 'volunteers', 'programs', 'stories', 'partners', 'users', 'contacts', 'settings'];
+      
+      requiredEntities.forEach(entity => {
+        if (!this.data[entity]) {
+          this.data[entity] = [];
+        }
+      });
+
+      if (!this.data.settings) {
+        this.data.settings = {
+          siteTitle: 'HopeLink — Mahama Refugee Camp',
+          contactEmail: 'contact@hopelink.example',
+          donateMethods: ['Stripe', 'PayPal', 'Mobile Money'],
+          darkMode: false,
+          currency: 'USD',
+          language: 'en',
+          timezone: 'UTC',
+          socialLinks: {
+            facebook: '',
+            twitter: '',
+            instagram: '',
+            linkedin: ''
+          },
+          seo: {
+            metaTitle: 'HopeLink - Refugee Support',
+            metaDescription: 'Supporting refugees at Mahama Camp through education, healthcare, and community programs',
+            keywords: 'refugee, support, education, healthcare, community'
+          }
+        };
+      }
+
+      // Ensure there's at least one admin user
+      if (this.data.users.length === 0) {
+        this.data.users.push({
+          id: 'user_admin',
+          name: 'Demo Admin',
+          email: 'admin@demo.local',
+          role: 'Admin',
+          avatar: 'https://picsum.photos/seed/admin/100/100',
+          status: 'Active',
+          createdAt: new Date().toISOString().split('T')[0],
+          lastLogin: new Date().toISOString()
+        });
+      }
+
+      // Ensure there are some default pages
+      if (this.data.pages.length === 0) {
+        const defaultPages = [
+          { id: 'page_home', title: 'Home', slug: 'home', status: 'published' },
+          { id: 'page_programs', title: 'Programs', slug: 'programs', status: 'published' },
+          { id: 'page_hunger_help', title: 'Hunger Help', slug: 'hunger-help', status: 'published' },
+          { id: 'page_youth_empowerment', title: 'Youth Empowerment', slug: 'youth-empowerment', status: 'published' },
+          { id: 'page_mental_wellness', title: 'Mental Wellness', slug: 'mental-wellness', status: 'published' },
+          { id: 'page_who_we_are', title: 'Who We Are', slug: 'who-we-are', status: 'published' },
+          { id: 'page_get_involved', title: 'Get Involved', slug: 'get-involved', status: 'published' },
+          { id: 'page_news_updates', title: 'News & Updates', slug: 'news-updates', status: 'published' },
+          { id: 'page_success_stories', title: 'Success Stories', slug: 'success-stories', status: 'published' },
+          { id: 'page_contact', title: 'Contact', slug: 'contact', status: 'published' },
+          { id: 'page_opportunities', title: 'Opportunities', slug: 'opportunities', status: 'published' },
+          { id: 'page_donate_now', title: 'Donate Now', slug: 'donate-now', status: 'published' }
+        ];
+
+        defaultPages.forEach(page => {
+          this.data.pages.push({
+            ...DataGenerator.generatePage(),
+            ...page
+          });
+        });
+      }
+    }
+
+    static seedDemoData() {
+      this.data = {
+        pages: generateRandomData(12, DataGenerator.generatePage),
+        donations: generateRandomData(25, DataGenerator.generateDonation),
+        volunteers: generateRandomData(20, DataGenerator.generateVolunteer),
+        programs: generateRandomData(8, DataGenerator.generateProgram),
+        stories: generateRandomData(12, DataGenerator.generateSuccessStory),
+        partners: generateRandomData(10, DataGenerator.generatePartner),
+        users: generateRandomData(5, DataGenerator.generateUser),
+        contacts: generateRandomData(18, DataGenerator.generateContact),
+        settings: {
+          siteTitle: 'HopeLink — Mahama Refugee Camp',
+          contactEmail: 'contact@hopelink.example',
+          donateMethods: ['Stripe', 'PayPal', 'Mobile Money'],
+          darkMode: false,
+          currency: 'USD',
+          language: 'en',
+          timezone: 'UTC',
+          socialLinks: {
+            facebook: 'https://facebook.com/hopelink',
+            twitter: 'https://twitter.com/hopelink',
+            instagram: 'https://instagram.com/hopelink',
+            linkedin: 'https://linkedin.com/company/hopelink'
+          },
+          seo: {
+            metaTitle: 'HopeLink - Refugee Support',
+            metaDescription: 'Supporting refugees at Mahama Camp through education, healthcare, and community programs',
+            keywords: 'refugee, support, education, healthcare, community'
+          }
+        }
+      };
+
+      // Ensure first user is admin
+      if (this.data.users.length > 0) {
+        this.data.users[0].role = 'Admin';
+        this.data.users[0].name = 'Demo Admin';
+        this.data.users[0].email = 'admin@demo.local';
+      }
+    }
+
+    static save() {
+      return StorageManager.save(this.data);
+    }
+
+    static getAll(entity) {
+      return this.data[entity] || [];
+    }
+
+    static getById(entity, id) {
+      return this.data[entity]?.find(item => item.id === id) || null;
+    }
+
+    static create(entity, item) {
+      if (!this.data[entity]) {
+        this.data[entity] = [];
+      }
+      this.data[entity].unshift(item);
+      this.save();
+      return item;
+    }
+
+    static update(entity, id, updates) {
+      const index = this.data[entity]?.findIndex(item => item.id === id);
+      if (index !== -1) {
+        this.data[entity][index] = { ...this.data[entity][index], ...updates, updatedAt: nowISO() };
+        this.save();
+        return this.data[entity][index];
+      }
+      return null;
+    }
+
+    static delete(entity, id) {
+      if (this.data[entity]) {
+        this.data[entity] = this.data[entity].filter(item => item.id !== id);
+        this.save();
+        return true;
+      }
+      return false;
+    }
+
+    static bulkDelete(entity, ids) {
+      if (this.data[entity]) {
+        this.data[entity] = this.data[entity].filter(item => !ids.includes(item.id));
+        this.save();
+        return true;
+      }
+      return false;
+    }
+
+    static bulkUpdate(entity, ids, updates) {
+      if (this.data[entity]) {
+        this.data[entity].forEach(item => {
+          if (ids.includes(item.id)) {
+            Object.assign(item, updates, { updatedAt: nowISO() });
+          }
+        });
+        this.save();
+        return true;
+      }
+      return false;
+    }
+
+    static duplicate(entity, id) {
+      const original = this.getById(entity, id);
+      if (original) {
+        const copy = JSON.parse(JSON.stringify(original));
+        copy.id = uid(entity.slice(0, 3));
+        copy.title = (copy.title || copy.name) + ' (Copy)';
+        copy.createdAt = nowISO();
+        copy.updatedAt = nowISO();
+        return this.create(entity, copy);
+      }
+      return null;
+    }
+
+    static getStats() {
+      return {
+        pages: this.data.pages.length,
+        donations: this.data.donations.length,
+        volunteers: this.data.volunteers.filter(v => v.status === 'Active').length,
+        programs: this.data.programs.filter(p => p.status === 'Active').length,
+        stories: this.data.stories.filter(s => s.status === 'Published').length,
+        partners: this.data.partners.filter(p => p.status === 'Active').length,
+        users: this.data.users.length,
+        contacts: this.data.contacts.filter(c => c.status === 'New').length,
+        totalDonations: this.data.donations
+          .filter(d => d.status === 'Completed')
+          .reduce((sum, donation) => sum + (donation.amount || 0), 0)
+      };
+    }
+
+    static search(query, entities = ['pages', 'donations', 'volunteers', 'programs', 'stories', 'partners', 'users', 'contacts']) {
+      const results = {};
+      const lowerQuery = query.toLowerCase();
+      
+      entities.forEach(entity => {
+        results[entity] = this.data[entity]?.filter(item => 
+          Object.values(item).some(value => 
+            String(value).toLowerCase().includes(lowerQuery)
+          )
+        ) || [];
+      });
+      
+      return results;
+    }
+  }
+
+  // ============================================================================
+  // 13. RICH TEXT EDITOR
+  // ============================================================================
+  class RichTextEditor {
+    static init(container) {
+      const editor = container.querySelector('.editor');
+      const toolbar = container.querySelector('.editor-toolbar');
+      
+      if (!editor || !toolbar) return;
+
+      // Toolbar button handlers
+      toolbar.querySelectorAll('button[data-cmd]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cmd = btn.dataset.cmd;
+          const val = btn.dataset.val || null;
+          
+          if (cmd === 'formatBlock') {
+            document.execCommand('formatBlock', false, `<${val}>`);
+          } else {
+            document.execCommand(cmd, false, val);
+          }
+          
+          editor.focus();
+          this.updateToolbarState(editor, toolbar);
+        });
+      });
+
+      // Special handlers
+      container.querySelector('#insertLinkBtn')?.addEventListener('click', () => {
+        const url = prompt('Enter URL:');
+        if (url) {
+          document.execCommand('createLink', false, url);
+        }
+      });
+
+      container.querySelector('#insertImageBtn')?.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              document.execCommand('insertImage', false, e.target.result);
+            };
+            reader.readAsDataURL(file);
+          }
+        };
+        input.click();
+      });
+
+      container.querySelector('#codeBlockBtn')?.addEventListener('click', () => {
+        const sel = window.getSelection();
+        if (sel.rangeCount) {
+          const range = sel.getRangeAt(0);
+          const pre = document.createElement('pre');
+          pre.style.cssText = 'background:#1f2937;color:#f8fafc;padding:0.75rem;border-radius:0.375rem;overflow:auto;';
+          pre.textContent = sel.toString() || 'Code block';
+          range.deleteContents();
+          range.insertNode(pre);
+        }
+      });
+
+      // Update toolbar state on selection change
+      editor.addEventListener('input', () => this.updateToolbarState(editor, toolbar));
+      editor.addEventListener('click', () => this.updateToolbarState(editor, toolbar));
+      document.addEventListener('selectionchange', () => this.updateToolbarState(editor, toolbar));
+
+      // Word count
+      const updateWordCount = () => {
+        const wordCountEl = container.querySelector('#wordCount');
+        if (wordCountEl) {
+          const text = editor.innerText || '';
+          const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+          wordCountEl.textContent = `Words: ${words}`;
+        }
+      };
+      
+      editor.addEventListener('input', updateWordCount);
+      updateWordCount();
+
+      // Fullscreen
+      container.querySelector('#fullscreenBtn')?.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          editor.requestFullscreen?.();
+        } else {
+          document.exitFullscreen?.();
+        }
+      });
+    }
+
+    static updateToolbarState(editor, toolbar) {
+      const commands = ['bold', 'italic', 'underline', 'strikeThrough'];
+      
+      commands.forEach(cmd => {
+        const btn = toolbar.querySelector(`[data-cmd="${cmd}"]`);
+        if (btn) {
+          const isActive = document.queryCommandState(cmd);
+          btn.classList.toggle('active', isActive);
+        }
+      });
+
+      // Check block format
+      const formats = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+      formats.forEach(format => {
+        const btn = toolbar.querySelector(`[data-val="${format.toUpperCase()}"]`);
+        if (btn) {
+          // This is a simplified check - in a real implementation you'd need more complex logic
+          btn.classList.toggle('active', false);
+        }
+      });
+    }
+
+    static getContent(container) {
+      const editor = container.querySelector('.editor');
+      return editor ? editor.innerHTML : '';
+    }
+
+    static setContent(container, content) {
+      const editor = container.querySelector('.editor');
+      if (editor) {
+        editor.innerHTML = content;
+      }
+    }
+  }
+
+  // ============================================================================
+  // 14. DASHBOARD VIEW RENDERERS
+  // ============================================================================
+  class DashboardRenderer {
+    static main = document.getElementById('main');
+    static state = new DashboardState();
+
+    static renderOverview() {
+      const stats = DataManager.getStats();
+      
+      this.main.innerHTML = `
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400">${DataManager.data.settings.siteTitle} — Admin Panel</p>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Donations</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">${formatCurrency(stats.totalDonations)}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${stats.donations} donations</p>
+              </div>
+              <div class="p-3 bg-green-50 dark:bg-green-900 rounded-lg">
+                <i class="fas fa-hand-holding-heart text-green-600 dark:text-green-400 text-xl"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Active Volunteers</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">${stats.volunteers}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Making a difference</p>
+              </div>
+              <div class="p-3 bg-blue-50 dark:bg-blue-900 rounded-lg">
+                <i class="fas fa-hands-helping text-blue-600 dark:text-blue-400 text-xl"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Program Participants</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">${DataManager.data.programs.reduce((sum, prog) => sum + (prog.participants || 0), 0)}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Across ${stats.programs} programs</p>
+              </div>
+              <div class="p-3 bg-purple-50 dark:bg-purple-900 rounded-lg">
+                <i class="fas fa-users text-purple-600 dark:text-purple-400 text-xl"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Success Stories</p>
+                <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">${stats.stories}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Inspiring transformations</p>
+              </div>
+              <div class="p-3 bg-orange-50 dark:bg-orange-900 rounded-lg">
+                <i class="fas fa-book-open text-orange-600 dark:text-orange-400 text-xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytics Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Traffic Overview</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Last 7 days</p>
+              </div>
+              <button id="refreshCharts" class="px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors">
+                <i class="fas fa-sync-alt mr-1"></i> Refresh
+              </button>
+            </div>
+            <div class="h-64">
+              <canvas id="chartTraffic"></canvas>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Traffic Sources</h3>
+            </div>
+            <div class="h-64">
+              <canvas id="chartSources"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Visitors by Device</h3>
+            <div class="h-48">
+              <canvas id="chartDevices"></canvas>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Donation Trends</h3>
+            <div class="h-48">
+              <canvas id="chartDonations"></canvas>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">Program Distribution</h3>
+            <div class="h-48">
+              <canvas id="chartPrograms"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity & Quick Actions -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h3>
+            <div id="recentActivity" class="space-y-3">
+              <!-- Activity items will be populated by JavaScript -->
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <button id="quickNewPage" class="p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">
+                <i class="fas fa-plus mr-2"></i> New Page
+              </button>
+              <button id="quickNewDonation" class="p-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium">
+                <i class="fas fa-donate mr-2"></i> New Donation
+              </button>
+              <button id="quickExport" class="p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium">
+                <i class="fas fa-download mr-2"></i> Export Data
+              </button>
+              <button id="quickImport" class="p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium">
+                <i class="fas fa-upload mr-2"></i> Import Data
+              </button>
+            </div>
+
+            <div class="mt-6">
+              <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-3">System Status</h4>
+              <div class="space-y-2">
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-600 dark:text-gray-400">Storage Usage</span>
+                  <span class="text-sm font-medium text-gray-900 dark:text-white">${Math.round((JSON.stringify(DataManager.data).length / (1024 * 1024)) * 100) / 100} MB</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-600 dark:text-gray-400">Last Backup</span>
+                  <span class="text-sm font-medium text-gray-900 dark:text-white">${formatDate(new Date())}</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-600 dark:text-gray-400">Active Sessions</span>
+                  <span class="text-sm font-medium text-green-600 dark:text-green-400">1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      this.attachOverviewEvents();
+      this.renderCharts();
+      this.renderRecentActivity();
+    }
+
+    static attachOverviewEvents() {
+      document.getElementById('refreshCharts')?.addEventListener('click', () => {
+        ChartManager.refreshAllCharts();
+      });
+
+      document.getElementById('quickNewPage')?.addEventListener('click', () => {
+        this.openPageEditor();
+      });
+
+      document.getElementById('quickNewDonation')?.addEventListener('click', () => {
+        this.openDonationEditor();
+      });
+
+      document.getElementById('quickExport')?.addEventListener('click', () => {
+        const data = StorageManager.exportData();
+        downloadFile('hopelink-export-' + new Date().toISOString().split('T')[0] + '.json', data);
+        ToastManager.show('Data exported successfully', 'success');
+      });
+
+      document.getElementById('quickImport')?.addEventListener('click', () => {
+        ModalManager.open({
+          title: 'Import Data',
+          body: `
+            <div class="space-y-4">
+              <div class="p-4 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-800 rounded-md">
+                <p class="text-sm text-yellow-800 dark:text-yellow-200">
+                  <i class="fas fa-exclamation-triangle mr-1"></i>
+                  This will replace all current data. Make sure to export your current data first.
+                </p>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Paste JSON Data</label>
+                <textarea id="importData" class="w-full h-64 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2 font-mono text-sm" placeholder="Paste your JSON data here..."></textarea>
+              </div>
+            </div>
+          `,
+          onConfirm: () => {
+            const jsonData = document.getElementById('importData').value;
+            if (jsonData && StorageManager.importData(jsonData)) {
+              DataManager.initialize();
+              ToastManager.show('Data imported successfully', 'success');
+              this.renderOverview();
+              return true;
+            } else {
+              ToastManager.show('Invalid JSON data', 'error');
+              return false;
+            }
+          }
+        });
+      });
+    }
+
+    static renderCharts() {
+      // Destroy existing charts
+      ChartManager.destroyAllCharts();
+
+      // Create new charts
+      setTimeout(() => {
+        const trafficCtx = document.getElementById('chartTraffic')?.getContext('2d');
+        const sourcesCtx = document.getElementById('chartSources')?.getContext('2d');
+        const devicesCtx = document.getElementById('chartDevices')?.getContext('2d');
+        const donationsCtx = document.getElementById('chartDonations')?.getContext('2d');
+        const programsCtx = document.getElementById('chartPrograms')?.getContext('2d');
+
+        if (trafficCtx) ChartManager.createTrafficChart(trafficCtx);
+        if (sourcesCtx) ChartManager.createSourcesChart(sourcesCtx);
+        if (devicesCtx) ChartManager.createDeviceChart(devicesCtx);
+        if (donationsCtx) ChartManager.createDonationTrendsChart(donationsCtx);
+        if (programsCtx) ChartManager.createProgramDistributionChart(programsCtx);
+      }, 100);
+    }
+
+    static renderRecentActivity() {
+      const container = document.getElementById('recentActivity');
+      if (!container) return;
+
+      const activities = ActivityManager.getRecent(5);
+      
+      if (activities.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-4 text-gray-500 dark:text-gray-400">
+            <i class="fas fa-inbox text-2xl mb-2"></i>
+            <p>No recent activity</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = activities.map(activity => `
+        <div class="flex items-start space-x-3 p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+          <div class="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+            <i class="fas fa-${this.getActivityIcon(activity.action)} text-blue-600 dark:text-blue-400 text-sm"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm text-gray-900 dark:text-white">
+              <span class="font-medium">${escapeHtml(activity.actor)}</span>
+              ${escapeHtml(activity.action)}
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">${formatDate(activity.timestamp, { hour: '2-digit', minute: '2-digit' })}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    static getActivityIcon(action) {
+      if (action.includes('Created')) return 'plus';
+      if (action.includes('Updated')) return 'edit';
+      if (action.includes('Deleted')) return 'trash';
+      if (action.includes('Logged')) return 'sign-in-alt';
+      if (action.includes('Processed')) return 'credit-card';
+      return 'circle';
+    }
+
+    // ============================================================================
+    // PAGE MANAGER - FULLY RESPONSIVE IMPLEMENTATION
+    // ============================================================================
+    static renderPageManager() {
+      const entityState = this.state.getEntityState('pages');
+      const items = DataManager.getAll('pages');
+      
+      // Apply filters
+      let filteredItems = this.filterItems(items, entityState.filter, 'pages');
+      if (entityState.status && entityState.status !== 'All') {
+        filteredItems = filteredItems.filter(item => item.status === entityState.status);
+      }
+      
+      // Apply sorting
+      filteredItems = this.sortItems(filteredItems, entityState.sort, 'pages');
+      
+      // Paginate
+      const paginated = this.paginateItems(filteredItems, entityState.page, entityState.pageSize);
+      const selectedCount = this.state.getSelectedCount('pages');
+      
+      this.main.innerHTML = `
+        <div class="mb-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Page Manager</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Manage all website pages from your dashboard</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              ${selectedCount > 0 ? `
+                <div class="flex items-center gap-2 mr-2">
+                  <span class="text-sm text-gray-600 dark:text-gray-400">${selectedCount} selected</span>
+                  <button class="px-3 py-1.5 text-sm bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 text-red-700 dark:text-red-300 rounded-lg transition-colors bulk-delete-btn">
+                    <i class="fas fa-trash mr-1"></i> Delete
+                  </button>
+                  <button class="px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors bulk-clear-btn">
+                    Clear
+                  </button>
+                </div>
+              ` : ''}
+              <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors new-page-btn">
+                <i class="fas fa-plus mr-2"></i> Create New Page
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 mb-6">
+          <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+            <div class="flex-1">
+              <div class="relative">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input 
+                  type="text" 
+                  class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Search pages by title, ID, slug..." 
+                  value="${entityState.filter}"
+                >
+              </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-2">
+              <select class="pages-status-filter px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="All">All Status</option>
+                <option value="published" ${entityState.status === 'published' ? 'selected' : ''}>Published</option>
+                <option value="draft" ${entityState.status === 'draft' ? 'selected' : ''}>Draft</option>
+                <option value="archived" ${entityState.status === 'archived' ? 'selected' : ''}>Archived</option>
+              </select>
+                
+              <select class="pages-sort-select px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="Newest" ${entityState.sort === 'Newest' ? 'selected' : ''}>Newest First</option>
+                <option value="Oldest" ${entityState.sort === 'Oldest' ? 'selected' : ''}>Oldest First</option>
+                <option value="A-Z" ${entityState.sort === 'A-Z' ? 'selected' : ''}>Title A-Z</option>
+                <option value="Z-A" ${entityState.sort === 'Z-A' ? 'selected' : ''}>Title Z-A</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Cards View -->
+        <div class="block md:hidden space-y-4 mb-6">
+          ${paginated.items.length > 0 ? paginated.items.map(item => `
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-4">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-semibold text-gray-900 dark:text-white">${escapeHtml(item.title)}</h3>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  item.status === 'published' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+                  item.status === 'draft' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
+                  'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
+                }">
+                  ${item.status}
+                </span>
+              </div>
+              <div class="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                <div>Slug: /${escapeHtml(item.slug)}</div>
+                <div>Created: ${formatDate(item.createdAt)}</div>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-xs text-gray-500 dark:text-gray-400">ID: ${item.id}</span>
+                <div class="flex gap-1">
+                  <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="view" data-id="${item.id}" title="View">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="edit" data-id="${item.id}" title="Edit">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="duplicate" data-id="${item.id}" title="Duplicate">
+                    <i class="fas fa-copy"></i>
+                  </button>
+                  <button class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg transition-colors" data-action="delete" data-id="${item.id}" title="Delete">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `).join('') : `
+            <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+              <i class="fas fa-inbox text-2xl mb-2"></i>
+              <p>No pages found</p>
+              <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors new-page-btn">
+                Create your first page
+              </button>
+            </div>
+          `}
+        </div>
+
+        <!-- Desktop Table View -->
+        <div class="hidden md:block bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-gray-50 dark:bg-gray-900">
+                <tr>
+                  <th class="w-12 px-4 py-3">
+                    <input type="checkbox" class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 pages-select-all-checkbox" 
+                      ${paginated.items.length > 0 && this.state.getSelectedIds('pages').length === paginated.items.length ? 'checked' : ''}>
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">ID</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Slug</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Created</th>
+                  <th class="w-48 px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                ${paginated.items.length > 0 ? paginated.items.map(item => `
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <td class="px-4 py-3">
+                      <input type="checkbox" class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 pages-item-checkbox" 
+                        value="${item.id}" ${this.state.getSelectedIds('pages').includes(item.id) ? 'checked' : ''}>
+                    </td>
+                    <td class="px-4 py-3 text-sm font-mono text-gray-500 dark:text-gray-400">${item.id}</td>
+                    <td class="px-4 py-3">
+                      <div class="flex items-center">
+                        ${item.featuredImage ? `
+                          <img src="${item.featuredImage}" alt="${escapeHtml(item.title)}" class="w-10 h-10 rounded object-cover mr-3">
+                        ` : `
+                          <div class="w-10 h-10 bg-gray-200 dark:bg-gray-600 rounded flex items-center justify-center mr-3">
+                            <i class="fas fa-file-alt text-gray-400"></i>
+                          </div>
+                        `}
+                        <div>
+                          <div class="font-medium text-gray-900 dark:text-white">${escapeHtml(item.title)}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">/${escapeHtml(item.slug)}</td>
+                    <td class="px-4 py-3">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        item.status === 'published' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+                        item.status === 'draft' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
+                        'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
+                      }">
+                        ${item.status}
+                      </span>
+                    </td>
+                    <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">${formatDate(item.createdAt)}</td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="flex justify-end gap-1">
+                        <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="view" data-id="${item.id}" title="View">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="edit" data-id="${item.id}" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="duplicate" data-id="${item.id}" title="Duplicate">
+                          <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="toggle" data-id="${item.id}" title="${item.status === 'published' ? 'Unpublish' : 'Publish'}">
+                          <i class="fas fa-${item.status === 'published' ? 'eye-slash' : 'eye'}"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg transition-colors" data-action="delete" data-id="${item.id}" title="Delete">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('') : `
+                  <tr>
+                    <td colspan="7" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                      <i class="fas fa-inbox text-2xl mb-2"></i>
+                      <p>No pages found</p>
+                      <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors new-page-btn">
+                        Create your first page
+                      </button>
+                    </td>
+                  </tr>
+                `}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        ${paginated.pages > 1 ? `
+          <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="text-sm text-gray-700 dark:text-gray-300">
+              Showing ${((paginated.page - 1) * entityState.pageSize) + 1} to 
+              ${Math.min(paginated.page * entityState.pageSize, paginated.total)} of 
+              ${paginated.total} entries
+            </div>
+            <div class="flex items-center gap-2">
+              <select class="pages-page-size-select px-3 py-1.5 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg text-sm">
+                ${[10, 25, 50, 100].map(size => `
+                  <option value="${size}" ${entityState.pageSize === size ? 'selected' : ''}>${size} per page</option>
+                `).join('')}
+              </select>
+              
+              <button class="pages-prev-page-btn px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed" 
+                ${!paginated.hasPrev ? 'disabled' : ''}>
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              
+              <span class="px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300">
+                Page ${paginated.page} of ${paginated.pages}
+              </span>
+              
+              <button class="pages-next-page-btn px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed" 
+                ${!paginated.hasNext ? 'disabled' : ''}>
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      this.attachPageManagerEvents(paginated);
+    }
+
+    static attachPageManagerEvents(paginated) {
+      const entityState = this.state.getEntityState('pages');
+
+      // New page button
+      document.querySelector('.new-page-btn')?.addEventListener('click', () => {
+        this.openPageEditor();
+      });
+
+      // Search input
+      const searchInput = document.querySelector('input[type="text"]');
+      if (searchInput) {
+        searchInput.addEventListener('input', debounce((e) => {
+          entityState.filter = e.target.value;
+          entityState.page = 1;
+          this.renderPageManager();
+        }, 300));
+      }
+
+      // Filter selects
+      document.querySelector('.pages-status-filter')?.addEventListener('change', (e) => {
+        entityState.status = e.target.value;
+        entityState.page = 1;
+        this.renderPageManager();
+      });
+
+      // Sort select
+      document.querySelector('.pages-sort-select')?.addEventListener('change', (e) => {
+        entityState.sort = e.target.value;
+        this.renderPageManager();
+      });
+
+      // Page size select
+      document.querySelector('.pages-page-size-select')?.addEventListener('change', (e) => {
+        entityState.pageSize = parseInt(e.target.value);
+        entityState.page = 1;
+        this.renderPageManager();
+      });
+
+      // Pagination buttons
+      document.querySelector('.pages-prev-page-btn')?.addEventListener('click', () => {
+        if (paginated.hasPrev) {
+          entityState.page--;
+          this.renderPageManager();
+        }
+      });
+
+      document.querySelector('.pages-next-page-btn')?.addEventListener('click', () => {
+        if (paginated.hasNext) {
+          entityState.page++;
+          this.renderPageManager();
+        }
+      });
+
+      // Select all checkbox
+      document.querySelector('.pages-select-all-checkbox')?.addEventListener('change', (e) => {
+        const checkboxes = document.querySelectorAll('.pages-item-checkbox');
+        checkboxes.forEach(cb => {
+          cb.checked = e.target.checked;
+          this.state.toggleItemSelection('pages', cb.value);
+        });
+        this.renderPageManager();
+      });
+
+      // Individual item checkboxes
+      document.querySelectorAll('.pages-item-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          this.state.toggleItemSelection('pages', e.target.value);
+          this.renderPageManager();
+        });
+      });
+
+      // Bulk actions
+      document.querySelector('.bulk-delete-btn')?.addEventListener('click', () => {
+        const selectedIds = this.state.getSelectedIds('pages');
+        if (selectedIds.length > 0 && confirm(`Are you sure you want to delete ${selectedIds.length} pages?`)) {
+          DataManager.bulkDelete('pages', selectedIds);
+          ActivityManager.push({
+            actor: 'Admin',
+            action: `Bulk deleted ${selectedIds.length} pages`,
+            entity: 'pages',
+            entityIds: selectedIds
+          });
+          this.state.clearSelection('pages');
+          ToastManager.show(`${selectedIds.length} pages deleted`, 'success');
+          this.renderPageManager();
+        }
+      });
+
+      document.querySelector('.bulk-clear-btn')?.addEventListener('click', () => {
+        this.state.clearSelection('pages');
+        this.renderPageManager();
+      });
+
+      // Action buttons
+      document.querySelectorAll('[data-action]').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const action = e.currentTarget.dataset.action;
+          const id = e.currentTarget.dataset.id;
+          this.handlePageAction(action, id);
+        });
+      });
+    }
+
+    static handlePageAction(action, id) {
+      const item = DataManager.getById('pages', id);
+      if (!item) return;
+
+      switch (action) {
+        case 'view':
+          this.viewPage(id);
+          break;
+        case 'edit':
+          this.openPageEditor(id);
+          break;
+        case 'delete':
+          if (confirm(`Are you sure you want to delete the page "${item.title}"?`)) {
+            DataManager.delete('pages', id);
+            ActivityManager.push({
+              actor: 'Admin',
+              action: `Deleted page "${item.title}"`,
+              entity: 'pages',
+              entityId: id
+            });
+            ToastManager.show('Page deleted', 'success');
+            this.renderPageManager();
+          }
+          break;
+        case 'duplicate':
+          DataManager.duplicate('pages', id);
+          ActivityManager.push({
+            actor: 'Admin',
+            action: `Duplicated page "${item.title}"`,
+            entity: 'pages',
+            entityId: id
+          });
+          ToastManager.show('Page duplicated', 'success');
+          this.renderPageManager();
+          break;
+        case 'toggle':
+          this.togglePageStatus(id);
+          break;
+      }
+    }
+
+    static viewPage(id) {
+      const page = DataManager.getById('pages', id);
+      if (!page) return;
+
+      ModalManager.open({
+        title: page.title,
+        body: `
+          <div class="prose max-w-none dark:prose-invert">
+            <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-6">
+              <span>Slug: /${escapeHtml(page.slug)}</span>
+              <span>•</span>
+              <span>${formatDate(page.createdAt)}</span>
+              <span>•</span>
+              <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">${escapeHtml(page.status)}</span>
+            </div>
+            ${page.featuredImage ? `<img src="${page.featuredImage}" alt="${escapeHtml(page.title)}" class="w-full h-64 object-cover rounded-lg mb-6">` : ''}
+            <div>${page.content}</div>
+            ${page.sections && page.sections.length > 0 ? `
+              <div class="mt-6 pt-6 border-t dark:border-gray-700">
+                <h3>Sections</h3>
+                <div class="space-y-4 mt-2">
+                  ${page.sections.map(section => `
+                    <div class="p-4 border dark:border-gray-700 rounded-lg">
+                      <h4 class="font-medium">${escapeHtml(section.title)}</h4>
+                      <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">${section.content}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `,
+        wide: true,
+        showFooter: false
+      });
+    }
+
+    static togglePageStatus(id) {
+      const page = DataManager.getById('pages', id);
+      if (!page) return;
+
+      const newStatus = page.status === 'published' ? 'draft' : 'published';
+      DataManager.update('pages', id, { status: newStatus });
+      
+      ActivityManager.push({
+        actor: 'Admin',
+        action: `Changed page status to ${newStatus}`,
+        entity: 'pages',
+        entityId: id
+      });
+      
+      ToastManager.show(`Page ${newStatus}`, 'success');
+      this.renderPageManager();
+    }
+
+    static openPageEditor(id = null) {
+      const isNew = !id;
+      const page = isNew ? {} : DataManager.getById('pages', id);
+
+      ModalManager.open({
+        title: isNew ? 'Create New Page' : 'Edit Page',
+        body: this.getPageForm(page),
+        wide: true,
+        onConfirm: () => this.handlePageFormSubmit(id, isNew)
+      });
+
+      // Initialize rich text editor
+      setTimeout(() => {
+        const modal = document.querySelector('[data-modal-body]');
+        if (modal) {
+          RichTextEditor.init(modal);
+          
+          // Image upload handler
+          const chooseImageBtn = modal.querySelector('#chooseImage');
+          const fileInput = modal.querySelector('#pageImage');
+          const preview = modal.querySelector('#pageImagePreview');
+          
+          if (chooseImageBtn && fileInput && preview) {
+            chooseImageBtn.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', (e) => {
+              const file = e.target.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                  preview.innerHTML = `<img src="${reader.result}" class="w-32 h-20 object-cover rounded">`;
+                  preview.dataset.url = reader.result;
+                };
+                reader.readAsDataURL(file);
+              }
+            });
+            
+            // Drag and drop
+            const dropArea = modal.querySelector('#pageImageDrop');
+            if (dropArea) {
+              dropArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropArea.classList.add('bg-gray-50', 'dark:bg-gray-700');
+              });
+              
+              dropArea.addEventListener('dragleave', () => {
+                dropArea.classList.remove('bg-gray-50', 'dark:bg-gray-700');
+              });
+              
+              dropArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropArea.classList.remove('bg-gray-50', 'dark:bg-gray-700');
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = () => {
+                    preview.innerHTML = `<img src="${reader.result}" class="w-32 h-20 object-cover rounded">`;
+                    preview.dataset.url = reader.result;
+                  };
+                  reader.readAsDataURL(file);
+                }
+              });
+            }
+          }
+        }
+      }, 100);
+    }
+
+    static getPageForm(page) {
+      return `
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title *</label>
+              <input type="text" id="pageTitle" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(page.title || '')}" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug *</label>
+              <input type="text" id="pageSlug" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(page.slug || '')}" required>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+            <select id="pageStatus" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2">
+              <option value="draft" ${page.status === 'draft' ? 'selected' : ''}>Draft</option>
+              <option value="published" ${page.status === 'published' ? 'selected' : ''}>Published</option>
+              <option value="archived" ${page.status === 'archived' ? 'selected' : ''}>Archived</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Featured Image</label>
+            <div class="file-dashed mt-1 dark:border-gray-600" id="pageImageDrop">
+              <div id="pageImagePreview" class="mb-2">
+                ${page.featuredImage ? 
+                  `<img src="${page.featuredImage}" class="w-32 h-20 object-cover rounded">` : 
+                  `<div class="text-sm text-gray-400">No image selected</div>`
+                }
+              </div>
+              <input type="file" id="pageImage" class="hidden" accept="image/*">
+              <button type="button" id="chooseImage" class="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-700">
+                Choose Image
+              </button>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">Drag & drop or click to upload</div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
+            <div class="border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800">
+              <div class="p-2 border-b dark:border-gray-600 editor-toolbar flex flex-wrap gap-1">
+                <button type="button" data-cmd="bold" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Bold"><i class="fas fa-bold"></i></button>
+                <button type="button" data-cmd="italic" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Italic"><i class="fas fa-italic"></i></button>
+                <button type="button" data-cmd="underline" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Underline"><i class="fas fa-underline"></i></button>
+                <button type="button" data-cmd="strikeThrough" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Strikethrough"><i class="fas fa-strikethrough"></i></button>
+                <button type="button" data-cmd="formatBlock" data-val="H1" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-xs" title="Heading 1">H1</button>
+                <button type="button" data-cmd="formatBlock" data-val="H2" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-xs" title="Heading 2">H2</button>
+                <button type="button" data-cmd="insertUnorderedList" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Bullet List"><i class="fas fa-list-ul"></i></button>
+                <button type="button" data-cmd="insertOrderedList" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                <button type="button" id="insertLinkBtn" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Insert Link"><i class="fas fa-link"></i></button>
+                <button type="button" id="insertImageBtn" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Insert Image"><i class="fas fa-image"></i></button>
+                <button type="button" id="codeBlockBtn" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Code Block"><i class="fas fa-code"></i></button>
+                <button type="button" id="fullscreenBtn" class="ml-auto p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" title="Fullscreen"><i class="fas fa-expand"></i></button>
+              </div>
+              <div class="editor p-4 min-h-48 dark:bg-gray-800" contenteditable="true">${page.content || '<p>Start writing your page content here...</p>'}</div>
+              <div class="px-4 py-2 border-t dark:border-gray-600 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
+                <div>HTML content will be saved</div>
+                <div id="wordCount">Words: 0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Title</label>
+              <input type="text" id="metaTitle" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(page.metaTitle || '')}">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Meta Description</label>
+              <textarea id="metaDescription" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" rows="2">${escapeHtml(page.metaDescription || '')}</textarea>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    static handlePageFormSubmit(id, isNew) {
+      const title = document.getElementById('pageTitle').value;
+      const slug = document.getElementById('pageSlug').value;
+      const status = document.getElementById('pageStatus').value;
+      const featuredImage = document.getElementById('pageImagePreview')?.dataset?.url || '';
+      const content = RichTextEditor.getContent(document.querySelector('[data-modal-body]'));
+      const metaTitle = document.getElementById('metaTitle').value;
+      const metaDescription = document.getElementById('metaDescription').value;
+
+      if (!title || !slug) {
+        ToastManager.show('Please fill in all required fields', 'error');
+        return false;
+      }
+
+      const pageData = {
+        title,
+        slug,
+        status,
+        featuredImage,
+        content,
+        metaTitle,
+        metaDescription,
+        updatedAt: nowISO()
+      };
+
+      try {
+        if (isNew) {
+          DataManager.create('pages', {
+            ...pageData,
+            id: uid('page'),
+            createdAt: nowISO(),
+            sections: []
+          });
+          ActivityManager.push({
+            actor: 'Admin',
+            action: 'Created new page',
+            entity: 'pages',
+            entityData: { title }
+          });
+          ToastManager.show('Page created successfully', 'success');
+        } else {
+          DataManager.update('pages', id, pageData);
+          ActivityManager.push({
+            actor: 'Admin',
+            action: `Updated page "${title}"`,
+            entity: 'pages',
+            entityId: id
+          });
+          ToastManager.show('Page updated successfully', 'success');
+        }
+        
+        this.renderPageManager();
+        return true;
+      } catch (error) {
+        ToastManager.show(`Error saving page: ${error.message}`, 'error');
+        return false;
+      }
+    }
+
+    // ============================================================================
+    // DONATIONS MODULE
+    // ============================================================================
+    static renderDonations() {
+      const entityState = this.state.getEntityState('donations');
+      const items = DataManager.getAll('donations');
+      
+      // Apply filters
+      let filteredItems = this.filterItems(items, entityState.filter, 'donations');
+      if (entityState.status && entityState.status !== 'All') {
+        filteredItems = filteredItems.filter(item => item.status === entityState.status);
+      }
+      
+      // Apply sorting
+      filteredItems = this.sortItems(filteredItems, entityState.sort, 'donations');
+      
+      // Paginate
+      const paginated = this.paginateItems(filteredItems, entityState.page, entityState.pageSize);
+      const selectedCount = this.state.getSelectedCount('donations');
+      
+      this.main.innerHTML = `
+        <div class="mb-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Donations</h2>
+              <p class="text-sm text-gray-500 dark:text-gray-400">Manage donation records and reports</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              ${selectedCount > 0 ? `
+                <div class="flex items-center gap-2 mr-2">
+                  <span class="text-sm text-gray-600 dark:text-gray-400">${selectedCount} selected</span>
+                  <button class="px-3 py-1.5 text-sm bg-red-100 dark:bg-red-900 hover:bg-red-200 dark:hover:bg-red-800 text-red-700 dark:text-red-300 rounded-lg transition-colors bulk-delete-btn">
+                    <i class="fas fa-trash mr-1"></i> Delete
+                  </button>
+                  <button class="px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors bulk-clear-btn">
+                    Clear
+                  </button>
+                </div>
+              ` : ''}
+              <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors new-donation-btn">
+                <i class="fas fa-plus mr-2"></i> Add Donation
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 mb-6">
+          <div class="flex flex-col lg:flex-row lg:items-center gap-4">
+            <div class="flex-1">
+              <div class="relative">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input 
+                  type="text" 
+                  class="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Search donations by donor, email, ID..." 
+                  value="${entityState.filter}"
+                >
+              </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-2">
+              <select class="donations-status-filter px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="All">All Status</option>
+                <option value="Pending" ${entityState.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                <option value="Completed" ${entityState.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                <option value="Failed" ${entityState.status === 'Failed' ? 'selected' : ''}>Failed</option>
+                <option value="Refunded" ${entityState.status === 'Refunded' ? 'selected' : ''}>Refunded</option>
+              </select>
+                
+              <select class="donations-sort-select px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="Newest" ${entityState.sort === 'Newest' ? 'selected' : ''}>Newest First</option>
+                <option value="Oldest" ${entityState.sort === 'Oldest' ? 'selected' : ''}>Oldest First</option>
+                <option value="Amount High" ${entityState.sort === 'Amount High' ? 'selected' : ''}>Amount High to Low</option>
+                <option value="Amount Low" ${entityState.sort === 'Amount Low' ? 'selected' : ''}>Amount Low to High</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Donations</p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">${formatCurrency(items.filter(d => d.status === 'Completed').reduce((sum, d) => sum + d.amount, 0))}</p>
+              </div>
+              <div class="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                <i class="fas fa-hand-holding-usd text-green-600 dark:text-green-400"></i>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">This Month</p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">${formatCurrency(items.filter(d => {
+                  const date = new Date(d.createdAt);
+                  const now = new Date();
+                  return d.status === 'Completed' && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+                }).reduce((sum, d) => sum + d.amount, 0))}</p>
+              </div>
+              <div class="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                <i class="fas fa-calendar-alt text-blue-600 dark:text-blue-400"></i>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Pending</p>
+                <p class="text-xl font-bold text-gray-900 dark:text-white">${items.filter(d => d.status === 'Pending').length}</p>
+              </div>
+              <div class="p-2 bg-yellow-100 dark:bg-yellow-900 rounded-lg">
+                <i class="fas fa-clock text-yellow-600 dark:text-yellow-400"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Table View -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-gray-50 dark:bg-gray-900">
+                <tr>
+                  <th class="w-12 px-4 py-3">
+                    <input type="checkbox" class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 donations-select-all-checkbox" 
+                      ${paginated.items.length > 0 && this.state.getSelectedIds('donations').length === paginated.items.length ? 'checked' : ''}>
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Donor</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Amount</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Method</th>
+                  <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                  <th class="w-48 px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                ${paginated.items.length > 0 ? paginated.items.map(item => `
+                  <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                    <td class="px-4 py-3">
+                      <input type="checkbox" class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 donations-item-checkbox" 
+                        value="${item.id}" ${this.state.getSelectedIds('donations').includes(item.id) ? 'checked' : ''}>
+                    </td>
+                    <td class="px-4 py-3">
+                      <div>
+                        <div class="font-medium text-gray-900 dark:text-white">${escapeHtml(item.donor)}</div>
+                        <div class="text-sm text-gray-500 dark:text-gray-400">${escapeHtml(item.email)}</div>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">
+                      ${formatCurrency(item.amount, item.currency)}
+                    </td>
+                    <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                      ${formatDate(item.createdAt)}
+                    </td>
+                    <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
+                      ${escapeHtml(item.paymentMethod)}
+                    </td>
+                    <td class="px-4 py-3">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        item.status === 'Completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+                        item.status === 'Pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
+                        item.status === 'Failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' :
+                        'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
+                      }">
+                        ${item.status}
+                      </span>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                      <div class="flex justify-end gap-1">
+                        <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="view" data-id="${item.id}" title="View">
+                          <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg transition-colors" data-action="edit" data-id="${item.id}" title="Edit">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg transition-colors" data-action="delete" data-id="${item.id}" title="Delete">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('') : `
+                  <tr>
+                    <td colspan="7" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                      <i class="fas fa-inbox text-2xl mb-2"></i>
+                      <p>No donations found</p>
+                      <button class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors new-donation-btn">
+                        Add your first donation
+                      </button>
+                    </td>
+                  </tr>
+                `}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        ${paginated.pages > 1 ? `
+          <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="text-sm text-gray-700 dark:text-gray-300">
+              Showing ${((paginated.page - 1) * entityState.pageSize) + 1} to 
+              ${Math.min(paginated.page * entityState.pageSize, paginated.total)} of 
+              ${paginated.total} entries
+            </div>
+            <div class="flex items-center gap-2">
+              <select class="donations-page-size-select px-3 py-1.5 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-lg text-sm">
+                ${[10, 25, 50, 100].map(size => `
+                  <option value="${size}" ${entityState.pageSize === size ? 'selected' : ''}>${size} per page</option>
+                `).join('')}
+              </select>
+              
+              <button class="donations-prev-page-btn px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed" 
+                ${!paginated.hasPrev ? 'disabled' : ''}>
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              
+              <span class="px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300">
+                Page ${paginated.page} of ${paginated.pages}
+              </span>
+              
+              <button class="donations-next-page-btn px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed" 
+                ${!paginated.hasNext ? 'disabled' : ''}>
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      this.attachDonationsEvents(paginated);
+    }
+
+    static attachDonationsEvents(paginated) {
+      const entityState = this.state.getEntityState('donations');
+
+      // New donation button
+      document.querySelector('.new-donation-btn')?.addEventListener('click', () => {
+        this.openDonationEditor();
+      });
+
+      // Search input
+      const searchInput = document.querySelector('input[type="text"]');
+      if (searchInput) {
+        searchInput.addEventListener('input', debounce((e) => {
+          entityState.filter = e.target.value;
+          entityState.page = 1;
+          this.renderDonations();
+        }, 300));
+      }
+
+      // Filter selects
+      document.querySelector('.donations-status-filter')?.addEventListener('change', (e) => {
+        entityState.status = e.target.value;
+        entityState.page = 1;
+        this.renderDonations();
+      });
+
+      // Sort select
+      document.querySelector('.donations-sort-select')?.addEventListener('change', (e) => {
+        entityState.sort = e.target.value;
+        this.renderDonations();
+      });
+
+      // Page size select
+      document.querySelector('.donations-page-size-select')?.addEventListener('change', (e) => {
+        entityState.pageSize = parseInt(e.target.value);
+        entityState.page = 1;
+        this.renderDonations();
+      });
+
+      // Pagination buttons
+      document.querySelector('.donations-prev-page-btn')?.addEventListener('click', () => {
+        if (paginated.hasPrev) {
+          entityState.page--;
+          this.renderDonations();
+        }
+      });
+
+      document.querySelector('.donations-next-page-btn')?.addEventListener('click', () => {
+        if (paginated.hasNext) {
+          entityState.page++;
+          this.renderDonations();
+        }
+      });
+
+      // Select all checkbox
+      document.querySelector('.donations-select-all-checkbox')?.addEventListener('change', (e) => {
+        const checkboxes = document.querySelectorAll('.donations-item-checkbox');
+        checkboxes.forEach(cb => {
+          cb.checked = e.target.checked;
+          this.state.toggleItemSelection('donations', cb.value);
+        });
+        this.renderDonations();
+      });
+
+      // Individual item checkboxes
+      document.querySelectorAll('.donations-item-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+          this.state.toggleItemSelection('donations', e.target.value);
+          this.renderDonations();
+        });
+      });
+
+      // Bulk actions
+      document.querySelector('.bulk-delete-btn')?.addEventListener('click', () => {
+        const selectedIds = this.state.getSelectedIds('donations');
+        if (selectedIds.length > 0 && confirm(`Are you sure you want to delete ${selectedIds.length} donations?`)) {
+          DataManager.bulkDelete('donations', selectedIds);
+          ActivityManager.push({
+            actor: 'Admin',
+            action: `Bulk deleted ${selectedIds.length} donations`,
+            entity: 'donations',
+            entityIds: selectedIds
+          });
+          this.state.clearSelection('donations');
+          ToastManager.show(`${selectedIds.length} donations deleted`, 'success');
+          this.renderDonations();
+        }
+      });
+
+      document.querySelector('.bulk-clear-btn')?.addEventListener('click', () => {
+        this.state.clearSelection('donations');
+        this.renderDonations();
+      });
+
+      // Action buttons
+      document.querySelectorAll('[data-action]').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const action = e.currentTarget.dataset.action;
+          const id = e.currentTarget.dataset.id;
+          this.handleDonationAction(action, id);
+        });
+      });
+    }
+
+    static handleDonationAction(action, id) {
+      const item = DataManager.getById('donations', id);
+      if (!item) return;
+
+      switch (action) {
+        case 'view':
+          this.viewDonation(id);
+          break;
+        case 'edit':
+          this.openDonationEditor(id);
+          break;
+        case 'delete':
+          if (confirm(`Are you sure you want to delete the donation from ${item.donor}?`)) {
+            DataManager.delete('donations', id);
+            ActivityManager.push({
+              actor: 'Admin',
+              action: `Deleted donation from ${item.donor}`,
+              entity: 'donations',
+              entityId: id
+            });
+            ToastManager.show('Donation deleted', 'success');
+            this.renderDonations();
+          }
+          break;
+      }
+    }
+
+    static viewDonation(id) {
+      const donation = DataManager.getById('donations', id);
+      if (!donation) return;
+
+      ModalManager.open({
+        title: `Donation from ${donation.donor}`,
+        body: `
+          <div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Donor Name</label>
+                <p class="text-gray-900 dark:text-white">${escapeHtml(donation.donor)}</p>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                <p class="text-gray-900 dark:text-white">${escapeHtml(donation.email)}</p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Amount</label>
+                <p class="text-gray-900 dark:text-white">${formatCurrency(donation.amount, donation.currency)}</p>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Payment Method</label>
+                <p class="text-gray-900 dark:text-white">${escapeHtml(donation.paymentMethod)}</p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                  donation.status === 'Completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+                  donation.status === 'Pending' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
+                  donation.status === 'Failed' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' :
+                  'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'
+                }">
+                  ${donation.status}
+                </span>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
+                <p class="text-gray-900 dark:text-white">${formatDate(donation.createdAt)}</p>
+              </div>
+            </div>
+            
+            ${donation.notes ? `
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes</label>
+                <p class="text-gray-900 dark:text-white">${escapeHtml(donation.notes)}</p>
+              </div>
+            ` : ''}
+          </div>
+        `,
+        showFooter: false
+      });
+    }
+
+    static openDonationEditor(id = null) {
+      const isNew = !id;
+      const donation = isNew ? {} : DataManager.getById('donations', id);
+
+      ModalManager.open({
+        title: isNew ? 'Add New Donation' : 'Edit Donation',
+        body: this.getDonationForm(donation),
+        onConfirm: () => this.handleDonationFormSubmit(id, isNew)
+      });
+    }
+
+    static getDonationForm(donation) {
+      return `
+        <div class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Donor Name *</label>
+              <input type="text" id="donorName" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(donation.donor || '')}" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email *</label>
+              <input type="email" id="donorEmail" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(donation.email || '')}" required>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Amount *</label>
+              <input type="number" id="donationAmount" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${donation.amount || ''}" min="0" step="0.01" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Currency</label>
+              <select id="donationCurrency" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2">
+                ${config.currencies.map(currency => `
+                  <option value="${currency}" ${currency === (donation.currency || 'USD') ? 'selected' : ''}>${currency}</option>
+                `).join('')}
+              </select>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Payment Method</label>
+              <select id="paymentMethod" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2">
+                ${config.paymentMethods.map(method => `
+                  <option value="${method}" ${method === donation.paymentMethod ? 'selected' : ''}>${method}</option>
+                `).join('')}
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+              <select id="donationStatus" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2">
+                <option value="Pending" ${donation.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                <option value="Completed" ${donation.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                <option value="Failed" ${donation.status === 'Failed' ? 'selected' : ''}>Failed</option>
+                <option value="Refunded" ${donation.status === 'Refunded' ? 'selected' : ''}>Refunded</option>
+              </select>
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes</label>
+            <textarea id="donationNotes" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" rows="3" placeholder="Any additional notes...">${escapeHtml(donation.notes || '')}</textarea>
+          </div>
+        </div>
+      `;
+    }
+
+    static handleDonationFormSubmit(id, isNew) {
+      const donorName = document.getElementById('donorName').value;
+      const donorEmail = document.getElementById('donorEmail').value;
+      const amount = parseFloat(document.getElementById('donationAmount').value);
+      const currency = document.getElementById('donationCurrency').value;
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const status = document.getElementById('donationStatus').value;
+      const notes = document.getElementById('donationNotes').value;
+
+      if (!donorName || !donorEmail || !amount) {
+        ToastManager.show('Please fill in all required fields', 'error');
+        return false;
+      }
+
+      const donationData = {
+        donor: donorName,
+        email: donorEmail,
+        amount,
+        currency,
+        paymentMethod,
+        status,
+        notes,
+        updatedAt: nowISO()
+      };
+
+      try {
+        if (isNew) {
+          DataManager.create('donations', {
+            ...donationData,
+            id: uid('don'),
+            createdAt: nowISO()
+          });
+          ActivityManager.push({
+            actor: 'Admin',
+            action: 'Created new donation',
+            entity: 'donations',
+            entityData: { donor: donorName, amount }
+          });
+          ToastManager.show('Donation created successfully', 'success');
+        } else {
+          DataManager.update('donations', id, donationData);
+          ActivityManager.push({
+            actor: 'Admin',
+            action: `Updated donation from ${donorName}`,
+            entity: 'donations',
+            entityId: id
+          });
+          ToastManager.show('Donation updated successfully', 'success');
+        }
+        
+        this.renderDonations();
+        return true;
+      } catch (error) {
+        ToastManager.show(`Error saving donation: ${error.message}`, 'error');
+        return false;
+      }
+    }
+
+    // ============================================================================
+    // UTILITY METHODS FOR OTHER ENTITIES
+    // ============================================================================
+    static filterItems(items, filter, entity) {
+      if (!filter) return items;
+      
+      const lowerFilter = filter.toLowerCase();
+      return items.filter(item => {
+        // Search in common fields
+        const searchableFields = ['title', 'name', 'email', 'description', 'donor', 'author', 'subject', 'slug'];
+        return searchableFields.some(field => 
+          item[field] && String(item[field]).toLowerCase().includes(lowerFilter)
+        );
+      });
+    }
+
+    static sortItems(items, sort, entity) {
+      const sorted = [...items];
+      
+      switch (sort) {
+        case 'Newest':
+          return sorted.sort((a, b) => new Date(b.createdAt || b.joinDate || b.since) - new Date(a.createdAt || a.joinDate || a.since));
+        case 'Oldest':
+          return sorted.sort((a, b) => new Date(a.createdAt || a.joinDate || a.since) - new Date(b.createdAt || b.joinDate || b.since));
+        case 'A-Z':
+          return sorted.sort((a, b) => (a.title || a.name || a.donor || '').localeCompare(b.title || b.name || b.donor || ''));
+        case 'Z-A':
+          return sorted.sort((a, b) => (b.title || b.name || b.donor || '').localeCompare(a.title || a.name || a.donor || ''));
+        case 'Amount High':
+          return entity === 'donations' ? sorted.sort((a, b) => (b.amount || 0) - (a.amount || 0)) : sorted;
+        case 'Amount Low':
+          return entity === 'donations' ? sorted.sort((a, b) => (a.amount || 0) - (b.amount || 0)) : sorted;
+        default:
+          return sorted;
+      }
+    }
+
+    static paginateItems(items, page, pageSize) {
+      const total = items.length;
+      const pages = Math.max(1, Math.ceil(total / pageSize));
+      const start = (page - 1) * pageSize;
+      const paginatedItems = items.slice(start, start + pageSize);
+      
+      return {
+        items: paginatedItems,
+        page,
+        pages,
+        total,
+        hasPrev: page > 1,
+        hasNext: page < pages
+      };
+    }
+
+    // ============================================================================
+    // VIEW ROUTING
+    // ============================================================================
+    static setActiveView(view) {
+      this.state.currentView = view;
+      
+      // Update navigation buttons
+      document.querySelectorAll('.sidebar-item').forEach(btn => {
+        if (btn.dataset.view === view) {
+          btn.classList.add('bg-blue-50', 'dark:bg-blue-900', 'text-blue-600', 'dark:text-blue-400');
+        } else {
+          btn.classList.remove('bg-blue-50', 'dark:bg-blue-900', 'text-blue-600', 'dark:text-blue-400');
+        }
+      });
+
+      // Render the appropriate view
+      switch (view) {
+        case 'overview':
+          this.renderOverview();
+          break;
+        case 'page-manager':
+          this.renderPageManager();
+          break;
+        case 'donations':
+          this.renderDonations();
+          break;
+        case 'volunteers':
+          this.renderEntityList('volunteers');
+          break;
+        case 'programs-module':
+          this.renderEntityList('programs');
+          break;
+        case 'success-stories-module':
+          this.renderEntityList('stories');
+          break;
+        case 'partners':
+          this.renderEntityList('partners');
+          break;
+        case 'users':
+          this.renderEntityList('users');
+          break;
+        case 'contacts':
+          this.renderEntityList('contacts');
+          break;
+        case 'media':
+          this.renderMediaLibrary();
+          break;
+        case 'settings':
+          this.renderSettings();
+          break;
+        case 'api':
+          this.renderApiIntegration();
+          break;
+        default:
+          this.renderOverview();
+      }
+    }
+
+    // Placeholder for other entity list renderers
+    static renderEntityList(entity) {
+      // Simplified implementation for other entities
+      this.main.innerHTML = `
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">${entity.charAt(0).toUpperCase() + entity.slice(1)}</h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">This section is under development.</p>
+          <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors" onclick="DashboardRenderer.setActiveView('overview')">
+            Return to Overview
+          </button>
+        </div>
+      `;
+    }
+
+    static renderMediaLibrary() {
+      this.main.innerHTML = `
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Media Library</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Manage all images and files for your website</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+          <div class="text-center py-8">
+            <i class="fas fa-images text-4xl text-gray-400 mb-4"></i>
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">Media Library</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Upload and manage images for your website pages</p>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <i class="fas fa-upload mr-2"></i> Upload Media
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    static renderSettings() {
+      const settings = DataManager.data.settings;
+      
+      this.main.innerHTML = `
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Settings</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Configure your dashboard and site settings</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">General Settings</h3>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Site Title</label>
+              <input type="text" id="siteTitle" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(settings.siteTitle)}">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Contact Email</label>
+              <input type="email" id="contactEmail" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(settings.contactEmail)}">
+            </div>
+            <div class="flex justify-end">
+              <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" id="saveSettingsBtn">Save Settings</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+        const siteTitle = document.getElementById('siteTitle').value;
+        const contactEmail = document.getElementById('contactEmail').value;
+        
+        DataManager.data.settings.siteTitle = siteTitle;
+        DataManager.data.settings.contactEmail = contactEmail;
+        DataManager.save();
+        
+        ToastManager.show('Settings saved successfully', 'success');
+      });
+    }
+
+    static renderApiIntegration() {
+      this.main.innerHTML = `
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">API Integration</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400">Connect your dashboard to external services</p>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+          <div class="text-center py-8">
+            <i class="fas fa-code text-4xl text-gray-400 mb-4"></i>
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">API Integration</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">Connect your dashboard to external APIs and services</p>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <i class="fas fa-plug mr-2"></i> Configure API
+            </button>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  // ============================================================================
+  // 15. INITIALIZATION
+  // ============================================================================
+  function initializeDashboard() {
+    // Initialize data management
+    DataManager.initialize();
+    
+    // Initialize session
+    const session = SessionManager.load();
+    if (session.theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+    
+    // Set up navigation
+    document.querySelectorAll('.sidebar-item[data-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        DashboardRenderer.setActiveView(btn.dataset.view);
+      });
+    });
+
+    // Set up pages submenu toggle
+    document.getElementById('pagesToggle')?.addEventListener('click', () => {
+      const submenu = document.getElementById('pagesSubmenu');
+      const arrow = document.getElementById('pagesArrow');
+      
+      submenu.classList.toggle('hidden');
+      arrow.classList.toggle('rotate-180');
+    });
+
+    // Set up page submenu items
+    document.querySelectorAll('.sidebar-subitem[data-page]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const page = btn.dataset.page;
+        ToastManager.show(`Loading editor for ${page} page`, 'info');
+        // In a real implementation, you would load the specific page editor
+      });
+    });
+    
+    // Set up sidebar toggle
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('hidden');
+      sidebar.classList.toggle('md:block');
+    });
+    
+    // Set up profile dropdown
+    document.getElementById('profileBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.getElementById('profileDrop').classList.toggle('hidden');
+    });
+    
+    // Set up notifications dropdown
+    document.getElementById('notiBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.getElementById('notiDrop').classList.toggle('hidden');
+    });
+    
+    // Set up theme toggle
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      SessionManager.setTheme(isDark ? 'dark' : 'light');
+      DataManager.data.settings.darkMode = isDark;
+      DataManager.save();
+      ToastManager.show(`Theme changed to ${isDark ? 'dark' : 'light'} mode`, 'success');
+    });
+    
+    // Set up global search
+    const globalSearch = document.getElementById('globalSearch');
+    if (globalSearch) {
+      globalSearch.addEventListener('input', debounce((e) => {
+        const query = e.target.value.trim();
+        if (query) {
+          const results = DataManager.search(query);
+          // In a real implementation, you would show search results
+          console.log('Search results:', results);
+        }
+      }, 500));
+    }
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', () => {
+      document.getElementById('profileDrop').classList.add('hidden');
+      document.getElementById('notiDrop').classList.add('hidden');
+    });
+    
+    // Set up profile editor
+    document.getElementById('openProfileEditor').addEventListener('click', () => {
+      const admin = DataManager.data.users.find(u => u.role === 'Admin') || DataManager.data.users[0];
+      
+      ModalManager.open({
+        title: 'Edit Profile',
+        body: `
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <img id="profileAvatar" src="${admin.avatar || 'https://picsum.photos/seed/admin/100/100'}" 
+                class="w-16 h-16 rounded-full object-cover">
+              <div>
+                <button type="button" id="changeAvatar" class="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-700">
+                  Change Avatar
+                </button>
+                <input type="file" id="avatarUpload" class="hidden" accept="image/*">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                <input type="text" id="profileName" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(admin.name)}">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                <input type="email" id="profileEmail" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(admin.email)}">
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
+                <input type="tel" id="profilePhone" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" value="${escapeHtml(admin.phone || '')}">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Role</label>
+                <select id="profileRole" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2">
+                  ${config.userRoles.map(role => `
+                    <option value="${role}" ${role === admin.role ? 'selected' : ''}>${role}</option>
+                  `).join('')}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bio</label>
+              <textarea id="profileBio" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" rows="3" placeholder="Tell us about yourself...">${escapeHtml(admin.bio || '')}</textarea>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">New Password</label>
+                <input type="password" id="newPassword" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" placeholder="New password">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md px-3 py-2" placeholder="Confirm new password">
+              </div>
+            </div>
+          </div>
+        `,
+        onConfirm: () => {
+          const name = document.getElementById('profileName').value;
+          const email = document.getElementById('profileEmail').value;
+          const phone = document.getElementById('profilePhone').value;
+          const role = document.getElementById('profileRole').value;
+          const bio = document.getElementById('profileBio').value;
+          const avatar = document.getElementById('profileAvatar').src;
+          const newPassword = document.getElementById('newPassword').value;
+          const confirmPassword = document.getElementById('confirmPassword').value;
+          
+          if (!name || !email) {
+            ToastManager.show('Please fill in all required fields', 'error');
+            return false;
+          }
+          
+          if (newPassword && newPassword !== confirmPassword) {
+            ToastManager.show('Passwords do not match', 'error');
+            return false;
+          }
+          
+          // Update user data
+          Object.assign(admin, { name, email, phone, role, bio, avatar });
+          DataManager.save();
+          
+          // Update UI
+          document.getElementById('adminName').textContent = name;
+          document.getElementById('profileEmail').textContent = email;
+          document.getElementById('adminAvatar').src = avatar;
+          
+          ToastManager.show('Profile updated successfully', 'success');
+          ActivityManager.push({
+            actor: 'Admin',
+            action: 'Updated profile information'
+          });
+          
+          return true;
+        }
+      });
+      
+      // Avatar upload handler
+      document.getElementById('changeAvatar').addEventListener('click', () => {
+        document.getElementById('avatarUpload').click();
+      });
+      
+      document.getElementById('avatarUpload').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            document.getElementById('profileAvatar').src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    });
+    
+    // Set up logout
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      if (confirm('Are you sure you want to log out?')) {
+        ToastManager.show('You have been logged out', 'info');
+        ActivityManager.push({
+          actor: 'Admin',
+          action: 'Logged out of the system'
+        });
+        SessionManager.clear();
+        // In a real app, you would redirect to login page
+        // window.location.href = '/login';
+      }
+    });
+    
+    // Set up notifications
+    document.getElementById('clearNoti').addEventListener('click', () => {
+      NotificationManager.clear();
+      ToastManager.show('Notifications cleared', 'success');
+    });
+    
+    // Initialize notifications
+    NotificationManager.updateBadge();
+    
+    // Add some demo notifications if none exist
+    if (NotificationManager.load().length === 0) {
+      NotificationManager.push({
+        title: 'Welcome to HopeLink Admin',
+        message: 'Your dashboard is ready to use. Start by exploring the different sections.',
+        type: 'info'
+      });
+      
+      NotificationManager.push({
+        title: 'New Feature Available',
+        message: 'Check out the new analytics charts in the overview section.',
+        type: 'info'
+      });
+    }
+    
+    // Add some demo activity
+    if (ActivityManager.load().length === 0) {
+      ActivityManager.push({
+        actor: 'System',
+        action: 'Dashboard initialized successfully'
+      });
+    }
+    
+    // Start with overview view
+    DashboardRenderer.setActiveView('overview');
+    
+    // Expose some utilities for debugging
+    window.Dashboard = {
+      DataManager,
+      DashboardRenderer,
+      ToastManager,
+      ModalManager,
+      ActivityManager,
+      NotificationManager,
+      ChartManager
+    };
+  }
+
+  // Start the dashboard when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeDashboard);
+  } else {
+    initializeDashboard();
+  }
+})();
+
+// ============================================================================
+// END OF HOPELINK ADMIN DASHBOARD JAVASCRIPT
+// ============================================================================
+  </script>
+</body>
+</html>

@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication - HopeLink Mahama</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .auth-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .auth-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .form-input {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+        .tab-active {
+            background: linear-gradient(135deg, #3B82F6, #10B981);
+            color: white;
+        }
+        .loading-spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            color: white;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .notification.success {
+            background: linear-gradient(135deg, #10B981, #059669);
+        }
+        .notification.error {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+        }
+        .notification.info {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+        }
+        .otp-input {
+            width: 3rem;
+            height: 3rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .otp-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .resend-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563EB, #1D4ED8);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-success:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.4);
+        }
+        .btn-purple {
+            background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-purple:hover {
+            background: linear-gradient(135deg, #7C3AED, #6D28D9);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.4);
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-r from-blue-500 to-green-500 p-3 rounded-xl">
+                        <i class="fas fa-hands-helping text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-xl text-gray-800">HopeLink</div>
+                        <div class="text-xs text-green-500 font-semibold">Mahama Refugee Camp</div>
+                    </div>
+                </div>
+                <a href="index.html" class="btn-primary px-6 py-2.5 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
+                    <i class="fas fa-home"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <div class="flex items-center space-x-3">
+            <i id="notificationIcon" class="fas fa-check-circle"></i>
+            <span id="notificationMessage">Action completed successfully!</span>
+            <button onclick="hideNotification()" class="ml-4 opacity-70 hover:opacity-100">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Authentication Section -->
+    <div class="auth-container pt-20">
+        <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="auth-card w-full max-w-md">
+                <div class="p-8">
+                    <!-- Tab Navigation -->
+                    <div class="flex border-b border-gray-200 mb-8">
+                        <button id="login-tab" class="flex-1 py-4 px-6 text-center font-semibold text-gray-500 hover:text-blue-500 transition tab-active">
+                            Sign In
+                        </button>
+                        <button id="signup-tab" class="flex-1 py-4 px-6 text-center font-semibold text-gray-500 hover:text-blue-500 transition">
+                            Sign Up
+                        </button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="login-form-container">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">Welcome Back</h2>
+                        <p class="text-gray-600 text-center mb-8">Sign in to your HopeLink account</p>
+
+                        <form id="loginForm" class="space-y-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Email Address</label>
+                                <input type="email" id="login-email" required 
+                                       class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="Enter your email">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Password</label>
+                                <input type="password" id="login-password" required 
+                                       class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="Enter your password">
+                            </div>
+
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" id="remember-me" class="rounded border-gray-300 text-blue-500 focus:ring-blue-500">
+                                    <span class="text-gray-600">Remember me</span>
+                                </label>
+                                <button type="button" id="forgot-password-btn" class="text-blue-500 hover:text-blue-600 text-sm font-medium">
+                                    Forgot password?
+                                </button>
+                            </div>
+
+                            <div id="login-error" class="hidden bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm"></div>
+                            <div id="login-success" class="hidden bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm"></div>
+
+                            <button type="submit" class="w-full btn-primary py-4 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                                <span id="login-button-text">Sign In</span>
+                                <div id="login-spinner" class="loading-spinner hidden"></div>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Signup Form -->
+                    <div id="signup-form-container" class="hidden">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">Create Account</h2>
+                        <p class="text-gray-600 text-center mb-8">Join HopeLink community today</p>
+
+                        <form id="signupForm" class="space-y-6">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">First Name</label>
+                                    <input type="text" id="signup-firstname" required 
+                                           class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                           placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">Last Name</label>
+                                    <input type="text" id="signup-lastname" required 
+                                           class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                           placeholder="Doe">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Email Address</label>
+                                <input type="email" id="signup-email" required 
+                                       class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="john.doe@example.com">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Password</label>
+                                <input type="password" id="signup-password" required 
+                                       class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="Create a strong password">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Confirm Password</label>
+                                <input type="password" id="signup-confirm-password" required 
+                                       class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="Confirm your password">
+                            </div>
+
+                            <div class="flex items-start space-x-3">
+                                <input type="checkbox" id="terms-agreement" required 
+                                       class="rounded border-gray-300 text-blue-500 focus:ring-blue-500 w-5 h-5 mt-1">
+                                <label for="terms-agreement" class="text-gray-600 text-sm">
+                                    I agree to the <a href="#" class="text-blue-500 hover:text-blue-600 font-medium">Terms of Service</a> and <a href="#" class="text-blue-500 hover:text-blue-600 font-medium">Privacy Policy</a>
+                                </label>
+                            </div>
+
+                            <div id="signup-error" class="hidden bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm"></div>
+                            <div id="signup-success" class="hidden bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm"></div>
+
+                            <button type="submit" class="w-full btn-success py-4 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                                <span id="signup-button-text">Create Account</span>
+                                <div id="signup-spinner" class="loading-spinner hidden"></div>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Forgot Password - Email Input -->
+                    <div id="forgot-password-container" class="hidden">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">Reset Password</h2>
+                        <p class="text-gray-600 text-center mb-8">Enter your email to receive a verification code</p>
+
+                        <form id="forgotPasswordForm" class="space-y-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Email Address</label>
+                                <input type="email" id="forgot-password-email" required 
+                                       class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="Enter your email">
+                            </div>
+
+                            <div id="forgot-password-error" class="hidden bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm"></div>
+                            <div id="forgot-password-success" class="hidden bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm"></div>
+
+                            <button type="submit" class="w-full btn-purple py-4 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                                <span id="forgot-password-button-text">Send Verification Code</span>
+                                <div id="forgot-password-spinner" class="loading-spinner hidden"></div>
+                            </button>
+
+                            <button type="button" id="back-to-login" class="w-full text-blue-500 hover:text-blue-600 font-semibold py-2 transition flex items-center justify-center space-x-2">
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Back to Login</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- OTP Verification -->
+                    <div id="otp-verification-container" class="hidden">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">Verify Code</h2>
+                        <p class="text-gray-600 text-center mb-2">Enter the 6-digit code sent to your email</p>
+                        <p id="otp-email" class="text-blue-600 text-center mb-8 font-medium"></p>
+
+                        <form id="otpVerificationForm" class="space-y-6">
+                            <div class="flex justify-center space-x-3 mb-6">
+                                <input type="text" maxlength="1" class="otp-input" data-index="0" oninput="handleOtpInput(0)" onkeydown="handleOtpKeyDown(0, event)">
+                                <input type="text" maxlength="1" class="otp-input" data-index="1" oninput="handleOtpInput(1)" onkeydown="handleOtpKeyDown(1, event)">
+                                <input type="text" maxlength="1" class="otp-input" data-index="2" oninput="handleOtpInput(2)" onkeydown="handleOtpKeyDown(2, event)">
+                                <input type="text" maxlength="1" class="otp-input" data-index="3" oninput="handleOtpInput(3)" onkeydown="handleOtpKeyDown(3, event)">
+                                <input type="text" maxlength="1" class="otp-input" data-index="4" oninput="handleOtpInput(4)" onkeydown="handleOtpKeyDown(4, event)">
+                                <input type="text" maxlength="1" class="otp-input" data-index="5" oninput="handleOtpInput(5)" onkeydown="handleOtpKeyDown(5, event)">
+                            </div>
+
+                            <!-- Timer and Resend -->
+                            <div class="text-center space-y-3">
+                                <div id="otp-timer" class="text-sm text-gray-600 font-medium">
+                                    Code expires in: <span id="timer">10:00</span>
+                                </div>
+                                <button type="button" id="resend-otp-btn" class="text-blue-500 hover:text-blue-600 font-medium transition-colors resend-btn" disabled>
+                                    Resend Code (<span id="resend-timer">60</span>s)
+                                </button>
+                            </div>
+
+                            <div id="otp-error" class="hidden bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm"></div>
+
+                            <button type="submit" class="w-full btn-primary py-4 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                                <span id="otp-button-text">Verify Code</span>
+                                <div id="otp-spinner" class="loading-spinner hidden"></div>
+                            </button>
+
+                            <button type="button" id="back-to-email" class="w-full text-blue-500 hover:text-blue-600 font-semibold py-3 transition-colors flex items-center justify-center space-x-2">
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Back to Email</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- New Password -->
+                    <div id="new-password-container" class="hidden">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">New Password</h2>
+                        <p class="text-gray-600 text-center mb-8">Create your new password</p>
+
+                        <form id="newPasswordForm" class="space-y-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">New Password</label>
+                                <input type="password" id="new-password" required 
+                                       class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="Enter new password">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Confirm New Password</label>
+                                <input type="password" id="confirm-new-password" required 
+                                       class="form-input w-full p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                       placeholder="Confirm new password">
+                            </div>
+
+                            <div id="new-password-error" class="hidden bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm"></div>
+
+                            <button type="submit" class="w-full btn-success py-4 rounded-lg font-semibold flex items-center justify-center space-x-2">
+                                <span id="new-password-button-text">Reset Password</span>
+                                <div id="new-password-spinner" class="loading-spinner hidden"></div>
+                            </button>
+
+                            <button type="button" id="back-to-otp" class="w-full text-blue-500 hover:text-blue-600 font-semibold py-3 transition-colors flex items-center justify-center space-x-2">
+                                <i class="fas fa-arrow-left"></i>
+                                <span>Back to Verification</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Reset Success -->
+                    <div id="reset-success-container" class="hidden">
+                        <div class="text-center space-y-6">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                                <i class="fas fa-check text-green-500 text-2xl"></i>
+                            </div>
+                            <h2 class="text-3xl font-bold text-gray-800">Password Reset!</h2>
+                            <p class="text-gray-600">Your password has been successfully reset.</p>
+                            <div class="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl text-sm">
+                                You can now sign in with your new password.
+                            </div>
+                            <button type="button" id="go-to-login" class="w-full btn-primary py-4 rounded-lg font-semibold transition-all duration-300">
+                                Sign In Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================================
+        // WORKING PASSWORD RESET SYSTEM WITH PROFESSIONAL COLORS
+        // ============================================================================
+
+        // Global state
+        let currentView = 'login';
+        let currentResetEmail = '';
+        let otpCode = '';
+        let otpTimer;
+        let resendTimer;
+
+        // Demo users for login functionality
+        const demoUsers = [
+            {
+                email: "admin@hopelink.org",
+                password: "admin123",
+                name: "Administrator",
+                role: "admin"
+            },
+            {
+                email: "user@example.com",
+                password: "user123",
+                name: "Demo User",
+                role: "user"
+            }
+        ];
+
+        // Notification functions
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const icon = document.getElementById('notificationIcon');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            notification.className = `notification ${type}`;
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 
+                           type === 'error' ? 'fas fa-exclamation-circle' : 
+                           'fas fa-info-circle';
+            messageEl.textContent = message;
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                hideNotification();
+            }, 5000);
+        }
+
+        function hideNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.remove('show');
+        }
+
+        // Utility functions
+        function showLoading(buttonId, spinnerId, buttonTextId, loadingText) {
+            const button = document.querySelector(buttonId);
+            const spinner = document.getElementById(spinnerId);
+            const buttonText = document.getElementById(buttonTextId);
+            
+            button.disabled = true;
+            buttonText.textContent = loadingText;
+            spinner.classList.remove('hidden');
+        }
+
+        function hideLoading(buttonId, spinnerId, buttonTextId, originalText) {
+            const button = document.querySelector(buttonId);
+            const spinner = document.getElementById(spinnerId);
+            const buttonText = document.getElementById(buttonTextId);
+            
+            button.disabled = false;
+            buttonText.textContent = originalText;
+            spinner.classList.add('hidden');
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function hideError(elementId) {
+            const element = document.getElementById(elementId);
+            element.classList.add('hidden');
+        }
+
+        function showSuccess(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        // Generate secure OTP
+        function generateOTP() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        // ============================================================================
+        // LOGIN FUNCTIONALITY - PROFESSIONAL IMPLEMENTATION
+        // ============================================================================
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            showLoading('#loginForm button[type="submit"]', 'login-spinner', 'login-button-text', 'Signing In...');
+            hideError('login-error');
+            hideError('login-success');
+
+            try {
+                // Validate inputs
+                if (!email || !password) {
+                    throw new Error('Please fill in all fields');
+                }
+
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                // Check credentials against demo users
+                const user = demoUsers.find(u => u.email === email && u.password === password);
+                
+                if (!user) {
+                    throw new Error('Invalid email or password');
+                }
+
+                // Save remembered email
+                if (rememberMe) {
+                    localStorage.setItem('rememberedEmail', email);
+                } else {
+                    localStorage.removeItem('rememberedEmail');
+                }
+
+                // Store user session
+                sessionStorage.setItem('currentUser', JSON.stringify({
+                    email: user.email,
+                    name: user.name,
+                    role: user.role,
+                    loginTime: new Date().toISOString()
+                }));
+
+                showSuccess('login-success', `Welcome back, ${user.name}! Redirecting...`);
+                showNotification(`Welcome back, ${user.name}!`, 'success', `Role: ${user.role.toUpperCase()}`);
+
+                // Redirect based on role
+                setTimeout(() => {
+                    if (user.role === 'admin') {
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
+                }, 2000);
+
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('login-error', error.message);
+                showNotification('Login failed', 'error', error.message);
+            } finally {
+                hideLoading('#loginForm button[type="submit"]', 'login-spinner', 'login-button-text', 'Sign In');
+            }
+        }
+
+        // ============================================================================
+        // SIGNUP FUNCTIONALITY - PROFESSIONAL IMPLEMENTATION
+        // ============================================================================
+
+        async function handleSignup(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('signup-firstname').value;
+            const lastName = document.getElementById('signup-lastname').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const termsAgreed = document.getElementById('terms-agreement').checked;
+            
+            showLoading('#signupForm button[type="submit"]', 'signup-spinner', 'signup-button-text', 'Creating Account...');
+            hideError('signup-error');
+            hideError('signup-success');
+
+            try {
+                // Validate inputs
+                if (!firstName || !lastName || !email || !password || !confirmPassword) {
+                    throw new Error('Please fill in all fields');
+                }
+
+                if (!termsAgreed) {
+                    throw new Error('Please agree to the Terms of Service and Privacy Policy');
+                }
+
+                if (password !== confirmPassword) {
+                    throw new Error('Passwords do not match');
+                }
+
+                if (password.length < 6) {
+                    throw new Error('Password must be at least 6 characters long');
+                }
+
+                // Check if user already exists
+                const existingUser = demoUsers.find(u => u.email === email);
+                if (existingUser) {
+                    throw new Error('An account with this email already exists');
+                }
+
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Create new user
+                const newUser = {
+                    email: email,
+                    password: password,
+                    name: `${firstName} ${lastName}`,
+                    role: 'user'
+                };
+
+                demoUsers.push(newUser);
+
+                showSuccess('signup-success', 'Account created successfully! Redirecting to login...');
+                showNotification('Account created!', 'success', 'Welcome to HopeLink!');
+
+                // Clear form and switch to login
+                setTimeout(() => {
+                    document.getElementById('signupForm').reset();
+                    switchAuthView('login');
+                    document.getElementById('login-email').value = email;
+                }, 2000);
+
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError('signup-error', error.message);
+                showNotification('Signup failed', 'error', error.message);
+            } finally {
+                hideLoading('#signupForm button[type="submit"]', 'signup-spinner', 'signup-button-text', 'Create Account');
+            }
+        }
+
+        // ============================================================================
+        // EMAIL SENDING SERVICE
+        // ============================================================================
+
+        async function sendOTPDemo(email, otp) {
+            // Store OTP in localStorage for demo purposes
+            localStorage.setItem(`otp_${email}`, JSON.stringify({
+                code: otp,
+                expires: Date.now() + 10 * 60 * 1000, // 10 minutes
+                attempts: 0
+            }));
+
+            // Show OTP in notification for demo
+            showNotification(
+                `Password reset code sent to ${email}`, 
+                'success',
+                `Your OTP is: ${otp} (Expires in 10 minutes)`
+            );
+
+            return true;
+        }
+
+        // ============================================================================
+        // OTP VERIFICATION
+        // ============================================================================
+
+        async function verifyOTP(email, enteredOtp) {
+            try {
+                // Check demo storage
+                const stored = localStorage.getItem(`otp_${email}`);
+                if (!stored) {
+                    return { valid: false, error: 'No OTP found. Please request a new one.' };
+                }
+
+                const otpData = JSON.parse(stored);
+                
+                // Check expiration
+                if (Date.now() > otpData.expires) {
+                    localStorage.removeItem(`otp_${email}`);
+                    return { valid: false, error: 'OTP has expired. Please request a new one.' };
+                }
+
+                // Check attempts
+                if (otpData.attempts >= 5) {
+                    localStorage.removeItem(`otp_${email}`);
+                    return { valid: false, error: 'Too many attempts. Please request a new OTP.' };
+                }
+
+                // Verify OTP
+                if (otpData.code === enteredOtp) {
+                    localStorage.removeItem(`otp_${email}`);
+                    return { valid: true };
+                } else {
+                    // Increment attempts
+                    otpData.attempts++;
+                    localStorage.setItem(`otp_${email}`, JSON.stringify(otpData));
+                    
+                    const remaining = 5 - otpData.attempts;
+                    return { 
+                        valid: false, 
+                        error: `Invalid code. ${remaining} attempts remaining.` 
+                    };
+                }
+            } catch (error) {
+                return { valid: false, error: 'Verification failed. Please try again.' };
+            }
+        }
+
+        // ============================================================================
+        // OTP UI HANDLERS
+        // ============================================================================
+
+        function handleOtpInput(index) {
+            const inputs = document.querySelectorAll('.otp-input');
+            const currentInput = inputs[index];
+            const value = currentInput.value;
+            
+            // Only allow numbers
+            if (value && !/^\d$/.test(value)) {
+                currentInput.value = '';
+                return;
+            }
+            
+            // Auto-focus next input
+            if (value && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+            
+            // Auto-submit when all inputs are filled
+            const allFilled = Array.from(inputs).every(input => input.value !== '');
+            if (allFilled) {
+                document.getElementById('otpVerificationForm').dispatchEvent(new Event('submit'));
+            }
+        }
+
+        function handleOtpKeyDown(index, event) {
+            const inputs = document.querySelectorAll('.otp-input');
+            
+            if (event.key === 'Backspace') {
+                if (inputs[index].value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            }
+            
+            if (event.key === 'ArrowLeft' && index > 0) {
+                inputs[index - 1].focus();
+            }
+            if (event.key === 'ArrowRight' && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        }
+
+        function getOtpValue() {
+            const inputs = document.querySelectorAll('.otp-input');
+            return Array.from(inputs).map(input => input.value).join('');
+        }
+
+        function resetOtpInputs() {
+            const inputs = document.querySelectorAll('.otp-input');
+            inputs.forEach(input => {
+                input.value = '';
+            });
+            inputs[0].focus();
+        }
+
+        // ============================================================================
+        // TIMER FUNCTIONS
+        // ============================================================================
+
+        function startOtpTimer() {
+            clearInterval(otpTimer);
+            let timeLeft = 10 * 60; // 10 minutes
+            
+            otpTimer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(otpTimer);
+                    showError('otp-error', 'OTP has expired. Please request a new one.');
+                }
+                
+                timeLeft--;
+            }, 1000);
+        }
+
+        function startResendTimer() {
+            clearInterval(resendTimer);
+            let timeLeft = 60;
+            const resendBtn = document.getElementById('resend-otp-btn');
+            
+            resendBtn.disabled = true;
+            document.getElementById('resend-timer').textContent = timeLeft;
+            
+            resendTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('resend-timer').textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(resendTimer);
+                    resendBtn.disabled = false;
+                    document.getElementById('resend-timer').textContent = '0';
+                }
+            }, 1000);
+        }
+
+        // ============================================================================
+        // PASSWORD RESET FLOW
+        // ============================================================================
+
+        async function handleForgotPassword(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('forgot-password-email').value;
+            currentResetEmail = email;
+            
+            showLoading('#forgotPasswordForm button[type="submit"]', 'forgot-password-spinner', 'forgot-password-button-text', 'Sending Code...');
+            hideError('forgot-password-error');
+            hideError('forgot-password-success');
+
+            try {
+                // Generate OTP
+                otpCode = generateOTP();
+                
+                // Send OTP via demo service
+                await sendOTPDemo(email, otpCode);
+
+                showSuccess('forgot-password-success', 'Verification code sent to your email!');
+                
+                // Show OTP verification screen
+                switchAuthView('otp-verification');
+                document.getElementById('otp-email').textContent = email;
+                resetOtpInputs();
+                startOtpTimer();
+                startResendTimer();
+
+            } catch (error) {
+                console.error('Password reset error:', error);
+                showError('forgot-password-error', 'Failed to send verification code. Please try again.');
+                showNotification('Reset failed', 'error', 'Please check your email address.');
+            } finally {
+                hideLoading('#forgotPasswordForm button[type="submit"]', 'forgot-password-spinner', 'forgot-password-button-text', 'Send Verification Code');
+            }
+        }
+
+        async function handleOtpVerification(e) {
+            e.preventDefault();
+            
+            const otp = getOtpValue();
+            
+            if (otp.length !== 6) {
+                showError('otp-error', 'Please enter the complete 6-digit code.');
+                return;
+            }
+            
+            showLoading('#otpVerificationForm button[type="submit"]', 'otp-spinner', 'otp-button-text', 'Verifying...');
+            hideError('otp-error');
+
+            try {
+                const verification = await verifyOTP(currentResetEmail, otp);
+                
+                if (verification.valid) {
+                    showNotification('Code verified!', 'success', 'You can now set your new password.');
+                    
+                    // Move to new password screen
+                    setTimeout(() => {
+                        switchAuthView('new-password');
+                        resetOtpInputs();
+                        clearInterval(otpTimer);
+                        clearInterval(resendTimer);
+                    }, 1000);
+                } else {
+                    throw new Error(verification.error);
+                }
+                
+            } catch (error) {
+                showError('otp-error', error.message);
+                showNotification('Verification failed', 'error', error.message);
+                resetOtpInputs();
+            } finally {
+                hideLoading('#otpVerificationForm button[type="submit"]', 'otp-spinner', 'otp-button-text', 'Verify Code');
+            }
+        }
+
+        async function handleNewPassword(e) {
+            e.preventDefault();
+            
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
+            
+            if (newPassword !== confirmPassword) {
+                showError('new-password-error', 'Passwords do not match.');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                showError('new-password-error', 'Password must be at least 6 characters long.');
+                return;
+            }
+            
+            showLoading('#newPasswordForm button[type="submit"]', 'new-password-spinner', 'new-password-button-text', 'Resetting Password...');
+            hideError('new-password-error');
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                showNotification('Password reset!', 'success', 'You can now sign in with your new password.');
+                
+                // Show success screen
+                setTimeout(() => {
+                    switchAuthView('reset-success');
+                }, 1000);
+                
+            } catch (error) {
+                showError('new-password-error', 'Failed to reset password. Please try again.');
+                showNotification('Reset failed', 'error', 'Please try again.');
+            } finally {
+                hideLoading('#newPasswordForm button[type="submit"]', 'new-password-spinner', 'new-password-button-text', 'Reset Password');
+            }
+        }
+
+        async function handleResendOtp() {
+            try {
+                otpCode = generateOTP();
+                await sendOTPDemo(currentResetEmail, otpCode);
+                
+                resetOtpInputs();
+                startOtpTimer();
+                startResendTimer();
+                
+            } catch (error) {
+                showNotification('Failed to resend code', 'error', 'Please try again.');
+            }
+        }
+
+        // ============================================================================
+        // VIEW MANAGEMENT
+        // ============================================================================
+
+        function switchAuthView(view) {
+            currentView = view;
+            
+            // Update tabs
+            document.getElementById('login-tab').classList.toggle('tab-active', view === 'login');
+            document.getElementById('signup-tab').classList.toggle('tab-active', view === 'signup');
+            document.getElementById('login-tab').classList.toggle('text-gray-500', view !== 'login');
+            document.getElementById('signup-tab').classList.toggle('text-gray-500', view !== 'signup');
+            
+            // Update containers
+            document.getElementById('login-form-container').classList.toggle('hidden', view !== 'login');
+            document.getElementById('signup-form-container').classList.toggle('hidden', view !== 'signup');
+            document.getElementById('forgot-password-container').classList.toggle('hidden', view !== 'forgot-password');
+            document.getElementById('otp-verification-container').classList.toggle('hidden', view !== 'otp-verification');
+            document.getElementById('new-password-container').classList.toggle('hidden', view !== 'new-password');
+            document.getElementById('reset-success-container').classList.toggle('hidden', view !== 'reset-success');
+            
+            // Clear errors
+            document.querySelectorAll('.error-message, .success-message').forEach(el => {
+                el.classList.add('hidden');
+            });
+        }
+
+        // ============================================================================
+        // INITIALIZATION
+        // ============================================================================
+
+        function initializeTabs() {
+            document.getElementById('login-tab').addEventListener('click', () => switchAuthView('login'));
+            document.getElementById('signup-tab').addEventListener('click', () => switchAuthView('signup'));
+            document.getElementById('forgot-password-btn').addEventListener('click', () => switchAuthView('forgot-password'));
+            document.getElementById('back-to-login').addEventListener('click', () => switchAuthView('login'));
+            document.getElementById('back-to-email').addEventListener('click', () => switchAuthView('forgot-password'));
+            document.getElementById('back-to-otp').addEventListener('click', () => switchAuthView('otp-verification'));
+            document.getElementById('go-to-login').addEventListener('click', () => switchAuthView('login'));
+            document.getElementById('resend-otp-btn').addEventListener('click', handleResendOtp);
+        }
+
+        function initializeForms() {
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('signupForm').addEventListener('submit', handleSignup);
+            document.getElementById('forgotPasswordForm').addEventListener('submit', handleForgotPassword);
+            document.getElementById('otpVerificationForm').addEventListener('submit', handleOtpVerification);
+            document.getElementById('newPasswordForm').addEventListener('submit', handleNewPassword);
+        }
+
+        function checkRememberedUser() {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                document.getElementById('login-email').value = rememberedEmail;
+                document.getElementById('remember-me').checked = true;
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTabs();
+            initializeForms();
+            checkRememberedUser();
+            
+            console.log('Professional Authentication System Ready');
+            console.log('Demo Accounts:');
+            console.log('- Admin: admin@hopelink.org / admin123');
+            console.log('- User: user@example.com / user123');
+        });
+
+        // Make functions available globally
+        window.handleOtpInput = handleOtpInput;
+        window.handleOtpKeyDown = handleOtpKeyDown;
+    </script>
+</body>
+</html>

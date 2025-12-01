@@ -14,17 +14,16 @@
             theme: {
                 extend: {
                     colors: {
+                        'primary-blue': '#3B82F6',
+                        'primary-green': '#10B981',
+                        'primary-yellow': '#F59E0B',
+                        'primary-light': '#FEF3C7',
+                        'primary-dark': '#1E293B',
                         'hope-blue': '#007BFF',
                         'warm-yellow': '#FFD93D',
                         'growth-green': '#4CAF50',
                         'soft-purple': '#9C89B8',
                         'calm-teal': '#4FB0C6',
-                        primary: {
-                            blue: '#3B82F6',
-                            green: '#10B981',
-                            yellow: '#FBBF24',
-                            light: '#FEF3C7'
-                        }
                     },
                     fontFamily: {
                         'poppins': ['Poppins', 'sans-serif'],
@@ -34,6 +33,10 @@
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-in-out',
                         'slide-up': 'slideUp 0.5s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'fade-in-up': 'fadeInUp 0.6s ease forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
                     },
                     keyframes: {
                         fadeIn: {
@@ -43,6 +46,14 @@
                         slideUp: {
                             '0%': { transform: 'translateY(20px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
                         }
                     }
                 },
@@ -83,6 +94,9 @@
         .nav-item {
             position: relative;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 500;
         }
         .nav-item::after {
             content: '';
@@ -98,10 +112,70 @@
         .nav-item:hover::after {
             width: 100%;
         }
+        
+        /* Login and Signup button styles */
+        .login-btn {
+            background: transparent;
+            border: 2px solid #3B82F6;
+            color: #3B82F6;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .login-btn:hover {
+            background: #3B82F6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        .signup-btn {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+       
+        /* Opportunities button specific styling */
+        .opportunities-btn {
+            background: #F59E0B;
+            color: #1F2937;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .opportunities-btn:hover {
+            background: #D97706;
+        }
+       
+        /* Logo text sizing */
+        .logo-main {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .logo-sub {
+            font-size: 11px;
+            font-weight: 600;
+        }
+       
+        /* Mobile navigation font sizes */
+        .mobile-nav-item {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
         .donate-btn {
             background: linear-gradient(135deg, #10B981, #059669);
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
             transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
         }
         .donate-btn:hover {
             transform: translateY(-2px);
@@ -109,12 +183,12 @@
         }
         
         /* Enhanced animations */
-        .fade-in {
+        .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.6s ease;
         }
-        .fade-in.visible {
+        .fade-in-up.visible {
             opacity: 1;
             transform: translateY(0);
         }
@@ -379,132 +453,205 @@
                 font-size: 16px; /* Prevents iOS zoom on focus */
             }
         }
+
+        /* Responsive improvements */
+        @media (max-width: 1280px) {
+            .desktop-nav {
+                display: none !important;
+            }
+            .mobile-menu-btn {
+                display: block !important;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            .lg-md\:flex {
+                display: flex !important;
+            }
+            .lg-md\:hidden {
+                display: none !important;
+            }
+            .desktop-nav {
+                display: flex !important;
+            }
+            .mobile-menu-btn {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2 !important;
+            }
+            .section-title {
+                font-size: 2rem !important;
+            }
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+        }
+
+        @media (max-width: 475px) {
+            .hero-title {
+                font-size: 2rem !important;
+            }
+            .section-title {
+                font-size: 1.75rem !important;
+            }
+            .logo-main {
+                font-size: 18px;
+            }
+            .logo-sub {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
-<body class="font-sans">
+<body class="font-sans bg-gray-50 scroll-smooth">
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- Navigation with professional background -->
+    <!-- Navigation -->
     <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
-        <div class="max-w-7xl mx-auto px-4">
+        <div class="max-w-full mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <!-- Enhanced Logo -->
+                <!-- Logo Section -->
+                <div class="flex items-center flex-shrink-0">
                     <div class="flex items-center">
                         <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
                             <i class="fas fa-hands-helping text-white text-xl"></i>
                         </div>
                         <div>
-                            <div class="font-bold text-xl text-gray-800">HopeLink</div>
-                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                            <div class="logo-main text-gray-800">HopeLink</div>
+                            <div class="logo-sub text-primary-green">Mahama Refugee Camp</div>
                         </div>
                     </div>
                 </div>
-                
+               
                 <!-- Desktop Navigation -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
-                    
-                    <!-- Programs Dropdown -->
-                    <div class="dropdown relative">
-                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
-                            Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content" id="programs-dropdown">
-                            <a href="hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
-                            <a href="youth-empowerment.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
-                            <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                <div class="desktop-nav hidden lg-md:flex items-center flex-1 justify-center">
+                    <div class="flex items-center space-x-3 lg-md:space-x-4 xl:space-x-5">
+                        <a href="./index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Home</a>
+                       
+                        <!-- Programs Dropdown -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="programs">
+                                Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="programs-dropdown">
+                                <a href="./hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
+                                <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
+                                <a href="./mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <a href="about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">who we are</a>
-                    <a href="get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
-                    
-                    <!-- News & Updates -->
-                    <div class="dropdown relative">
-                        <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
-                            News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content" id="news-dropdown">
-                            <a href="news.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Latest News</a>
-                            <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">advertisement</a>
-                            <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                       
+                        <a href="./about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">who we are</a>
+                        <a href="./get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Get Involved</a>
+                       
+                        <!-- News & Updates -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center" data-dropdown="news">
+                                News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="news-dropdown">
+                                <a href="./advertisement.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Advertisement</a>
+                                <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <a href="contact.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
-                    
-                    <!-- Opportunities -->
-                    <div class="dropdown relative">
-                        <button class="nav-item dropdown-btn bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300 flex items-center" data-dropdown="opportunities">
-                            Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="dropdown-content" id="opportunities-dropdown">
-                            <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
-                            <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
-                            <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                       
+                        <a href="./contact.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300">Contact</a>
+                       
+                        <!-- Opportunities -->
+                        <div class="dropdown relative">
+                            <button class="nav-item dropdown-btn opportunities-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition duration-300 flex items-center" data-dropdown="opportunities">
+                                Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="dropdown-content" id="opportunities-dropdown">
+                                <a href="volunteer.html" class="block px-4 py-2 text-primary-blue font-semibold hover:bg-blue-50 transition">Volunteer</a>
+                                <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
+                                <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-4">
-                    <button id="donateButton" class="donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-600 transition transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-heart mr-2"></i>Donate Now
-                    </button>
-                    <button id="mobileMenuButton" class="md:hidden text-gray-600 hover:text-primary-blue transition">
-                        <i class="fas fa-bars text-xl"></i>
+                <!-- Right Section with Login, Signup, and Donate -->
+                <div class="desktop-nav hidden lg-md:flex items-center space-x-2 lg-md:space-x-3 flex-shrink-0">
+                    <a href="login.html" class="login-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                    <a href="signup.html" class="signup-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                        <i class="fas fa-user-plus mr-2"></i>Sign Up
+                    </a>
+                    <button onclick="openModal('donateModal')" class="donate-btn btn-professional bg-primary-green text-white px-4 py-2 lg-md:px-5 lg-md:py-2 rounded-lg transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-heart mr-2"></i>Donate
                     </button>
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="mobile-menu-btn lg-md:hidden text-gray-600 hover:text-primary-blue transition flex-shrink-0">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
-            
+           
             <!-- Mobile Menu -->
-            <div id="mobileMenu" class="mobile-menu">
+            <div id="mobileMenu" class="mobile-menu lg-md:hidden">
                 <div class="px-4 py-2 space-y-3">
-                    <a href="index.html" class="block py-2 text-primary-blue font-semibold border-b border-gray-200 transition">Home</a>
-                    
+                    <a href="./index.html" class="block mobile-nav-item text-gray-600 hover:text-primary-blue transition">Home</a>
+                   
                     <!-- Programs Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
                             Programs <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
-                            <a href="hunger-help.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Hunger Help</a>
-                            <a href="youth-empowerment.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
-                            <a href="mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
+                            <a href="./hunger-help.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Hunger Help</a>
+                            <a href="./Youth Empowerment .html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
+                            <a href="./mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
                         </div>
                     </div>
-                    
-                    <a href="about-us.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">About</a>
-                    <a href="get-involved.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Get Involved</a>
-                    
+                   
+                    <a href="./about-us.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">About</a>
+                    <a href="./get-involved.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">Get Involved</a>
+                   
                     <!-- News & Updates Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between">
                             News & Updates <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
-                            <a href="news.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Latest News</a>
-                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">advertisement</a>
+                            <a href="./advertisement.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Advertisement</a>
                             <a href="stories.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Success Stories</a>
                         </div>
                     </div>
-                    
-                    <a href="contact.html" class="block py-2 text-gray-600 hover:text-primary-blue transition">Contact</a>
-                    
+                   
+                    <a href="./contact.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition">Contact</a>
+                   
                     <!-- Opportunities Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 bg-primary-yellow text-gray-800 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-between px-4">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 opportunities-btn rounded-lg transition flex items-center justify-between px-4">
                             Opportunities <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
-                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Volunteer</a>
+                            <a href="volunteer.html" class="block py-2 text-primary-blue font-semibold hover:text-primary-blue transition pl-4">Volunteer</a>
                             <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Careers</a>
                             <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Partnerships</a>
                         </div>
                     </div>
-                    
-                    <button id="mobileDonateButton" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg hover:bg-green-600 transition transform hover:scale-105 text-left flex items-center">
+                   
+                    <!-- Login and Signup buttons for mobile -->
+                    <div class="flex flex-col space-y-2 pt-2">
+                        <a href="login.html" class="login-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        </a>
+                        <a href="signup.html" class="signup-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                            <i class="fas fa-user-plus mr-2"></i>Sign Up
+                        </a>
+                    </div>
+                   
+                    <button onclick="openModal('donateModal')" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg transition transform hover:scale-105 text-left flex items-center">
                         <i class="fas fa-heart mr-2"></i>Donate Now
                     </button>
                 </div>
@@ -524,7 +671,6 @@
         </div>
     </section>
 
-    <!-- Rest of the page content remains exactly the same -->
     <!-- Page Content -->
     <section class="py-12 md:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -805,11 +951,11 @@
                 
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
-                        <li><a href="about-us.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-info-circle mr-2 text-xs"></i>About</a></li>
-                        <li><a href="get-involved.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
-                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="./index.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="./about-us.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-info-circle mr-2 text-xs"></i>About</a></li>
+                        <li><a href="./get-involved.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
+                        <li><a href="./contact.html" class="text-gray-400 hover:text-white transition flex items-center"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
                     </ul>
                 </div>
                 
@@ -834,26 +980,26 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
                     <div class="flex space-x-4">
-                        <button class="social-btn w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110" data-platform="facebook">
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110">
                             <i class="fab fa-facebook-f"></i>
-                        </button>
-                        <button class="social-btn w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110" data-platform="instagram">
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110">
                             <i class="fab fa-instagram"></i>
-                        </button>
-                        <button class="social-btn w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition transform hover:scale-110" data-platform="linkedin">
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition transform hover:scale-110">
                             <i class="fab fa-linkedin-in"></i>
-                        </button>
-                        <button class="social-btn w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-red-500 transition transform hover:scale-110" data-platform="youtube">
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-red-500 transition transform hover:scale-110">
                             <i class="fab fa-youtube"></i>
-                        </button>
+                        </a>
                     </div>
                     
                     <!-- Newsletter Signup -->
                     <div class="mt-6">
                         <h5 class="text-sm font-semibold mb-2">Stay Updated</h5>
                         <div class="flex">
-                            <input type="email" id="newsletterEmail" placeholder="Your email" class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none">
-                            <button id="newsletterBtn" class="bg-primary-green text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
+                            <input type="email" placeholder="Your email" class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none focus:ring-2 focus:ring-primary-green">
+                            <button class="bg-primary-green text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
                         </div>
@@ -868,113 +1014,55 @@
         </div>
     </footer>
 
-    <!-- Donation Modal -->
+    <!-- Donation Modal from first code -->
     <div id="donateModal" class="modal">
-        <div class="modal-content program-modal">
+        <div class="bg-white p-8 rounded-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-900">Make a Donation</h3>
-                <button class="close-modal text-gray-500 hover:text-gray-700" data-modal="donateModal">
+                <h3 class="text-2xl font-bold text-gray-800">Make a Donation</h3>
+                <button onclick="closeModal('donateModal')" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
             
-            <div class="space-y-6">
+            <form id="donationForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Donation Amount</label>
-                    <div class="grid grid-cols-3 gap-3 mb-4">
-                        <button class="donation-amount py-3 border border-gray-300 rounded-lg hover:border-hope-blue hover:bg-blue-50 transition" data-amount="25">$25</button>
-                        <button class="donation-amount py-3 border border-gray-300 rounded-lg hover:border-hope-blue hover:bg-blue-50 transition" data-amount="50">$50</button>
-                        <button class="donation-amount py-3 border border-gray-300 rounded-lg hover:border-hope-blue hover:bg-blue-50 transition" data-amount="100">$100</button>
+                    <label class="block text-gray-700 mb-2">Donation Amount</label>
+                    <div class="grid grid-cols-3 gap-2 mb-2">
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="5000">RWF 5,000</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="10000">RWF 10,000</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="25000">RWF 25,000</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="50000">RWF 50,000</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="100000">RWF 100,000</button>
+                        <button type="button" class="donation-amount py-2 border border-gray-300 rounded hover:bg-primary-blue hover:text-white transition-colors" data-amount="250000">RWF 250,000</button>
                     </div>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500">$</span>
-                        </div>
-                        <input type="number" id="customAmount" placeholder="Other amount" class="pl-8 w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
-                    </div>
+                    <input type="number" id="customAmount" placeholder="Custom Amount (RWF)" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div class="payment-method" data-method="card">
-                            <div class="flex items-center">
-                                <i class="fas fa-credit-card text-hope-blue text-xl mr-3"></i>
-                                <div>
-                                    <div class="font-medium">Credit Card</div>
-                                    <div class="text-xs text-gray-500">Visa, Mastercard</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="payment-method" data-method="paypal">
-                            <div class="flex items-center">
-                                <i class="fab fa-paypal text-blue-500 text-xl mr-3"></i>
-                                <div>
-                                    <div class="font-medium">PayPal</div>
-                                    <div class="text-xs text-gray-500">Secure payment</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="payment-method" data-method="bank">
-                            <div class="flex items-center">
-                                <i class="fas fa-university text-green-500 text-xl mr-3"></i>
-                                <div>
-                                    <div class="font-medium">Bank Transfer</div>
-                                    <div class="text-xs text-gray-500">Direct transfer</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <label class="block text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="donorName" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
                 </div>
                 
-                <div id="cardFields" class="payment-fields">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="col-span-2">
-                            <label for="cardNumber" class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
-                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
-                        </div>
-                        <div>
-                            <label for="cardName" class="block text-sm font-medium text-gray-700 mb-1">Name on Card</label>
-                            <input type="text" id="cardName" placeholder="John Doe" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label for="expiryDate" class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
-                                <input type="text" id="expiryDate" placeholder="MM/YY" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
-                            </div>
-                            <div>
-                                <label for="cvv" class="block text-sm font-medium text-gray-700 mb-1">CVV</label>
-                                <input type="text" id="cvv" placeholder="123" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="paypalFields" class="payment-fields">
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                        <p class="text-sm text-yellow-800">You will be redirected to PayPal to complete your payment securely.</p>
-                    </div>
-                </div>
-
-                <div id="bankFields" class="payment-fields">
-                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                        <h4 class="font-medium text-green-800 mb-2">Bank Transfer Details</h4>
-                        <div class="text-sm text-green-700 space-y-1">
-                            <p><strong>Bank:</strong> HopeLink Community Bank</p>
-                            <p><strong>Account Name:</strong> HopeLink Mahama Refugee Camp</p>
-                            <p><strong>Account Number:</strong> 1234567890</p>
-                            <p><strong>Routing Number:</strong> 021000021</p>
-                        </div>
-                    </div>
+                <div>
+                    <label class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" id="donorEmail" required class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
                 </div>
                 
-                <div class="pt-4 border-t border-gray-200">
-                    <button id="donateSubmit" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-300 flex items-center justify-center">
-                        <i class="fas fa-heart mr-2"></i>Complete Donation
+                <div>
+                    <label class="block text-gray-700 mb-2">Payment Method</label>
+                    <select id="paymentMethod" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                        <option value="mobile">Mobile Money</option>
+                        <option value="bank">Bank Transfer</option>
+                        <option value="card">Credit Card</option>
+                    </select>
+                </div>
+                
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors">
+                        Process Donation
                     </button>
-                    <p class="text-xs text-gray-500 mt-2 text-center">Your donation is secure and tax-deductible</p>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -1021,11 +1109,248 @@
     </div>
 
     <script>
-        // Comprehensive Button Functionality
+        // ========== MODAL MANAGEMENT ==========
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside content
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // ========== NAVIGATION FUNCTIONALITY ==========
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize all button functionalities
-            initNavigation();
-            initDonationSystem();
+            // Mobile menu toggle
+            document.getElementById('mobileMenuButton').addEventListener('click', function() {
+                document.getElementById('mobileMenu').classList.toggle('active');
+            });
+
+            // Desktop dropdown functionality
+            document.querySelectorAll('.dropdown-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const dropdownId = this.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(`${dropdownId}-dropdown`);
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown-content').forEach(d => {
+                        if (d.id !== `${dropdownId}-dropdown`) {
+                            d.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('active');
+                });
+            });
+
+            // Mobile dropdown functionality
+            document.querySelectorAll('.mobile-dropdown-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const dropdownContent = this.nextElementSibling;
+                    dropdownContent.classList.toggle('active');
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                // Close desktop dropdowns
+                if (!event.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+                
+                // Close mobile dropdowns
+                if (!event.target.closest('.mobile-dropdown')) {
+                    document.querySelectorAll('.mobile-dropdown-content').forEach(dropdown => {
+                        dropdown.classList.remove('active');
+                    });
+                }
+                
+                // Close mobile menu
+                const mobileMenu = document.getElementById('mobileMenu');
+                const mobileMenuButton = document.getElementById('mobileMenuButton');
+                if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+                    mobileMenu.classList.remove('active');
+                }
+            });
+
+            // ========== DONATION FORM HANDLING ==========
+            // Donation form
+            document.getElementById('donationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get donation amount
+                let amount = document.getElementById('customAmount').value;
+                if (!amount) {
+                    // Check if a preset amount was selected
+                    const selectedAmount = document.querySelector('.donation-amount.active');
+                    if (selectedAmount) {
+                        amount = selectedAmount.getAttribute('data-amount');
+                    }
+                }
+                
+                if (!amount || amount <= 0) {
+                    showNotification('Please select or enter a valid donation amount', 'error');
+                    return;
+                }
+                
+                const name = document.getElementById('donorName').value;
+                const email = document.getElementById('donorEmail').value;
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                
+                if (!name || !email) {
+                    showNotification('Please fill in all required fields', 'error');
+                    return;
+                }
+                
+                if (!isValidEmail(email)) {
+                    showNotification('Please enter a valid email address', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                const submitButton = this.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                submitButton.disabled = true;
+                
+                // Simulate payment processing
+                setTimeout(() => {
+                    showNotification(`Thank you for your donation of RWF ${amount}! A receipt has been sent to ${email}.`);
+                    closeModal('donateModal');
+                    
+                    // Reset form
+                    document.getElementById('donationForm').reset();
+                    document.querySelectorAll('.donation-amount').forEach(btn => {
+                        btn.classList.remove('active', 'bg-primary-blue', 'text-white');
+                    });
+                    
+                    // Reset button state
+                    submitButton.innerHTML = originalText;
+                    submitButton.disabled = false;
+                }, 2000);
+            });
+
+            // Donation amount buttons
+            document.querySelectorAll('.donation-amount').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.donation-amount').forEach(btn => {
+                        btn.classList.remove('active', 'bg-primary-blue', 'text-white');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active', 'bg-primary-blue', 'text-white');
+                    
+                    // Clear custom amount
+                    document.getElementById('customAmount').value = '';
+                });
+            });
+
+            // Clear preset amount when custom amount is entered
+            document.getElementById('customAmount').addEventListener('input', function() {
+                document.querySelectorAll('.donation-amount').forEach(btn => {
+                    btn.classList.remove('active', 'bg-primary-blue', 'text-white');
+                });
+            });
+
+            // ========== ANIMATIONS ==========
+            // Intersection Observer for fade-in animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            // Observe fade-in elements
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const nav = document.getElementById('mainNav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('nav-scrolled');
+                } else {
+                    nav.classList.remove('nav-scrolled');
+                }
+                
+                // Update scroll progress bar
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('scrollProgress').style.width = scrolled + '%';
+            });
+
+            // ========== UTILITY FUNCTIONS ==========
+            window.scrollToSection = function(sectionId) {
+                document.getElementById(sectionId).scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            };
+
+            window.isValidEmail = function(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            };
+
+            // ========== NOTIFICATION SYSTEM ==========
+            window.showNotification = function(message, type = 'success') {
+                const notification = document.getElementById('notification');
+                const notificationIcon = document.getElementById('notificationIcon');
+                const notificationMessage = document.getElementById('notificationText');
+                
+                // Set notification content and style
+                notificationMessage.textContent = message;
+                notification.className = 'notification ' + type;
+                
+                if (type === 'success') {
+                    notificationIcon.className = 'fas fa-check-circle mr-2';
+                    notification.classList.add('bg-primary-green');
+                } else {
+                    notificationIcon.className = 'fas fa-exclamation-circle mr-2';
+                    notification.classList.add('bg-red-500');
+                }
+                
+                // Show notification
+                notification.classList.add('show');
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            };
+
+            // ========== INITIALIZATION ==========
+            // Show welcome notification after page loads
+            setTimeout(() => {
+                showNotification('Welcome to HopeLink Mahama Youth Empowerment Program!', 'success');
+            }, 1000);
+
+            // Comprehensive Button Functionality
             initProgramEnrollment();
             initJobApplications();
             initInternshipPrograms();
@@ -1048,229 +1373,6 @@
                 });
             });
         });
-
-        // 1. Navigation System
-        function initNavigation() {
-            // Mobile menu toggle
-            const mobileMenuButton = document.getElementById('mobileMenuButton');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', function() {
-                    mobileMenu.classList.toggle('active');
-                    this.querySelector('i').classList.toggle('fa-bars');
-                    this.querySelector('i').classList.toggle('fa-times');
-                });
-            }
-
-            // Dropdown functionality
-            const dropdownButtons = document.querySelectorAll('.dropdown-btn');
-            dropdownButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const dropdownId = this.getAttribute('data-dropdown');
-                    const dropdown = document.getElementById(dropdownId + '-dropdown');
-                    
-                    // Close all other dropdowns
-                    document.querySelectorAll('.dropdown-content.active').forEach(dd => {
-                        if (dd !== dropdown) dd.classList.remove('active');
-                    });
-                    
-                    if (dropdown) {
-                        dropdown.classList.toggle('active');
-                    }
-                });
-            });
-
-            // Mobile dropdown functionality
-            const mobileDropdownButtons = document.querySelectorAll('.mobile-dropdown-btn');
-            mobileDropdownButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const dropdownContent = this.nextElementSibling;
-                    const icon = this.querySelector('i');
-                    
-                    if (dropdownContent && dropdownContent.classList.contains('mobile-dropdown-content')) {
-                        dropdownContent.classList.toggle('active');
-                        icon.classList.toggle('fa-chevron-down');
-                        icon.classList.toggle('fa-chevron-up');
-                    }
-                });
-            });
-
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function() {
-                document.querySelectorAll('.dropdown-content.active').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-                document.querySelectorAll('.mobile-dropdown-content.active').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            });
-        }
-
-        // 2. Donation System with Payment Methods
-        function initDonationSystem() {
-            const donateButtons = document.querySelectorAll('#donateButton, #mobileDonateButton');
-            const donateModal = document.getElementById('donateModal');
-            const donationAmounts = document.querySelectorAll('.donation-amount');
-            const customAmount = document.getElementById('customAmount');
-            const paymentMethods = document.querySelectorAll('.payment-method');
-            const paymentFields = document.querySelectorAll('.payment-fields');
-            const donateSubmit = document.getElementById('donateSubmit');
-
-            let selectedAmount = 0;
-            let selectedPaymentMethod = 'card';
-
-            // Open donation modal
-            donateButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    openModal('donateModal');
-                    resetDonationForm();
-                });
-            });
-
-            // Donation amount selection
-            donationAmounts.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    donationAmounts.forEach(btn => {
-                        btn.classList.remove('border-hope-blue', 'bg-blue-50', 'text-hope-blue');
-                        btn.classList.add('border-gray-300', 'text-gray-700');
-                    });
-                    
-                    // Add active class to clicked button
-                    this.classList.remove('border-gray-300', 'text-gray-700');
-                    this.classList.add('border-hope-blue', 'bg-blue-50', 'text-hope-blue');
-                    
-                    // Set selected amount
-                    selectedAmount = parseFloat(this.getAttribute('data-amount'));
-                    customAmount.value = selectedAmount;
-                });
-            });
-
-            // Custom amount input
-            customAmount.addEventListener('input', function() {
-                selectedAmount = parseFloat(this.value) || 0;
-                
-                // Remove active class from preset amount buttons
-                donationAmounts.forEach(btn => {
-                    btn.classList.remove('border-hope-blue', 'bg-blue-50', 'text-hope-blue');
-                    btn.classList.add('border-gray-300', 'text-gray-700');
-                });
-            });
-
-            // Payment method selection
-            paymentMethods.forEach(method => {
-                method.addEventListener('click', function() {
-                    // Remove active class from all methods
-                    paymentMethods.forEach(m => {
-                        m.classList.remove('active');
-                    });
-                    
-                    // Add active class to selected method
-                    this.classList.add('active');
-                    
-                    // Get selected method
-                    selectedPaymentMethod = this.getAttribute('data-method');
-                    
-                    // Show corresponding payment fields
-                    paymentFields.forEach(field => {
-                        field.classList.remove('active');
-                    });
-                    
-                    const activeField = document.getElementById(selectedPaymentMethod + 'Fields');
-                    if (activeField) {
-                        activeField.classList.add('active');
-                    }
-                });
-            });
-
-            // Donation form submission
-            donateSubmit.addEventListener('click', function() {
-                if (validateDonationForm()) {
-                    processDonation();
-                }
-            });
-
-            function validateDonationForm() {
-                if (selectedAmount <= 0) {
-                    showNotification('Please select or enter a donation amount', 'error');
-                    return false;
-                }
-
-                if (selectedPaymentMethod === 'card') {
-                    const cardNumber = document.getElementById('cardNumber').value;
-                    const cardName = document.getElementById('cardName').value;
-                    const expiryDate = document.getElementById('expiryDate').value;
-                    const cvv = document.getElementById('cvv').value;
-
-                    if (!cardNumber || !cardName || !expiryDate || !cvv) {
-                        showNotification('Please fill in all card details', 'error');
-                        return false;
-                    }
-
-                    if (!/^\d{16}$/.test(cardNumber.replace(/\s/g, ''))) {
-                        showNotification('Please enter a valid 16-digit card number', 'error');
-                        return false;
-                    }
-
-                    if (!/^\d{3,4}$/.test(cvv)) {
-                        showNotification('Please enter a valid CVV', 'error');
-                        return false;
-                    }
-                }
-
-                return true;
-            }
-
-            function processDonation() {
-                // Show loading state
-                const originalText = donateSubmit.innerHTML;
-                donateSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
-                donateSubmit.disabled = true;
-
-                // Simulate payment processing
-                setTimeout(() => {
-                    showNotification(`Thank you for your $${selectedAmount} donation! Your support makes a difference.`, 'success');
-                    closeModal('donateModal');
-                    
-                    // Reset button
-                    donateSubmit.innerHTML = originalText;
-                    donateSubmit.disabled = false;
-                    
-                    // Reset form
-                    resetDonationForm();
-                }, 2000);
-            }
-
-            function resetDonationForm() {
-                selectedAmount = 0;
-                selectedPaymentMethod = 'card';
-                
-                donationAmounts.forEach(btn => {
-                    btn.classList.remove('border-hope-blue', 'bg-blue-50', 'text-hope-blue');
-                    btn.classList.add('border-gray-300', 'text-gray-700');
-                });
-                
-                paymentMethods.forEach(m => {
-                    m.classList.remove('active');
-                    if (m.getAttribute('data-method') === 'card') {
-                        m.classList.add('active');
-                    }
-                });
-                
-                paymentFields.forEach(field => {
-                    field.classList.remove('active');
-                });
-                document.getElementById('cardFields').classList.add('active');
-                
-                customAmount.value = '';
-                document.getElementById('cardNumber').value = '';
-                document.getElementById('cardName').value = '';
-                document.getElementById('expiryDate').value = '';
-                document.getElementById('cvv').value = '';
-            }
-        }
 
         // 3. Program Enrollment System
         function initProgramEnrollment() {
@@ -1325,19 +1427,19 @@
                                 <form id="enrollmentForm" class="space-y-4">
                                     <div>
                                         <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                        <input type="text" id="fullName" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue" required>
+                                        <input type="text" id="fullName" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue" required>
                                     </div>
                                     <div>
                                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                        <input type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue" required>
+                                        <input type="email" id="email" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue" required>
                                     </div>
                                     <div>
                                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                                        <input type="tel" id="phone" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue" required>
+                                        <input type="tel" id="phone" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue" required>
                                     </div>
                                     <div>
                                         <label for="background" class="block text-sm font-medium text-gray-700 mb-1">Background/Experience</label>
-                                        <textarea id="background" rows="3" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue" placeholder="Tell us about your background and why you're interested in this program"></textarea>
+                                        <textarea id="background" rows="3" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue" placeholder="Tell us about your background and why you're interested in this program"></textarea>
                                     </div>
                                 </form>
                             </div>
@@ -1549,11 +1651,11 @@
                                 <form class="space-y-3">
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
-                                        <input type="date" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                                        <input type="date" class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
-                                        <select class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-hope-blue focus:border-hope-blue">
+                                        <select class="w-full border border-gray-300 rounded-lg py-2 px-3 focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue">
                                             <option>Morning (9 AM - 12 PM)</option>
                                             <option>Afternoon (1 PM - 4 PM)</option>
                                             <option>Evening (5 PM - 7 PM)</option>
@@ -1621,7 +1723,7 @@
                                     <li>Serves over 50 regular customers</li>
                                 </ul>
                             </div>
-                            <blockquote class="border-l-4 border-hope-blue pl-4 italic text-gray-700">
+                            <blockquote class="border-l-4 border-primary-blue pl-4 italic text-gray-700">
                                 "The skills training program gave me more than just technical knowledge - it gave me confidence and a path to build a better future for myself and my community."
                             </blockquote>
                         </div>
@@ -1644,7 +1746,7 @@
                                     <li>Teaches basic computer skills to other youth</li>
                                 </ul>
                             </div>
-                            <blockquote class="border-l-4 border-hope-blue pl-4 italic text-gray-700">
+                            <blockquote class="border-l-4 border-primary-blue pl-4 italic text-gray-700">
                                 "Learning computer skills opened doors I never imagined. I went from having no computer experience to having a stable job in just a few months."
                             </blockquote>
                         </div>
@@ -1667,7 +1769,7 @@
                                     <li>Serves as community representative</li>
                                 </ul>
                             </div>
-                            <blockquote class="border-l-4 border-hope-blue pl-4 italic text-gray-700">
+                            <blockquote class="border-l-4 border-primary-blue pl-4 italic text-gray-700">
                                 "The mentorship program connected me with opportunities I didn't know existed. Now I'm helping other young people discover their potential too."
                             </blockquote>
                         </div>
@@ -1761,22 +1863,6 @@
 
         // Utility Functions
         function initScrollEffects() {
-            // Scroll progress bar
-            window.onscroll = function() {
-                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                const scrolled = (winScroll / height) * 100;
-                document.getElementById("scrollProgress").style.width = scrolled + "%";
-                
-                // Navbar scroll effect
-                const nav = document.getElementById('mainNav');
-                if (window.scrollY > 50) {
-                    nav.classList.add('nav-scrolled');
-                } else {
-                    nav.classList.remove('nav-scrolled');
-                }
-            };
-
             // Fade in animation on scroll
             const fadeElements = document.querySelectorAll('.fade-in');
             const fadeInOnScroll = function() {
@@ -1824,22 +1910,6 @@
             });
         }
 
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Prevent background scrolling
-            }
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scrolling
-            }
-        }
-
         function showCustomModal(title, content, actionText, actionCallback) {
             const modalContent = `
                 <div class="modal-content">
@@ -1852,7 +1922,7 @@
                     <div class="mb-6">${content}</div>
                     <div class="flex justify-end space-x-3">
                         <button class="close-custom-modal px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition">Close</button>
-                        <button class="custom-modal-action px-4 py-2 bg-hope-blue text-white rounded hover:bg-blue-700 transition">${actionText}</button>
+                        <button class="custom-modal-action px-4 py-2 bg-primary-blue text-white rounded hover:bg-blue-700 transition">${actionText}</button>
                     </div>
                 </div>
             `;
@@ -1883,32 +1953,6 @@
             });
 
             document.body.style.overflow = 'hidden';
-        }
-
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            const notificationText = document.getElementById('notificationText');
-            
-            // Set notification content and style
-            notificationText.textContent = message;
-            notification.className = 'notification';
-            notification.classList.add(type, 'show');
-            
-            // Update icon based on type
-            const icon = notification.querySelector('i');
-            icon.className = type === 'success' ? 'fas fa-check-circle mr-2' :
-                            type === 'error' ? 'fas fa-exclamation-circle mr-2' :
-                            'fas fa-info-circle mr-2';
-
-            // Auto-hide after 5 seconds
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 5000);
-        }
-
-        function isValidEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
         }
     </script>
 </body>
