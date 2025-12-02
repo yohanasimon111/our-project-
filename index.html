@@ -423,6 +423,15 @@
             left: 100%;
         }
 
+        /* Program item styling */
+        .program-item {
+            transition: all 0.3s ease;
+        }
+        .program-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
         /* Responsive improvements */
         @media (max-width: 1280px) {
             .desktop-nav {
@@ -484,6 +493,9 @@
                 width: 100%;
                 margin-bottom: 0.5rem;
             }
+            .program-item img {
+                height: 300px;
+            }
         }
 
         @media (max-width: 475px) {
@@ -511,6 +523,9 @@
             .grid-responsive {
                 grid-template-columns: 1fr !important;
             }
+            .program-item img {
+                height: 250px;
+            }
         }
 
         /* Touch-friendly improvements */
@@ -529,6 +544,9 @@
             }
             .btn-professional:hover::before {
                 left: -100%;
+            }
+            .program-item:hover {
+                transform: none;
             }
         }
     </style>
@@ -811,7 +829,7 @@
         </div>
     </section>
 
-    <!-- Core Programs - Fully Clickable -->
+    <!-- Core Programs - Text Left, Images Right -->
     <section id="programs" class="py-16 md:py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-12 md:mb-16 fade-in">
@@ -819,74 +837,170 @@
                 <p class="section-subtitle text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">Transforming lives through targeted programs that address critical community needs</p>
             </div>
 
-            <div class="grid-responsive grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                <!-- Hunger Help -->
-                <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition group fade-in hover-lift cursor-pointer" data-program="hungerHelp">
-                    <div class="h-40 md:h-48 bg-gradient-to-r from-orange-400 to-orange-500 flex items-center justify-center relative">
-                        <i class="fas fa-utensils text-white text-5xl md:text-6xl"></i>
-                        <div class="absolute top-4 right-4 bg-white text-orange-500 px-3 py-1 rounded-full text-sm font-semibold">
-                            <i class="fas fa-fire mr-1"></i>Active
+            <!-- Hunger Help - Text Left, Image Right -->
+            <div class="program-item bg-white rounded-2xl shadow-lg overflow-hidden mb-8 md:mb-12 fade-in hover-lift">
+                <div class="flex flex-col md:flex-row">
+                    <!-- Text Content (Left) -->
+                    <div class="md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-orange-400 to-orange-500 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-utensils text-white text-lg md:text-xl"></i>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800">Hunger Help</h3>
+                            <span class="ml-4 bg-orange-100 text-orange-500 px-2 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-fire mr-1"></i>Active
+                            </span>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
+                            Providing access to food aid, nutrition support, and digital food request tools to fight hunger and malnutrition in Mahama Camp. Our program ensures that families have reliable access to nutritious meals through a streamlined distribution system.
+                        </p>
+                        
+                        <div class="mb-4">
+                            <div class="flex items-center text-xs md:text-sm text-gray-500 mb-2">
+                                <i class="fas fa-users mr-2 text-orange-500"></i>
+                                <span>500+ families supported monthly</span>
+                            </div>
+                            <div class="flex items-center text-xs md:text-sm text-gray-500 mb-2">
+                                <i class="fas fa-seedling mr-2 text-orange-500"></i>
+                                <span>Community gardens established</span>
+                            </div>
+                            <div class="flex items-center text-xs md:text-sm text-gray-500">
+                                <i class="fas fa-mobile-alt mr-2 text-orange-500"></i>
+                                <span>Digital food request system</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button onclick="openModal('hungerHelpModal')" class="bg-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-600 transition transform hover:scale-105 flex items-center justify-center btn-text">
+                                <i class="fas fa-utensils mr-2"></i>Explore Hunger Help
+                            </button>
                         </div>
                     </div>
-                    <div class="p-6 md:p-8">
-                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Hunger Help</h3>
-                        <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
-                            Providing access to food aid, nutrition support, and digital food request tools to fight hunger and malnutrition.
-                        </p>
-                        <div class="flex items-center text-xs md:text-sm text-gray-500 mb-4">
-                            <i class="fas fa-users mr-2"></i>
-                            <span>500+ families supported monthly</span>
-                        </div>
-                        <div class="w-full bg-orange-500 text-white py-2 md:py-3 rounded-lg font-semibold hover:bg-orange-600 transition transform group-hover:scale-105 flex items-center justify-center btn-text">
-                            <i class="fas fa-utensils mr-2"></i>Explore Hunger Help
+                    
+                    <!-- Image (Right) -->
+                    <div class="md:w-1/2">
+                        <div class="h-54 md:h-full">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80 " 
+                                 alt="Youth Empowerment Program - Digital Training" 
+                                 class="w-full h-full object-cover">
+                            <div class="bg-gradient-to-t from-black/50 to-transparent p-4 text-white text-sm">
+                                <p>Youth learning digital skills at our tech hub</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Youth Empowerment -->
-                <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition group fade-in hover-lift cursor-pointer" data-program="youthEmpowerment">
-                    <div class="h-40 md:h-48 bg-gradient-to-r from-primary-blue to-blue-500 flex items-center justify-center relative">
-                        <i class="fas fa-users text-white text-5xl md:text-6xl"></i>
-                        <div class="absolute top-4 right-4 bg-white text-primary-blue px-3 py-1 rounded-full text-sm font-semibold">
-                            <i class="fas fa-bolt mr-1"></i>Growing
+            <!-- Youth Empowerment - Text Left, Image Right -->
+            <div class="program-item bg-white rounded-2xl shadow-lg overflow-hidden mb-8 md:mb-12 fade-in hover-lift">
+                <div class="flex flex-col md:flex-row">
+                    <!-- Text Content (Left) -->
+                    <div class="md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-primary-blue to-blue-500 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-users text-white text-lg md:text-xl"></i>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800">Youth Empowerment</h3>
+                            <span class="ml-4 bg-blue-100 text-primary-blue px-2 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-bolt mr-1"></i>Growing
+                            </span>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
+                            Creating training programs, digital skills hubs, and job opportunities for young people to build their future. We empower youth with marketable skills and connect them with employment opportunities.
+                        </p>
+                        
+                        <div class="mb-4">
+                            <div class="flex items-center text-xs md:text-sm text-gray-500 mb-2">
+                                <i class="fas fa-graduation-cap mr-2 text-primary-blue"></i>
+                                <span>1,000+ youth trained in digital skills</span>
+                            </div>
+                            <div class="flex items-center text-xs md:text-sm text-gray-500 mb-2">
+                                <i class="fas fa-laptop-code mr-2 text-primary-blue"></i>
+                                <span>Tech workshops and coding bootcamps</span>
+                            </div>
+                            <div class="flex items-center text-xs md:text-sm text-gray-500">
+                                <i class="fas fa-briefcase mr-2 text-primary-blue"></i>
+                                <span>Job placement assistance</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button onclick="openModal('youthEmpowermentModal')" class="bg-primary-blue text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition transform hover:scale-105 flex items-center justify-center btn-text">
+                                <i class="fas fa-users mr-2"></i>See Opportunities
+                            </button>
                         </div>
                     </div>
-                    <div class="p-6 md:p-8">
-                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Youth Empowerment</h3>
-                        <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
-                            Creating training programs, digital skills hubs, and job opportunities for young people to build their future.
-                        </p>
-                        <div class="flex items-center text-xs md:text-sm text-gray-500 mb-4">
-                            <i class="fas fa-graduation-cap mr-2"></i>
-                            <span>1,000+ youth trained</span>
-                        </div>
-                        <div class="w-full bg-primary-blue text-white py-2 md:py-3 rounded-lg font-semibold hover:bg-blue-600 transition transform group-hover:scale-105 flex items-center justify-center btn-text">
-                            <i class="fas fa-users mr-2"></i>See Opportunities
+                    
+                    <!-- Image (Right) -->
+                    <div class="md:w-1/2">
+                        <div class="h-54 md:h-full">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80 " 
+                                 alt="Youth Empowerment Program - Digital Training" 
+                                 class="w-full h-full object-cover">
+                            <div class="bg-gradient-to-t from-black/50 to-transparent p-4 text-white text-sm">
+                                <p>Youth learning digital skills at our tech hub</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Mental Wellness -->
-                <div class="program-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition group fade-in hover-lift cursor-pointer" data-program="mentalWellness">
-                    <div class="h-40 md:h-48 bg-gradient-to-r from-primary-green to-green-500 flex items-center justify-center relative">
-                        <i class="fas fa-brain text-white text-5xl md:text-6xl"></i>
-                        <div class="absolute top-4 right-4 bg-white text-primary-green px-3 py-1 rounded-full text-sm font-semibold">
-                            <i class="fas fa-heart mr-1"></i>Support
+            <!-- Mental Wellness - Text Left, Image Right -->
+            <div class="program-item bg-white rounded-2xl shadow-lg overflow-hidden fade-in hover-lift">
+                <div class="flex flex-col md:flex-row">
+                    <!-- Text Content (Left) -->
+                    <div class="md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-primary-green to-green-500 rounded-lg flex items-center justify-center mr-4">
+                                <i class="fas fa-brain text-white text-lg md:text-xl"></i>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800">Mental Wellness</h3>
+                            <span class="ml-4 bg-green-100 text-primary-green px-2 py-1 rounded-full text-xs font-semibold">
+                                <i class="fas fa-heart mr-1"></i>Support
+                            </span>
                         </div>
-                    </div>
-                    <div class="p-6 md:p-8">
-                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Mental Wellness</h3>
+                        
                         <p class="text-gray-600 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
-                            Offering counseling, emotional support, and safe digital spaces for healing and sharing stories of resilience.
+                            Offering counseling, emotional support, and safe digital spaces for healing and sharing stories of resilience. We provide mental health services tailored to the unique needs of refugee communities.
                         </p>
-                        <div class="flex items-center text-xs md:text-sm text-gray-500 mb-4">
-                            <i class="fas fa-hand-holding-heart mr-2"></i>
-                            <span>300+ community members supported</span>
+                        
+                        <div class="mb-4">
+                            <div class="flex items-center text-xs md:text-sm text-gray-500 mb-2">
+                                <i class="fas fa-hand-holding-heart mr-2 text-primary-green"></i>
+                                <span>300+ community members supported</span>
+                            </div>
+                            <div class="flex items-center text-xs md:text-sm text-gray-500 mb-2">
+                                <i class="fas fa-comments mr-2 text-primary-green"></i>
+                                <span>Counseling and therapy sessions</span>
+                            </div>
+                            <div class="flex items-center text-xs md:text-sm text-gray-500">
+                                <i class="fas fa-hands-helping mr-2 text-primary-green"></i>
+                                <span>Peer support groups</span>
+                            </div>
                         </div>
-                        <div class="w-full bg-primary-green text-white py-2 md:py-3 rounded-lg font-semibold hover:bg-green-600 transition transform group-hover:scale-105 flex items-center justify-center btn-text">
-                            <i class="fas fa-brain mr-2"></i>Join Support Network
+                        
+                        <div class="mt-4">
+                            <button onclick="openModal('mentalWellnessModal')" class="bg-primary-green text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition transform hover:scale-105 flex items-center justify-center btn-text">
+                                <i class="fas fa-brain mr-2"></i>Join Support Network
+                            </button>
                         </div>
                     </div>
+                    
+                        <!-- Image (Right) -->
+                    <div class="md:w-1/2">
+                        <div class="h-54 md:h-full">
+                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" 
+                                 alt="Youth Empowerment Program - Digital Training" 
+                                 class="w-full h-full object-cover">
+                            <div class="bg-gradient-to-t from-black/50 to-transparent p-4 text-white text-sm">
+                                <p>Youth learning digital skills at our tech hub</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
@@ -1739,12 +1853,17 @@
                 observer.observe(element);
             });
             
-            // Program card click handlers
-            const programCards = document.querySelectorAll('.program-card');
-            programCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const program = this.getAttribute('data-program');
-                    openModal(`${program}Modal`);
+            // Program item click handlers (for the new design)
+            const programItems = document.querySelectorAll('.program-item');
+            programItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on button (button has its own handler)
+                    if (!e.target.closest('button')) {
+                        const program = this.querySelector('h3').textContent;
+                        if (program.includes('Hunger')) openModal('hungerHelpModal');
+                        else if (program.includes('Youth')) openModal('youthEmpowermentModal');
+                        else if (program.includes('Mental')) openModal('mentalWellnessModal');
+                    }
                 });
             });
             
