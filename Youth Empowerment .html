@@ -454,6 +454,64 @@
             }
         }
 
+        /* AUTHENTICATION STYLES */
+        .user-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            min-width: 250px;
+            z-index: 1000;
+        }
+        .user-menu.show {
+            display: block;
+        }
+        .profile-section {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3b82f6;
+        }
+        .menu-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .menu-item:hover {
+            background: #f3f4f6;
+            padding-left: 1.25rem;
+        }
+        .auth-form-input {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+        .auth-form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+        .auth-btn-primary {
+            background: linear-gradient(135deg, #3B82F6, #2563EB);
+            color: white;
+        }
+
+        /* Photo upload styles */
+        .upload-dropzone {
+            transition: all 0.3s ease;
+        }
+        .upload-dropzone.drag-over {
+            border-color: #3b82f6 !important;
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+
         /* Responsive improvements */
         @media (max-width: 1280px) {
             .desktop-nav {
@@ -513,7 +571,7 @@
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
 
-    <!-- Navigation -->
+    <!-- Navigation with integrated authentication -->
     <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
         <div class="max-w-full mx-auto px-4">
             <div class="flex justify-between items-center py-4">
@@ -542,7 +600,7 @@
                             </button>
                             <div class="dropdown-content" id="programs-dropdown">
                                 <a href="./hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
-                                <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
+                                <a href="./Youth Empowerment .html" class="block px-4 py-2 text-primary-blue font-semibold hover:bg-blue-50 transition">Youth Empowerment</a>
                                 <a href="./mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
                             </div>
                         </div>
@@ -569,7 +627,7 @@
                                 Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
                             </button>
                             <div class="dropdown-content" id="opportunities-dropdown">
-                                <a href="volunteer.html" class="block px-4 py-2 text-primary-blue font-semibold hover:bg-blue-50 transition">Volunteer</a>
+                                <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
                                 <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
                                 <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
                             </div>
@@ -577,17 +635,75 @@
                     </div>
                 </div>
 
-                <!-- Right Section with Login, Signup, and Donate -->
-                <div class="desktop-nav hidden lg-md:flex items-center space-x-2 lg-md:space-x-3 flex-shrink-0">
-                    <a href="login.html" class="login-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
-                        <i class="fas fa-sign-in-alt mr-2"></i>Login
-                    </a>
-                    <a href="signup.html" class="signup-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
-                        <i class="fas fa-user-plus mr-2"></i>Sign Up
-                    </a>
+                <!-- Right Section: Donate button first, then Login/Signup OR User Profile -->
+                <div id="nav-right-section" class="desktop-nav hidden lg-md:flex items-center space-x-2 lg-md:space-x-3 flex-shrink-0">
+                    <!-- Donate Button -->
                     <button onclick="openModal('donateModal')" class="donate-btn btn-professional bg-primary-green text-white px-4 py-2 lg-md:px-5 lg-md:py-2 rounded-lg transition transform hover:scale-105 shadow-lg">
                         <i class="fas fa-heart mr-2"></i>Donate
                     </button>
+
+                    <!-- Login/Signup Buttons (Visible when not logged in) -->
+                    <div id="auth-buttons-section" class="flex space-x-2 lg-md:space-x-3">
+                        <button onclick="window.location.href='auth.html?view=login'" class="login-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        </button>
+                        <button onclick="window.location.href='auth.html?view=signup'" class="signup-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
+                            <i class="fas fa-user-plus mr-2"></i>Sign Up
+                        </button>
+                    </div>
+
+                    <!-- User Profile Section (Visible when logged in) -->
+                    <div id="user-profile-section" class="hidden relative">
+                        <button id="user-menu-btn" class="flex items-center space-x-3 bg-gray-50 hover:bg-gray-100 rounded-xl p-2 transition-all duration-300">
+                            <img id="user-avatar" src="https://ui-avatars.com/api/?name=Guest&background=random" 
+                                 class="w-8 h-8 rounded-full border-2 border-blue-500">
+                            <div class="text-left">
+                                <div id="user-name" class="font-semibold text-gray-800">Guest</div>
+                                <div id="user-role" class="text-xs text-gray-500">Not logged in</div>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-400"></i>
+                        </button>
+                        
+                        <!-- User Dropdown Menu -->
+                        <div id="user-dropdown" class="user-menu">
+                            <div class="profile-section">
+                                <div class="flex items-center space-x-3">
+                                    <img id="dropdown-avatar" style="border-radius: 50%;" src="https://ui-avatars.com/api/?name=Guest&background=random" 
+                                         class="profile-pic">
+                                    <div>
+                                        <div id="dropdown-name" class="font-bold text-gray-800">Guest User</div>
+                                        <div id="dropdown-email" class="text-sm text-gray-500">guest@example.com</div>
+                                        <div id="dropdown-role" class="text-xs text-blue-600 font-semibold">Guest</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="py-2">
+                                <div class="menu-item" onclick="goToDashboard()">
+                                    <i class="fas fa-tachometer-alt text-blue-500 mr-3"></i>
+                                    Dashboard
+                                </div>
+                                <div class="menu-item" onclick="openProfileModal()">
+                                    <i class="fas fa-user-circle text-green-500 mr-3"></i>
+                                    My Profile
+                                </div>
+                                <div class="menu-item" onclick="openPhotoModal()">
+                                    <i class="fas fa-camera text-pink-500 mr-3"></i>
+                                    Change Photo
+                                </div>
+                                <div class="menu-item" onclick="openPasswordModal()">
+                                    <i class="fas fa-key text-yellow-500 mr-3"></i>
+                                    Change Password
+                                </div>
+                                <div class="border-t border-gray-200 mt-2 pt-2">
+                                    <div class="menu-item text-red-600" onclick="logout()">
+                                        <i class="fas fa-sign-out-alt mr-3"></i>
+                                        Logout
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -608,7 +724,7 @@
                         </button>
                         <div class="mobile-dropdown-content">
                             <a href="./hunger-help.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Hunger Help</a>
-                            <a href="./Youth Empowerment .html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Youth Empowerment</a>
+                            <a href="./Youth Empowerment .html" class="block py-2 text-primary-blue font-semibold hover:text-primary-blue transition pl-4">Youth Empowerment</a>
                             <a href="./mental-wellness.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Mental Wellness</a>
                         </div>
                     </div>
@@ -635,25 +751,52 @@
                             Opportunities <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
-                            <a href="volunteer.html" class="block py-2 text-primary-blue font-semibold hover:text-primary-blue transition pl-4">Volunteer</a>
+                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Volunteer</a>
                             <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Careers</a>
                             <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4">Partnerships</a>
                         </div>
                     </div>
                    
-                    <!-- Login and Signup buttons for mobile -->
-                    <div class="flex flex-col space-y-2 pt-2">
-                        <a href="login.html" class="login-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Login
-                        </a>
-                        <a href="signup.html" class="signup-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
-                            <i class="fas fa-user-plus mr-2"></i>Sign Up
-                        </a>
-                    </div>
-                   
+                    <!-- Mobile Donate Button -->
                     <button onclick="openModal('donateModal')" class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-2 rounded-lg transition transform hover:scale-105 text-left flex items-center">
                         <i class="fas fa-heart mr-2"></i>Donate Now
                     </button>
+
+                    <!-- Mobile Login/Signup/Profile Section -->
+                    <div id="mobile-auth-section" class="flex flex-col space-y-2 pt-2">
+                        <!-- Mobile User Profile (visible when logged in) -->
+                        <div id="mobile-user-profile" class="hidden">
+                            <div class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
+                                <img id="mobile-user-avatar" src="https://ui-avatars.com/api/?name=Guest&background=random" 
+                                     class="w-10 h-10 rounded-full border-2 border-blue-500">
+                                <div class="flex-1">
+                                    <div id="mobile-user-name" class="font-semibold text-gray-800">Guest</div>
+                                    <div id="mobile-user-role" class="text-xs text-gray-500">Not logged in</div>
+                                </div>
+                            </div>
+                            <div class="mt-2 space-y-1">
+                                <button onclick="openProfileModal()" class="w-full text-left py-2 px-3 text-gray-600 hover:bg-blue-50 rounded">
+                                    <i class="fas fa-user-circle mr-2 text-green-500"></i>My Profile
+                                </button>
+                                <button onclick="openPhotoModal()" class="w-full text-left py-2 px-3 text-gray-600 hover:bg-blue-50 rounded">
+                                    <i class="fas fa-camera mr-2 text-pink-500"></i>Change Photo
+                                </button>
+                                <button onclick="logout()" class="w-full text-left py-2 px-3 text-red-600 hover:bg-red-50 rounded">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Mobile Login/Signup buttons (visible when not logged in) -->
+                        <div id="mobile-auth-buttons" class="flex flex-col space-y-2">
+                            <button onclick="window.location.href='auth.html?view=login'" class="login-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Login
+                            </button>
+                            <button onclick="window.location.href='auth.html?view=signup'" class="signup-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
+                                <i class="fas fa-user-plus mr-2"></i>Sign Up
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1014,7 +1157,118 @@
         </div>
     </footer>
 
-    <!-- Donation Modal from first code -->
+    <!-- AUTHENTICATION MODALS -->
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">My Profile</h3>
+                    <button onclick="closeProfileModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="flex flex-col items-center space-y-4">
+                        <img id="modal-avatar" src="https://ui-avatars.com/api/?name=Guest&background=random" 
+                             class="w-32 h-32 rounded-full border-4 border-blue-500 object-cover">
+                        <div class="text-center">
+                            <h4 id="modal-fullname" class="text-xl font-bold text-gray-800">Guest User</h4>
+                            <p id="modal-email" class="text-gray-600">guest@example.com</p>
+                            <span id="modal-role" class="inline-block mt-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
+                                Guest
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">First Name</label>
+                            <input type="text" id="profile-firstname" 
+                                   class="auth-form-input w-full p-3 rounded-lg" placeholder="First Name">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Last Name</label>
+                            <input type="text" id="profile-lastname" 
+                                   class="auth-form-input w-full p-3 rounded-lg" placeholder="Last Name">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                            <input type="tel" id="profile-phone" 
+                                   class="auth-form-input w-full p-3 rounded-lg" placeholder="Phone Number">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Address</label>
+                            <input type="text" id="profile-address" 
+                                   class="auth-form-input w-full p-3 rounded-lg" placeholder="Address">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Bio</label>
+                        <textarea id="profile-bio" rows="4" 
+                                  class="auth-form-input w-full p-3 rounded-lg" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-4 pt-4">
+                        <button onclick="closeProfileModal()" class="px-6 py-3 text-gray-600 hover:text-gray-800 font-medium">
+                            Cancel
+                        </button>
+                        <button onclick="updateProfile()" class="auth-btn-primary px-6 py-3 rounded-lg font-semibold">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="password-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl w-full max-w-md">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Change Password</h3>
+                    <button onclick="closePasswordModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                
+                <form id="change-password-form" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Current Password</label>
+                        <input type="password" id="current-password" required
+                               class="auth-form-input w-full p-3 rounded-lg" placeholder="Enter current password">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">New Password</label>
+                        <input type="password" id="new-password" required
+                               class="auth-form-input w-full p-3 rounded-lg" placeholder="Enter new password">
+                        <div class="text-xs text-gray-500 mt-1">Must be at least 6 characters</div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Confirm New Password</label>
+                        <input type="password" id="confirm-new-password" required
+                               class="auth-form-input w-full p-3 rounded-lg" placeholder="Confirm new password">
+                    </div>
+                    
+                    <div id="password-error" class="hidden bg-red-50 border border-red-200 text-red-700 p-3 rounded-lg text-sm"></div>
+                    <div id="password-success" class="hidden bg-green-50 border border-green-200 text-green-700 p-3 rounded-lg text-sm"></div>
+                    
+                    <div class="pt-4">
+                        <button type="submit" class="w-full auth-btn-primary py-3 rounded-lg font-semibold">
+                            Update Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
     <div id="donateModal" class="modal">
         <div class="bg-white p-8 rounded-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto shadow-2xl">
             <div class="flex justify-between items-center mb-6">
@@ -1101,14 +1355,381 @@
     </div>
 
     <!-- Notification Container -->
-    <div id="notification" class="notification">
+    <div id="notification" class="notification fixed top-20 right-4 z-50 bg-green-500 text-white p-4 rounded-lg shadow-lg hidden">
         <div class="flex items-center">
-            <i class="fas fa-check-circle mr-2"></i>
+            <i id="notificationIcon" class="fas fa-check-circle mr-2"></i>
             <span id="notificationText">Action completed successfully!</span>
         </div>
     </div>
 
     <script>
+        // ========== AUTHENTICATION SYSTEM ==========
+        // Global state
+        let currentUser = null;
+
+        // Initialize localStorage for demo users
+        if (!localStorage.getItem('hopelink_users')) {
+            localStorage.setItem('hopelink_users', JSON.stringify([]));
+        }
+
+        // Get all users from localStorage
+        function getAllLocalUsers() {
+            return JSON.parse(localStorage.getItem('hopelink_users') || '[]');
+        }
+
+        // Get user by email from localStorage
+        function getLocalUserByEmail(email) {
+            const users = getAllLocalUsers();
+            return users.find(u => u.email === email);
+        }
+
+        // Update user in localStorage
+        function updateLocalUser(userId, updates) {
+            const users = getAllLocalUsers();
+            const index = users.findIndex(u => u.id === userId);
+            if (index !== -1) {
+                users[index] = { ...users[index], ...updates };
+                localStorage.setItem('hopelink_users', JSON.stringify(users));
+                
+                // Update current user in session
+                if (currentUser && currentUser.id === userId) {
+                    currentUser = users[index];
+                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    updateUI();
+                }
+            }
+        }
+
+        // Get user data
+        function getUserData() {
+            if (currentUser && currentUser.id) {
+                const localData = getLocalUserByEmail(currentUser.email);
+                if (localData) {
+                    return { source: 'local', data: localData };
+                }
+            }
+            
+            return { source: 'none', data: null };
+        }
+
+        // Update user data
+        function updateUserData(updates) {
+            if (!currentUser) return false;
+            
+            let success = false;
+            
+            // Update localStorage
+            if (currentUser.id) {
+                updateLocalUser(currentUser.id, updates);
+                success = true;
+                console.log("User data updated in localStorage");
+            }
+            
+            // Update current user in session
+            currentUser = { ...currentUser, ...updates };
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateUI();
+            
+            return success;
+        }
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const icon = document.getElementById('notificationIcon');
+            const messageEl = document.getElementById('notificationText');
+            
+            // Remove existing classes
+            notification.className = 'notification fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg flex items-center';
+            
+            // Add type-specific classes
+            if (type === 'success') {
+                notification.classList.add('bg-green-500', 'text-white');
+                icon.className = 'fas fa-check-circle mr-2';
+            } else if (type === 'error') {
+                notification.classList.add('bg-red-500', 'text-white');
+                icon.className = 'fas fa-exclamation-circle mr-2';
+            } else if (type === 'info') {
+                notification.classList.add('bg-blue-500', 'text-white');
+                icon.className = 'fas fa-info-circle mr-2';
+            }
+            
+            messageEl.textContent = message;
+            notification.classList.remove('hidden');
+            
+            setTimeout(hideNotification, 5000);
+        }
+
+        function hideNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('hidden');
+        }
+
+        // Check login status
+        function checkLoginStatus() {
+            // Check session storage for existing login
+            const userJson = sessionStorage.getItem('currentUser');
+            if (userJson) {
+                try {
+                    currentUser = JSON.parse(userJson);
+                    showUserSection();
+                    updateUI();
+                    return;
+                } catch (e) {
+                    console.error("Error parsing user data:", e);
+                    sessionStorage.removeItem('currentUser');
+                }
+            }
+            
+            // No user logged in
+            showAuthSection();
+        }
+
+        // Update UI based on user state
+        function updateUI() {
+            if (currentUser) {
+                // Get user data
+                const userData = getUserData();
+                const userInfo = userData.data || currentUser;
+                
+                // Update desktop navigation
+                document.getElementById('user-name').textContent = userInfo.displayName || userInfo.name || userInfo.email;
+                document.getElementById('user-role').textContent = userInfo.role === 'admin' ? 'Administrator' : 'Member';
+                
+                // Generate avatar URL
+                let userAvatar;
+                if (userInfo.photoURL) {
+                    userAvatar = userInfo.photoURL;
+                } else if (userInfo.email) {
+                    userAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(userInfo.displayName || userInfo.name || userInfo.email)}&background=random`;
+                } else {
+                    userAvatar = 'https://ui-avatars.com/api/?name=Guest&background=random';
+                }
+                
+                document.getElementById('user-avatar').src = userAvatar;
+                
+                // Update dropdown
+                document.getElementById('dropdown-name').textContent = userInfo.displayName || userInfo.name || userInfo.email;
+                document.getElementById('dropdown-email').textContent = userInfo.email || 'No email';
+                document.getElementById('dropdown-role').textContent = userInfo.role === 'admin' ? 'Administrator' : 'Member';
+                document.getElementById('dropdown-avatar').src = userAvatar;
+                
+                // Update mobile navigation
+                document.getElementById('mobile-user-name').textContent = userInfo.displayName || userInfo.name || userInfo.email;
+                document.getElementById('mobile-user-role').textContent = userInfo.role === 'admin' ? 'Administrator' : 'Member';
+                document.getElementById('mobile-user-avatar').src = userAvatar;
+                
+                // Update modals
+                document.getElementById('modal-fullname').textContent = userInfo.displayName || userInfo.name || userInfo.email;
+                document.getElementById('modal-email').textContent = userInfo.email || 'No email';
+                document.getElementById('modal-role').textContent = userInfo.role === 'admin' ? 'Administrator' : 'Member';
+                document.getElementById('modal-avatar').src = userAvatar;
+                
+                document.getElementById('profile-firstname').value = userInfo.firstName || userInfo.displayName?.split(' ')[0] || '';
+                document.getElementById('profile-lastname').value = userInfo.lastName || userInfo.displayName?.split(' ')[1] || '';
+                document.getElementById('profile-phone').value = userInfo.phone || '';
+                document.getElementById('profile-address').value = userInfo.address || '';
+                document.getElementById('profile-bio').value = userInfo.bio || '';
+                
+                console.log(`User UI updated from localStorage`);
+            }
+        }
+
+        // Show/Hide sections
+        function showUserSection() {
+            // Show user profile, hide auth buttons
+            document.getElementById('user-profile-section').classList.remove('hidden');
+            document.getElementById('auth-buttons-section').classList.add('hidden');
+            
+            // Mobile version
+            document.getElementById('mobile-user-profile').classList.remove('hidden');
+            document.getElementById('mobile-auth-buttons').classList.add('hidden');
+            
+            updateUI();
+        }
+
+        function showAuthSection() {
+            // Show auth buttons, hide user profile
+            document.getElementById('user-profile-section').classList.add('hidden');
+            document.getElementById('auth-buttons-section').classList.remove('hidden');
+            
+            // Mobile version
+            document.getElementById('mobile-user-profile').classList.add('hidden');
+            document.getElementById('mobile-auth-buttons').classList.remove('hidden');
+        }
+
+        // Open profile modal
+        function openProfileModal() {
+            document.getElementById('profile-modal').classList.remove('hidden');
+            const userDropdown = document.getElementById('user-dropdown');
+            if (userDropdown) {
+                userDropdown.classList.remove('show');
+            }
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close profile modal
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Open password modal
+        function openPasswordModal() {
+            document.getElementById('password-modal').classList.remove('hidden');
+            const userDropdown = document.getElementById('user-dropdown');
+            if (userDropdown) {
+                userDropdown.classList.remove('show');
+            }
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close password modal
+        function closePasswordModal() {
+            document.getElementById('password-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Update profile
+        function updateProfile() {
+            const firstName = document.getElementById('profile-firstname').value;
+            const lastName = document.getElementById('profile-lastname').value;
+            const phone = document.getElementById('profile-phone').value;
+            const address = document.getElementById('profile-address').value;
+            const bio = document.getElementById('profile-bio').value;
+            
+            if (!currentUser) return;
+            
+            const updates = {
+                firstName: firstName,
+                lastName: lastName,
+                displayName: `${firstName} ${lastName}`,
+                phone: phone,
+                address: address,
+                bio: bio
+            };
+            
+            const success = updateUserData(updates);
+            
+            if (success) {
+                showNotification('Profile updated successfully!', 'success');
+            } else {
+                showNotification('Failed to update profile', 'error');
+            }
+            
+            closeProfileModal();
+        }
+
+        // Change password
+        function handleChangePassword(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-new-password').value;
+            
+            if (!currentUser) return;
+            
+            if (newPassword.length < 6) {
+                document.getElementById('password-error').textContent = 'New password must be at least 6 characters';
+                document.getElementById('password-error').classList.remove('hidden');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                document.getElementById('password-error').textContent = 'New passwords do not match';
+                document.getElementById('password-error').classList.remove('hidden');
+                return;
+            }
+            
+            // Update local user password
+            if (currentUser.password !== currentPassword) {
+                document.getElementById('password-error').textContent = 'Current password is incorrect';
+                document.getElementById('password-error').classList.remove('hidden');
+                return;
+            }
+            
+            updateUserData({ password: newPassword });
+            
+            document.getElementById('password-success').textContent = 'Password updated successfully!';
+            document.getElementById('password-success').classList.remove('hidden');
+            document.getElementById('password-error').classList.add('hidden');
+            
+            showNotification('Password updated successfully!', 'success');
+            
+            // Clear form
+            document.getElementById('change-password-form').reset();
+            
+            setTimeout(() => {
+                closePasswordModal();
+            }, 1500);
+        }
+
+        // Go to dashboard
+        function goToDashboard() {
+            if (currentUser && currentUser.role === 'admin') {
+                window.location.href = 'dashboard.html';
+            } else {
+                showNotification('You need admin privileges to access the dashboard', 'error');
+            }
+        }
+
+        // Logout
+        function logout() {
+            // Clear session storage
+            sessionStorage.removeItem('currentUser');
+            currentUser = null;
+            
+            // Update UI
+            showAuthSection();
+            showNotification('Logged out successfully', 'info');
+            
+            // Close dropdowns
+            const userDropdown = document.getElementById('user-dropdown');
+            if (userDropdown) {
+                userDropdown.classList.remove('show');
+            }
+            
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu && mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                const icon = document.querySelector('#mobileMenuButton i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        }
+
+        // Check for auth redirect
+        function checkForAuthRedirect() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authSuccess = urlParams.get('auth');
+            const view = urlParams.get('view');
+            
+            if (authSuccess === 'success') {
+                // Remove the parameter from URL
+                const url = new URL(window.location);
+                url.searchParams.delete('auth');
+                url.searchParams.delete('view');
+                window.history.replaceState({}, '', url);
+                
+                // Check login status
+                checkLoginStatus();
+                
+                // Show welcome message
+                if (currentUser) {
+                    showNotification(`Welcome ${currentUser.displayName || currentUser.email}!`, 'success');
+                }
+            }
+            
+            // Check if we should redirect to auth page with specific view
+            if (view && (view === 'login' || view === 'signup')) {
+                window.location.href = `auth.html?view=${view}`;
+            }
+        }
+
         // ========== MODAL MANAGEMENT ==========
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
@@ -1120,16 +1741,43 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Close modal when clicking outside content
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
         // ========== NAVIGATION FUNCTIONALITY ==========
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize authentication
+            checkLoginStatus();
+            checkForAuthRedirect();
+            
+            // Toggle user dropdown
+            const userMenuBtn = document.getElementById('user-menu-btn');
+            if (userMenuBtn) {
+                userMenuBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    document.getElementById('user-dropdown').classList.toggle('show');
+                });
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                const userDropdown = document.getElementById('user-dropdown');
+                if (userDropdown) {
+                    userDropdown.classList.remove('show');
+                }
+            });
+
+            // Prevent dropdown close when clicking inside
+            const userDropdown = document.getElementById('user-dropdown');
+            if (userDropdown) {
+                userDropdown.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+
+            // Password form event listener
+            const passwordForm = document.getElementById('change-password-form');
+            if (passwordForm) {
+                passwordForm.addEventListener('submit', handleChangePassword);
+            }
+
             // Mobile menu toggle
             document.getElementById('mobileMenuButton').addEventListener('click', function() {
                 document.getElementById('mobileMenu').classList.toggle('active');
@@ -1317,33 +1965,6 @@
                 return emailRegex.test(email);
             };
 
-            // ========== NOTIFICATION SYSTEM ==========
-            window.showNotification = function(message, type = 'success') {
-                const notification = document.getElementById('notification');
-                const notificationIcon = document.getElementById('notificationIcon');
-                const notificationMessage = document.getElementById('notificationText');
-                
-                // Set notification content and style
-                notificationMessage.textContent = message;
-                notification.className = 'notification ' + type;
-                
-                if (type === 'success') {
-                    notificationIcon.className = 'fas fa-check-circle mr-2';
-                    notification.classList.add('bg-primary-green');
-                } else {
-                    notificationIcon.className = 'fas fa-exclamation-circle mr-2';
-                    notification.classList.add('bg-red-500');
-                }
-                
-                // Show notification
-                notification.classList.add('show');
-                
-                // Hide after 5 seconds
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 5000);
-            };
-
             // ========== INITIALIZATION ==========
             // Show welcome notification after page loads
             setTimeout(() => {
@@ -1374,7 +1995,7 @@
             });
         });
 
-        // 3. Program Enrollment System
+        // Program Enrollment System
         function initProgramEnrollment() {
             const enrollButtons = document.querySelectorAll('.enroll-btn');
             const enrollmentModal = document.getElementById('enrollmentModal');
@@ -1480,7 +2101,7 @@
             }
         }
 
-        // 4. Job Application System
+        // Job Application System
         function initJobApplications() {
             const applyButtons = document.querySelectorAll('.apply-job-btn');
             const viewJobsButton = document.querySelector('.view-jobs-btn');
@@ -1526,7 +2147,7 @@
             }
         }
 
-        // 5. Internship Programs
+        // Internship Programs
         function initInternshipPrograms() {
             const internshipButtons = document.querySelectorAll('.internship-btn');
 
@@ -1571,7 +2192,7 @@
             });
         }
 
-        // 6. Entrepreneurship Support
+        // Entrepreneurship Support
         function initEntrepreneurshipSupport() {
             const entrepreneurshipButtons = document.querySelectorAll('.entrepreneurship-btn');
 
@@ -1625,7 +2246,7 @@
             });
         }
 
-        // 7. Career Development
+        // Career Development
         function initCareerDevelopment() {
             const counselingButtons = document.querySelectorAll('.counseling-btn');
 
@@ -1698,7 +2319,7 @@
             });
         }
 
-        // 8. Success Stories
+        // Success Stories
         function initSuccessStories() {
             const storyButtons = document.querySelectorAll('.story-btn');
             const storyModal = document.getElementById('storyModal');
@@ -1791,7 +2412,7 @@
             });
         }
 
-        // 9. Newsletter Signup
+        // Newsletter Signup
         function initNewsletterSignup() {
             const newsletterBtn = document.getElementById('newsletterBtn');
             const newsletterEmail = document.getElementById('newsletterEmail');
@@ -1833,7 +2454,7 @@
             }
         }
 
-        // 10. Social Media Integration
+        // Social Media Integration
         function initSocialMedia() {
             const socialButtons = document.querySelectorAll('.social-btn');
 

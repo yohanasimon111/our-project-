@@ -13,7 +13,7 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    
     <style>
         .auth-container {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -996,6 +996,52 @@
             console.log('- Admin: admin@hopelink.org / admin123');
             console.log('- User: user@example.com / user123');
         });
+        // After successful login in logn-sign.html
+function handleLoginSuccess(userData) {
+    // ... existing login success code ...
+    
+    // Save user to profile system
+    if (window.userProfile) {
+        window.userProfile.saveUser({
+            email: userData.email,
+            name: userData.name,
+            displayName: userData.displayName,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            role: userData.role,
+            uid: userData.uid,
+            loginTime: new Date().toISOString()
+        });
+    }
+    
+    // Redirect to homepage
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 2000);
+}
+
+// After successful signup in logn-sign.html
+function handleSignupSuccess(userData) {
+    // ... existing signup success code ...
+    
+    // Save user to profile system
+    if (window.userProfile) {
+        window.userProfile.saveUser({
+            email: userData.email,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            displayName: `${userData.firstName} ${userData.lastName}`,
+            role: 'user',
+            uid: userData.uid || `user_${Date.now()}`,
+            loginTime: new Date().toISOString()
+        });
+    }
+    
+    // Redirect to homepage
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 2000);
+}
 
         // Make functions available globally
         window.handleOtpInput = handleOtpInput;

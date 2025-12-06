@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - Support HopeLink Mahama</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Razorpay Integration (for demo purposes) -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            blue: '#3B82F6',
+                            green: '#10B981',
+                            yellow: '#FBBF24',
+                            light: '#FEF3C7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Professional navigation styles */
+        .nav-professional {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        /* Enhanced dropdowns */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 12rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0;
+            z-index: 100;
+        }
+
+        @media (min-width: 768px) {
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+        }
+
+        .dropdown-content.active {
+            display: block;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            display: none;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-dropdown-content {
+            display: none;
+            padding-left: 1rem;
+        }
+
+        .mobile-dropdown-content.active {
+            display: block;
+        }
+
+        /* Smooth animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero background */
+        .hero-background {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* Progress bar animation */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10B981, #059669);
+            width: 0%;
+            transition: width 2s ease-in-out;
+            border-radius: 3px;
+        }
+
+        /* Pulse animation for donation amounts */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        /* Professional button animations */
+        .btn-professional {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-professional::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-professional:hover::before {
+            left: 100%;
+        }
+
+        /* Donation card hover effects */
+        .donation-card {
+            transition: all 0.3s ease;
+        }
+
+        .donation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #10B981;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+
+<body class="font-sans">
+    <!-- Navigation -->
+    <nav class="nav-professional shadow-lg fixed w-full z-50 transition-all duration-300" id="mainNav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                        <i class="fas fa-hands-helping text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-xl text-gray-800">HopeLink</div>
+                        <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex space-x-8 items-center">
+                    <a href="./index.html"
+                        class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-sm font-medium">Home</a>
+
+                    <!-- Programs Dropdown -->
+                    <div class="dropdown relative">
+                        <button
+                            class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center text-sm font-medium"
+                            data-dropdown="programs">
+                            Programs <i class="fas fa-chevron-down ml-1 text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div class="dropdown-content" id="programs-dropdown">
+                            <a href="hunger-help.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition border-b border-gray-100">Hunger
+                                Help</a>
+                            <a href="youth-empowerment.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition border-b border-gray-100">Youth
+                                Empowerment</a>
+                            <a href="mental-wellness.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental
+                                Wellness</a>
+                        </div>
+                    </div>
+
+                    <a href="about-us.html"
+                        class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-sm font-medium">Who
+                        We Are</a>
+                    <a href="get-involved.html"
+                        class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-sm font-medium">Get
+                        Involved</a>
+
+                    <!-- News & Updates Dropdown -->
+                    <div class="dropdown relative">
+                        <button
+                            class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center text-sm font-medium"
+                            data-dropdown="news">
+                            News & Updates <i
+                                class="fas fa-chevron-down ml-1 text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div class="dropdown-content" id="news-dropdown">
+                            <a href="news.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition border-b border-gray-100">Latest
+                                News</a>
+                            <a href="advertisement.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition border-b border-gray-100">Advertisement</a>
+                            <a href="stories.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success
+                                Stories</a>
+                        </div>
+                    </div>
+
+                    <a href="contact.html"
+                        class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-sm font-medium">Contact</a>
+
+                    <!-- Opportunities Dropdown -->
+                    <div class="dropdown relative">
+                        <button
+                            class="nav-item bg-primary-yellow text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition duration-300 flex items-center text-sm"
+                            data-dropdown="opportunities">
+                            Opportunities <i
+                                class="fas fa-chevron-down ml-1 text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div class="dropdown-content" id="opportunities-dropdown">
+                            <a href="volunteer.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition border-b border-gray-100">Volunteer</a>
+                            <a href="careers.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition border-b border-gray-100">Careers</a>
+                            <a href="partnerships.html"
+                                class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                        </div>
+                    </div>
+
+                    <!-- Donate Button - Active State -->
+                    <button
+                        class="donate-btn btn-professional bg-primary-green text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition transform hover:scale-105 shadow-lg text-sm border-2 border-primary-green">
+                        <i class="fas fa-heart mr-2"></i>Donate Now
+                    </button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="lg:hidden flex items-center space-x-4">
+                    <button id="mobileMenuButton" class="text-gray-600 hover:text-primary-blue transition">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-gray-200 shadow-xl">
+                <div class="px-4 py-6 space-y-4">
+                    <a href="index.html"
+                        class="block py-3 text-primary-blue font-semibold border-b border-gray-100 transition text-lg">Home</a>
+
+                    <!-- Mobile Programs Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button
+                            class="mobile-dropdown-btn w-full text-left py-3 text-gray-600 hover:text-primary-blue transition flex items-center justify-between text-lg font-medium">
+                            Programs <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div class="mobile-dropdown-content bg-gray-50 rounded-lg mt-2">
+                            <a href="hunger-help.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition border-b border-gray-200">Hunger
+                                Help</a>
+                            <a href="youth-empowerment.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition border-b border-gray-200">Youth
+                                Empowerment</a>
+                            <a href="mental-wellness.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition">Mental
+                                Wellness</a>
+                        </div>
+                    </div>
+
+                    <a href="about-us.html"
+                        class="block py-3 text-gray-600 hover:text-primary-blue transition text-lg">Who We Are</a>
+                    <a href="get-involved.html"
+                        class="block py-3 text-gray-600 hover:text-primary-blue transition text-lg">Get Involved</a>
+
+                    <!-- Mobile News & Updates Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button
+                            class="mobile-dropdown-btn w-full text-left py-3 text-gray-600 hover:text-primary-blue transition flex items-center justify-between text-lg font-medium">
+                            News & Updates <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div class="mobile-dropdown-content bg-gray-50 rounded-lg mt-2">
+                            <a href="news.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition border-b border-gray-200">Latest
+                                News</a>
+                            <a href="advertisement.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition border-b border-gray-200">Advertisement</a>
+                            <a href="stories.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition">Success
+                                Stories</a>
+                        </div>
+                    </div>
+
+                    <a href="contact.html"
+                        class="block py-3 text-gray-600 hover:text-primary-blue transition text-lg">Contact</a>
+
+                    <!-- Mobile Opportunities Dropdown -->
+                    <div class="mobile-dropdown">
+                        <button
+                            class="mobile-dropdown-btn w-full text-left py-3 bg-primary-yellow text-gray-800 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-between text-lg px-4">
+                            Opportunities <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                        </button>
+                        <div class="mobile-dropdown-content bg-gray-50 rounded-lg mt-2">
+                            <a href="volunteer.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition border-b border-gray-200">Volunteer</a>
+                            <a href="careers.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition border-b border-gray-200">Careers</a>
+                            <a href="partnerships.html"
+                                class="block py-3 px-4 text-gray-600 hover:text-primary-blue transition">Partnerships</a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Donate Button - Active State -->
+                    <button
+                        class="w-full donate-btn btn-professional bg-primary-green text-white px-6 py-4 rounded-lg hover:bg-green-600 transition transform hover:scale-105 text-left flex items-center justify-center text-lg font-semibold mt-4 border-2 border-primary-green">
+                        <i class="fas fa-heart mr-3"></i>Donate Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 hero-background min-h-screen flex items-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-10 left-10 w-20 h-20 bg-white rounded-full animate-pulse"></div>
+            <div class="absolute top-40 right-20 w-16 h-16 bg-white rounded-full animate-pulse"
+                style="animation-delay: 0.5s;"></div>
+            <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-white rounded-full animate-pulse"
+                style="animation-delay: 1s;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center text-white relative z-10">
+            <div class="fade-in">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    Your Donation Creates Hope
+                </h1>
+                <p class="text-lg sm:text-xl lg:text-2xl mb-8 opacity-90 max-w-4xl mx-auto leading-relaxed">
+                    Every contribution helps us provide food, education, and support to refugees in Mahama Camp. Join us
+                    in building a future where no one is left behind.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="scrollToSection('donation-options')"
+                        class="btn-professional bg-white text-primary-green px-6 sm:px-8 py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-gift mr-2"></i>Make a Donation
+                    </button>
+                    <button onclick="scrollToSection('impact')"
+                        class="btn-professional bg-transparent border-2 border-white text-white px-6 sm:px-8 py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-white hover:text-primary-green transition transform hover:scale-105">
+                        <i class="fas fa-chart-line mr-2"></i>See Your Impact
+                    </button>
+                </div>
+
+                <!-- Live Donation Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mt-16 max-w-2xl mx-auto">
+                    <div class="text-center bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="text-2xl sm:text-3xl font-bold counter" data-target="12547">0</div>
+                        <div class="text-sm opacity-80 mt-2">Donors This Year</div>
+                    </div>
+                    <div class="text-center bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="text-2xl sm:text-3xl font-bold">$<span class="counter" data-target="238450">0</span>
+                        </div>
+                        <div class="text-sm opacity-80 mt-2">Raised in 2024</div>
+                    </div>
+                    <div class="text-center bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+                        <div class="text-2xl sm:text-3xl font-bold counter" data-target="98">0</div>
+                        <div class="text-sm opacity-80 mt-2">% Goes Directly to Programs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Options -->
+    <section id="donation-options" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Choose Your Donation Method</h2>
+                <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">Multiple secure ways to support our
+                    mission. Every contribution makes a difference.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- One-time Donation -->
+                <div class="fade-in">
+                    <div
+                        class="donation-card bg-white border-2 border-primary-green rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div
+                            class="w-16 h-16 bg-primary-green rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-gift text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">One-time Donation</h3>
+                        <p class="text-gray-600 mb-6 text-center">Make a single contribution to support our immediate
+                            needs and emergency programs.</p>
+
+                        <div class="space-y-4 mb-6">
+                            <button onclick="selectAmount(25)"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-green hover:bg-green-50 transition text-left">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-gray-800">$25</span>
+                                    <span class="text-sm text-gray-600">Provides meals for 5 people</span>
+                                </div>
+                            </button>
+
+                            <button onclick="selectAmount(50)"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-green hover:bg-green-50 transition text-left">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-gray-800">$50</span>
+                                    <span class="text-sm text-gray-600">Supports education for 1 child</span>
+                                </div>
+                            </button>
+
+                            <button onclick="selectAmount(100)"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-green hover:bg-green-50 transition text-left">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-gray-800">$100</span>
+                                    <span class="text-sm text-gray-600">Funds medical supplies</span>
+                                </div>
+                            </button>
+
+                            <div class="mt-4">
+                                <label class="block text-gray-700 mb-2">Custom Amount</label>
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 bg-gray-50 text-gray-500 rounded-l-lg">
+                                        $
+                                    </span>
+                                    <input type="number" id="customAmount" placeholder="Enter amount"
+                                        class="flex-1 p-2 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="openDonationModal('one-time')"
+                            class="w-full bg-primary-green text-white py-4 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center">
+                            <i class="fas fa-heart mr-3"></i>Donate Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Monthly Donation -->
+                <div class="fade-in">
+                    <div
+                        class="donation-card bg-white border-2 border-primary-blue rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div
+                            class="w-16 h-16 bg-primary-blue rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-calendar-alt text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <span
+                                class="bg-primary-blue text-white px-3 py-1 rounded-full text-xs font-semibold pulse-animation">
+                                Most Impactful
+                            </span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Monthly Support</h3>
+                        <p class="text-gray-600 mb-6 text-center">Provide sustainable support with a recurring donation.
+                            Make a lasting difference every month.</p>
+
+                        <div class="space-y-4 mb-6">
+                            <button onclick="selectMonthlyAmount(10)"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-blue hover:bg-blue-50 transition text-left">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-gray-800">$10/month</span>
+                                    <span class="text-sm text-gray-600">Feeds 2 people monthly</span>
+                                </div>
+                            </button>
+
+                            <button onclick="selectMonthlyAmount(25)"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-blue hover:bg-blue-50 transition text-left">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-gray-800">$25/month</span>
+                                    <span class="text-sm text-gray-600">Supports education monthly</span>
+                                </div>
+                            </button>
+
+                            <button onclick="selectMonthlyAmount(50)"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-blue hover:bg-blue-50 transition text-left">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-gray-800">$50/month</span>
+                                    <span class="text-sm text-gray-600">Healthcare for a family</span>
+                                </div>
+                            </button>
+
+                            <div class="mt-4">
+                                <label class="block text-gray-700 mb-2">Custom Monthly Amount</label>
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 bg-gray-50 text-gray-500 rounded-l-lg">
+                                        $/month
+                                    </span>
+                                    <input type="number" id="customMonthlyAmount" placeholder="Enter amount"
+                                        class="flex-1 p-2 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-primary-blue">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="openDonationModal('monthly')"
+                            class="w-full bg-primary-blue text-white py-4 rounded-lg font-semibold hover:bg-blue-600 transition flex items-center justify-center">
+                            <i class="fas fa-calendar-check mr-3"></i>Start Monthly Giving
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Corporate/In-Kind -->
+                <div class="fade-in">
+                    <div
+                        class="donation-card bg-white border-2 border-primary-yellow rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div
+                            class="w-16 h-16 bg-primary-yellow rounded-full flex items-center justify-center mb-6 mx-auto">
+                            <i class="fas fa-building text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">Corporate Giving</h3>
+                        <p class="text-gray-600 mb-6 text-center">Partner with us through corporate sponsorships,
+                            in-kind donations, or employee matching.</p>
+
+                        <div class="space-y-4 mb-6">
+                            <button onclick="openCorporateModal('sponsorship')"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-yellow hover:bg-yellow-50 transition text-left">
+                                <div class="flex items-center">
+                                    <i class="fas fa-handshake text-primary-yellow mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold text-gray-800">Program Sponsorship</div>
+                                        <div class="text-sm text-gray-600">Sponsor a specific program</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button onclick="openCorporateModal('in-kind')"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-yellow hover:bg-yellow-50 transition text-left">
+                                <div class="flex items-center">
+                                    <i class="fas fa-box text-primary-yellow mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold text-gray-800">In-Kind Donations</div>
+                                        <div class="text-sm text-gray-600">Donate goods or services</div>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button onclick="openCorporateModal('matching')"
+                                class="w-full p-4 border border-gray-300 rounded-lg hover:border-primary-yellow hover:bg-yellow-50 transition text-left">
+                                <div class="flex items-center">
+                                    <i class="fas fa-users text-primary-yellow mr-3"></i>
+                                    <div>
+                                        <div class="font-semibold text-gray-800">Employee Matching</div>
+                                        <div class="text-sm text-gray-600">Double your employees' impact</div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+
+                        <button onclick="openCorporateModal('general')"
+                            class="w-full bg-primary-yellow text-gray-800 py-4 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-center">
+                            <i class="fas fa-briefcase mr-3"></i>Explore Corporate Options
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Badges -->
+            <div class="mt-12 text-center">
+                <p class="text-gray-600 mb-6">Your donation is secure and protected</p>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-lock text-primary-green text-xl"></i>
+                        <span class="text-gray-700">256-bit SSL Encryption</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-shield-alt text-primary-blue text-xl"></i>
+                        <span class="text-gray-700">PCI DSS Compliant</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-check-circle text-primary-green text-xl"></i>
+                        <span class="text-gray-700">Secure Payment Processing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fundraising Progress -->
+    <section class="py-16 sm:py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Current Fundraising Goals</h2>
+                <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">Track our progress and see how your
+                    donation contributes to specific initiatives</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 sm:gap-12">
+                <!-- Progress Bars -->
+                <div class="fade-in">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Campaign Progress</h3>
+
+                        <div class="space-y-6">
+                            <!-- Emergency Food Fund -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold text-gray-800">Emergency Food Fund</span>
+                                    <span class="font-bold text-primary-green">$8,450/$10,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 84.5%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Provides immediate food assistance to 200 families
+                                </p>
+                            </div>
+
+                            <!-- Youth Education Program -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold text-gray-800">Youth Education Program</span>
+                                    <span class="font-bold text-primary-blue">$15,200/$20,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 76%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Supports digital skills training for 50 youth</p>
+                            </div>
+
+                            <!-- Community Health Initiative -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold text-gray-800">Community Health Initiative</span>
+                                    <span class="font-bold text-primary-yellow">$5,800/$8,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 72.5%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Funds mental wellness support and basic healthcare
+                                </p>
+                            </div>
+
+                            <!-- Digital Infrastructure -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold text-gray-800">Digital Infrastructure</span>
+                                    <span class="font-bold text-purple-600">$3,200/$5,000</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 64%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Improves our digital platforms and outreach
+                                    systems</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Impact Calculator -->
+                <div class="fade-in">
+                    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg h-full">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">See Your Impact</h3>
+
+                        <div class="space-y-4 mb-6">
+                            <div>
+                                <label class="block text-gray-700 mb-2 font-medium">Enter Your Donation Amount</label>
+                                <div class="flex">
+                                    <span
+                                        class="inline-flex items-center px-3 py-3 border border-r-0 border-gray-300 bg-gray-50 text-gray-500 rounded-l-lg">
+                                        $
+                                    </span>
+                                    <input type="number" id="impactCalculator" value="50"
+                                        class="flex-1 p-3 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                                </div>
+                            </div>
+
+                            <button onclick="calculateImpact()"
+                                class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition">
+                                Calculate Impact
+                            </button>
+                        </div>
+
+                        <div id="impactResults" class="bg-primary-light p-6 rounded-lg">
+                            <h4 class="font-semibold text-gray-800 mb-4 text-lg">With $50, you can provide:</h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-center">
+                                    <i class="fas fa-utensils text-primary-green mr-3"></i>
+                                    <span>Meals for 10 people for a day</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-book text-primary-blue mr-3"></i>
+                                    <span>Educational materials for 2 children</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-heartbeat text-red-500 mr-3"></i>
+                                    <span>Basic healthcare for a family</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-wifi text-purple-600 mr-3"></i>
+                                    <span>Internet access for digital training</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <h4 class="font-semibold text-blue-800 mb-2 flex items-center">
+                                <i class="fas fa-info-circle mr-2"></i>Transparency Promise
+                            </h4>
+                            <p class="text-blue-700 text-sm">
+                                We maintain full financial transparency. 98% of every donation goes directly to program
+                                services. View our annual reports and financial statements on our website.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods -->
+    <section id="payment-methods" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Secure Payment Options</h2>
+                <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">Choose from multiple secure payment
+                    methods available worldwide</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Credit/Debit Cards -->
+                <div class="fade-in">
+                    <div class="bg-gray-50 p-6 rounded-2xl text-center h-full">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 mx-auto shadow-md">
+                            <i class="fas fa-credit-card text-primary-blue text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Credit/Debit Cards</h3>
+                        <div class="flex justify-center space-x-3 mb-4">
+                            <i class="fab fa-cc-visa text-blue-600 text-2xl"></i>
+                            <i class="fab fa-cc-mastercard text-red-600 text-2xl"></i>
+                            <i class="fab fa-cc-amex text-blue-800 text-2xl"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm">Visa, Mastercard, American Express accepted</p>
+                    </div>
+                </div>
+
+                <!-- Mobile Money -->
+                <div class="fade-in">
+                    <div class="bg-gray-50 p-6 rounded-2xl text-center h-full">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 mx-auto shadow-md">
+                            <i class="fas fa-mobile-alt text-primary-green text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Mobile Money</h3>
+                        <div class="flex justify-center space-x-3 mb-4">
+                            <span
+                                class="px-3 py-1 bg-green-100 text-green-800 rounded text-sm font-semibold">M-Pesa</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded text-sm font-semibold">Airtel
+                                Money</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">Available in Rwanda and East Africa</p>
+                    </div>
+                </div>
+
+                <!-- Bank Transfer -->
+                <div class="fade-in">
+                    <div class="bg-gray-50 p-6 rounded-2xl text-center h-full">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 mx-auto shadow-md">
+                            <i class="fas fa-university text-primary-yellow text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Bank Transfer</h3>
+                        <div class="mb-4">
+                            <div class="text-sm font-semibold text-gray-700">HopeLink Foundation</div>
+                            <div class="text-xs text-gray-600">Account: 1234567890</div>
+                        </div>
+                        <p class="text-gray-600 text-sm">Direct transfers accepted globally</p>
+                    </div>
+                </div>
+
+                <!-- Cryptocurrency -->
+                <div class="fade-in">
+                    <div class="bg-gray-50 p-6 rounded-2xl text-center h-full">
+                        <div
+                            class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 mx-auto shadow-md">
+                            <i class="fab fa-bitcoin text-orange-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Cryptocurrency</h3>
+                        <div class="flex justify-center space-x-3 mb-4">
+                            <i class="fab fa-bitcoin text-orange-500 text-xl"></i>
+                            <i class="fab fa-ethereum text-purple-600 text-xl"></i>
+                            <i class="fas fa-coins text-yellow-600 text-xl"></i>
+                        </div>
+                        <p class="text-gray-600 text-sm">Bitcoin, Ethereum, and other major cryptos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="impact" class="py-16 sm:py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 sm:mb-16 fade-in">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Donor Stories</h2>
+                <p class="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">See how your donation transforms lives
+                    through the eyes of our supporters</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
+                <div class="fade-in">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg h-full">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-12 h-12 bg-primary-blue rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                SJ
+                            </div>
+                            <div>
+                                <div class="font-semibold">Sarah Johnson</div>
+                                <div class="text-sm text-gray-500">Monthly Donor since 2023</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "I started giving $25 monthly after learning about the education programs. Seeing the
+                            progress reports and knowing children are learning gives me hope for their future."
+                        </p>
+                        <div class="mt-4 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fade-in">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg h-full">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-12 h-12 bg-primary-green rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                MK
+                            </div>
+                            <div>
+                                <div class="font-semibold">Michael K.</div>
+                                <div class="text-sm text-gray-500">Corporate Partner</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "Our company's matching program doubled our employees' donations. The transparency and
+                            regular updates from HopeLink make us confident our contributions make a real difference."
+                        </p>
+                        <div class="mt-4 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fade-in">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg h-full">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-12 h-12 bg-primary-yellow rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                AM
+                            </div>
+                            <div>
+                                <div class="font-semibold">Amina M.</div>
+                                <div class="text-sm text-gray-500">One-time + In-kind Donor</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">
+                            "I donated both funds and educational materials. The team was incredibly responsive and
+                            showed exactly how my contributions were used. I'll definitely donate again."
+                        </p>
+                        <div class="mt-4 text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 sm:py-20 bg-gradient-to-r from-primary-blue to-primary-green relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full"
+                style="background-image: url('data:image/svg+xml,<svg width=\" 60\" height=\"60\" viewBox=\"0 0 60 60\"
+                xmlns=\"http://www.w3.org/2000/svg\">
+                <g fill=\"none\" fill-rule=\"evenodd\">
+                    <g fill=\"%23ffffff\" fill-opacity=\"0.4\">
+                        <circle cx=\"30\" cy=\"30\" r=\"2\" />
+                    </g>
+                </g></svg>');">
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto text-center text-white px-4 relative z-10">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6 fade-in">
+                Ready to Make a Difference?
+            </h2>
+            <p class="text-lg sm:text-xl opacity-90 mb-8 fade-in">
+                Join thousands of supporters who are helping build hope, opportunity, and dignity for refugees in Mahama
+                Camp. Your donation, no matter the size, creates real change.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8 fade-in">
+                <button onclick="scrollToSection('donation-options')"
+                    class="btn-professional bg-white text-primary-green px-6 sm:px-8 py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-heart mr-2"></i>Donate Now
+                </button>
+                <button onclick="openFAQModal()"
+                    class="btn-professional bg-transparent border-2 border-white text-white px-6 sm:px-8 py-4 rounded-lg font-semibold text-base sm:text-lg hover:bg-white hover:text-primary-green transition transform hover:scale-105">
+                    <i class="fas fa-question-circle mr-2"></i>FAQ
+                </button>
+            </div>
+
+            <div class="mt-8 text-sm opacity-80">
+                <p>All donations are tax-deductible. You will receive a receipt for your records.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <!-- Footer Logo -->
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gradient-to-r from-primary-blue to-primary-green p-2 rounded-lg mr-3">
+                            <i class="fas fa-hands-helping text-white"></i>
+                        </div>
+                        <div>
+                            <div class="font-bold text-lg">HopeLink</div>
+                            <div class="text-xs text-primary-green font-semibold">Mahama Refugee Camp</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Empowering refugees through technology and innovation in Mahama Camp, Rwanda. Registered
+                        non-profit organization.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition flex items-center"><i
+                                    class="fas fa-home mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="get-involved.html"
+                                class="text-gray-400 hover:text-white transition flex items-center"><i
+                                    class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
+                        <li><a href="contact.html"
+                                class="text-gray-400 hover:text-white transition flex items-center"><i
+                                    class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
+                        <li><a href="#" onclick="openFAQModal()"
+                                class="text-gray-400 hover:text-white transition flex items-center"><i
+                                    class="fas fa-question-circle mr-2 text-xs"></i>Donation FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-gray-400">
+                        <p class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            Mahama Camp, Kirehe District, Rwanda
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            donations@hopelink.mahama.org
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-3"></i>
+                            +250 123 456 789
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Stay Connected</h4>
+                    <div class="flex space-x-4 mb-6/fix ) expected">
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary-blue transition transform hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition transform hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition transform hover:scale-110">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-red-500 transition transform hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div>
+                        <h5 class="text-sm font-semibold mb-2">Get Updates</h5>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email"
+                                class="flex-1 bg-gray-700 text-white px-3 py-2 rounded-l text-sm focus:outline-none">
+                            <button
+                                class="bg-primary-green text-white px-3 py-2 rounded-r text-sm hover:bg-green-600 transition">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 HopeLink Mahama — Empowering Refugees Through Innovation. All rights reserved.</p>
+                <p class="text-xs mt-2">Registration Number: NGO-123456-RW | Tax ID: 987654321</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Donation Modal -->
+    <div id="donationModal" class="fixed inset-0 z-50 hidden" aria-modal="true" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        <div class="relative mx-auto mt-8 mb-8 max-w-lg p-6 rounded-xl bg-white shadow-lg max-h-[90vh] overflow-y-auto">
+            <div class="flex items-start justify-between mb-6">
+                <h3 id="donationModalTitle" class="text-2xl font-bold text-gray-800">Make a Donation</h3>
+                <button onclick="closeDonationModal()" class="text-gray-500 hover:text-gray-700 p-2">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <form id="donationForm" class="space-y-6">
+                <!-- Donation Type -->
+                <div>
+                    <label class="block text-gray-700 mb-2 font-medium">Donation Type</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" id="oneTimeBtn"
+                            class="p-3 border-2 border-primary-green text-primary-green rounded-lg font-semibold">
+                            One-time
+                        </button>
+                        <button type="button" id="monthlyBtn"
+                            class="p-3 border border-gray-300 text-gray-600 rounded-lg font-semibold">
+                            Monthly
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Donation Amount -->
+                <div>
+                    <label class="block text-gray-700 mb-2 font-medium">Donation Amount</label>
+                    <div class="grid grid-cols-3 gap-3 mb-3">
+                        <button type="button" onclick="setDonationAmount(25)"
+                            class="p-3 border border-gray-300 rounded-lg hover:border-primary-green hover:bg-green-50 transition">$25</button>
+                        <button type="button" onclick="setDonationAmount(50)"
+                            class="p-3 border border-gray-300 rounded-lg hover:border-primary-green hover:bg-green-50 transition">$50</button>
+                        <button type="button" onclick="setDonationAmount(100)"
+                            class="p-3 border border-gray-300 rounded-lg hover:border-primary-green hover:bg-green-50 transition">$100</button>
+                    </div>
+                    <div class="flex">
+                        <span
+                            class="inline-flex items-center px-3 py-2 border border-r-0 border-gray-300 bg-gray-50 text-gray-500 rounded-l-lg">
+                            $
+                        </span>
+                        <input type="number" id="donationAmount" value="50" required
+                            class="flex-1 p-3 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                    </div>
+                </div>
+
+                <!-- Donor Information -->
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Your Information</h4>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 mb-2">First Name *</label>
+                            <input type="text" name="firstName" required
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Last Name *</label>
+                            <input type="text" name="lastName" required
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="block text-gray-700 mb-2">Email *</label>
+                        <input type="email" name="email" required
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="block text-gray-700 mb-2">Phone</label>
+                        <input type="tel" name="phone"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Payment Method</h4>
+                    <div class="space-y-3">
+                        <label
+                            class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-primary-green">
+                            <input type="radio" name="paymentMethod" value="card" class="mr-3" checked>
+                            <div>
+                                <div class="font-semibold">Credit/Debit Card</div>
+                                <div class="text-sm text-gray-600">Pay securely with your card</div>
+                            </div>
+                        </label>
+
+                        <label
+                            class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-primary-green">
+                            <input type="radio" name="paymentMethod" value="paypal" class="mr-3">
+                            <div>
+                                <div class="font-semibold">PayPal</div>
+                                <div class="text-sm text-gray-600">Pay with your PayPal account</div>
+                            </div>
+                        </label>
+
+                        <label
+                            class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:border-primary-green">
+                            <input type="radio" name="paymentMethod" value="bank" class="mr-3">
+                            <div>
+                                <div class="font-semibold">Bank Transfer</div>
+                                <div class="text-sm text-gray-600">Receive transfer details via email</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Card Details (shown when card selected) -->
+                <div id="cardDetails" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Card Number</label>
+                        <input type="text" placeholder="1234 5678 9012 3456"
+                            class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-gray-700 mb-2">Expiry Month</label>
+                            <input type="text" placeholder="MM"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">Expiry Year</label>
+                            <input type="text" placeholder="YY"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">CVV</label>
+                            <input type="text" placeholder="123"
+                                class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-green">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <div class="flex items-start">
+                    <input type="checkbox" id="terms" required class="mt-1 mr-3">
+                    <label for="terms" class="text-sm text-gray-600">
+                        I agree to the terms and conditions and authorize HopeLink Mahama to process my donation. I
+                        understand that my donation is tax-deductible to the extent allowed by law.
+                    </label>
+                </div>
+
+                <!-- Submit -->
+                <div class="pt-4">
+                    <button type="submit"
+                        class="w-full bg-primary-green text-white py-4 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center text-lg">
+                        <i class="fas fa-lock mr-3"></i>Complete Donation
+                    </button>
+                    <p class="text-center text-gray-600 text-sm mt-3">
+                        <i class="fas fa-shield-alt text-primary-green mr-1"></i>
+                        Secure SSL Encryption
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div id="faqModal" class="fixed inset-0 z-50 hidden" aria-modal="true" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        <div
+            class="relative mx-auto mt-8 mb-8 max-w-3xl p-6 rounded-xl bg-white shadow-lg max-h-[90vh] overflow-y-auto">
+            <div class="flex items-start justify-between mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Donation FAQ</h3>
+                <button onclick="closeFAQModal()" class="text-gray-500 hover:text-gray-700 p-2">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <details class="p-4 border border-gray-200 rounded-lg">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">Is my donation tax-deductible?</summary>
+                    <p class="mt-2 text-gray-600">Yes, HopeLink Mahama is a registered non-profit organization. All
+                        donations are tax-deductible to the extent allowed by law. You will receive a receipt for your
+                        records.</p>
+                </details>
+
+                <details class="p-4 border border-gray-200 rounded-lg">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">How much of my donation goes to
+                        programs?</summary>
+                    <p class="mt-2 text-gray-600">98% of every donation goes directly to program services. Only 2% is
+                        used for administrative costs and payment processing fees.</p>
+                </details>
+
+                <details class="p-4 border border-gray-200 rounded-lg">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">Can I cancel my monthly donation?
+                    </summary>
+                    <p class="mt-2 text-gray-600">Yes, you can cancel your monthly donation at any time by contacting us
+                        at donations@hopelink.mahama.org or through your donor portal.</p>
+                </details>
+
+                <details class="p-4 border border-gray-200 rounded-lg">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">What payment methods do you accept?
+                    </summary>
+                    <p class="mt-2 text-gray-600">We accept credit/debit cards (Visa, Mastercard, Amex), PayPal, bank
+                        transfers, mobile money (M-Pesa, Airtel Money), and cryptocurrency.</p>
+                </details>
+
+                <details class="p-4 border border-gray-200 rounded-lg">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">Will I receive updates about my
+                        donation's impact?</summary>
+                    <p class="mt-2 text-gray-600">Yes, all donors receive quarterly impact reports showing how their
+                        contributions are making a difference. Monthly donors receive additional updates.</p>
+                </details>
+
+                <details class="p-4 border border-gray-200 rounded-lg">
+                    <summary class="font-semibold text-gray-800 cursor-pointer">How can my company get involved?
+                    </summary>
+                    <p class="mt-2 text-gray-600">We offer corporate partnerships, employee matching programs,
+                        sponsorships, and in-kind donation opportunities. Contact partnerships@hopelink.mahama.org for
+                        more information.</p>
+                </details>
+            </div>
+
+            <div class="mt-6 text-center">
+                <p class="text-gray-600">Still have questions?</p>
+                <button onclick="window.location.href='contact.html'"
+                    class="mt-2 px-6 py-2 bg-primary-blue text-white rounded-lg hover:bg-blue-600 transition">
+                    Contact Us
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 hidden" aria-modal="true" aria-hidden="true">
+        <div class="absolute inset-0 bg-black/50"></div>
+
+        <div class="relative mx-auto mt-8 mb-8 max-w-md p-8 rounded-xl bg-white shadow-lg text-center">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-green-600 text-3xl"></i>
+            </div>
+
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Thank You!</h3>
+            <p class="text-gray-600 mb-6">
+                Your donation has been successfully processed. You will receive a confirmation email with your receipt
+                and donation details.
+            </p>
+
+            <div class="space-y-4">
+                <button onclick="closeSuccessModal()"
+                    class="w-full bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition">
+                    Continue to Website
+                </button>
+                <button onclick="downloadReceipt()"
+                    class="w-full border border-primary-green text-primary-green py-3 rounded-lg font-semibold hover:bg-green-50 transition">
+                    <i class="fas fa-download mr-2"></i>Download Receipt
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ========= GLOBAL VARIABLES ========= */
+        let currentDonationType = 'one-time';
+        let selectedAmount = 50;
+        let monthlyAmount = 25;
+
+        /* ========= DOM ELEMENTS ========= */
+        const mainNav = document.getElementById('mainNav');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const dropdownBtns = document.querySelectorAll('.dropdown-btn');
+        const mobileDropdownBtns = document.querySelectorAll('.mobile-dropdown-btn');
+        const donationModal = document.getElementById('donationModal');
+        const faqModal = document.getElementById('faqModal');
+        const successModal = document.getElementById('successModal');
+        const oneTimeBtn = document.getElementById('oneTimeBtn');
+        const monthlyBtn = document.getElementById('monthlyBtn');
+        const donationAmountInput = document.getElementById('donationAmount');
+        const cardDetails = document.getElementById('cardDetails');
+        const impactCalculator = document.getElementById('impactCalculator');
+        const impactResults = document.getElementById('impactResults');
+
+        /* ========= NAVIGATION FUNCTIONALITY ========= */
+        // Mobile menu toggle
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Desktop dropdown functionality
+        dropdownBtns.forEach(btn => {
+            btn.addEventListener('mouseenter', (e) => {
+                const dropdownId = btn.getAttribute('data-dropdown');
+                const dropdown = document.getElementById(`${dropdownId}-dropdown`);
+                dropdown.classList.add('active');
+            });
+
+            btn.addEventListener('mouseleave', (e) => {
+                const dropdownId = btn.getAttribute('data-dropdown');
+                const dropdown = document.getElementById(`${dropdownId}-dropdown`);
+                dropdown.classList.remove('active');
+            });
+
+            // For touch devices
+            btn.addEventListener('click', (e) => {
+                if (window.innerWidth < 768) {
+                    e.preventDefault();
+                    const dropdownId = btn.getAttribute('data-dropdown');
+                    const dropdown = document.getElementById(`${dropdownId}-dropdown`);
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
+        // Mobile dropdown functionality
+        mobileDropdownBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const content = btn.nextElementSibling;
+                content.classList.toggle('active');
+            });
+        });
+
+        // Nav scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                mainNav.classList.add('nav-scrolled');
+            } else {
+                mainNav.classList.remove('nav-scrolled');
+            }
+        });
+
+        /* ========= DONATION FUNCTIONALITY ========= */
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function selectAmount(amount) {
+            selectedAmount = amount;
+            document.getElementById('customAmount').value = amount;
+            // Highlight selected amount button
+            document.querySelectorAll('#donation-options button').forEach(btn => {
+                btn.classList.remove('border-2', 'border-primary-green', 'bg-green-50');
+            });
+            event.currentTarget.classList.add('border-2', 'border-primary-green', 'bg-green-50');
+        }
+
+        function selectMonthlyAmount(amount) {
+            monthlyAmount = amount;
+            document.getElementById('customMonthlyAmount').value = amount;
+            // Highlight selected amount button
+            document.querySelectorAll('#donation-options .donation-card:nth-child(2) button').forEach(btn => {
+                btn.classList.remove('border-2', 'border-primary-blue', 'bg-blue-50');
+            });
+            event.currentTarget.classList.add('border-2', 'border-primary-blue', 'bg-blue-50');
+        }
+
+        function openDonationModal(type) {
+            currentDonationType = type;
+            const modalTitle = document.getElementById('donationModalTitle');
+
+            if (type === 'one-time') {
+                modalTitle.textContent = 'Make a One-time Donation';
+                oneTimeBtn.classList.add('border-2', 'border-primary-green', 'text-primary-green');
+                monthlyBtn.classList.remove('border-2', 'border-primary-blue', 'text-primary-blue');
+                monthlyBtn.classList.add('border', 'border-gray-300', 'text-gray-600');
+                donationAmountInput.value = selectedAmount || 50;
+            } else {
+                modalTitle.textContent = 'Start Monthly Giving';
+                monthlyBtn.classList.add('border-2', 'border-primary-blue', 'text-primary-blue');
+                oneTimeBtn.classList.remove('border-2', 'border-primary-green', 'text-primary-green');
+                oneTimeBtn.classList.add('border', 'border-gray-300', 'text-gray-600');
+                donationAmountInput.value = monthlyAmount || 25;
+            }
+
+            donationModal.classList.remove('hidden');
+            donationModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDonationModal() {
+            donationModal.classList.add('hidden');
+            donationModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openFAQModal() {
+            faqModal.classList.remove('hidden');
+            faqModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFAQModal() {
+            faqModal.classList.add('hidden');
+            faqModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openSuccessModal() {
+            successModal.classList.remove('hidden');
+            successModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSuccessModal() {
+            successModal.classList.add('hidden');
+            successModal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = 'auto';
+            closeDonationModal();
+        }
+
+        function openCorporateModal(type) {
+            alert(`Thank you for your interest in corporate ${type}. Please contact partnerships@hopelink.mahama.org for more information.`);
+        }
+
+        function setDonationAmount(amount) {
+            donationAmountInput.value = amount;
+            // Highlight selected amount button
+            document.querySelectorAll('#donationModal button[onclick^="setDonationAmount"]').forEach(btn => {
+                btn.classList.remove('border-2', 'border-primary-green', 'bg-green-50');
+            });
+            event.currentTarget.classList.add('border-2', 'border-primary-green', 'bg-green-50');
+        }
+
+        /* ========= DONATION FORM HANDLING ========= */
+        document.getElementById('donationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const amount = donationAmountInput.value;
+            const type = currentDonationType;
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+            // Validate amount
+            if (amount < 1) {
+                alert('Please enter a valid donation amount.');
+                return;
+            }
+
+            // Simulate payment processing
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+            submitBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // In a real implementation, this would connect to payment gateway
+                // For demo purposes, we'll simulate success
+
+                // Store donation in localStorage
+                const donation = {
+                    id: 'don_' + Date.now(),
+                    amount: amount,
+                    type: type,
+                    paymentMethod: paymentMethod,
+                    date: new Date().toISOString(),
+                    firstName: formData.get('firstName'),
+                    email: formData.get('email')
+                };
+
+                let donations = JSON.parse(localStorage.getItem('hopelink_donations') || '[]');
+                donations.push(donation);
+                localStorage.setItem('hopelink_donations', JSON.stringify(donations));
+
+                // Update donation counter
+                updateDonationCounter();
+
+                // Show success modal
+                closeDonationModal();
+                setTimeout(() => {
+                    openSuccessModal();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 500);
+
+            }, 2000);
+        });
+
+        // Show/hide card details based on payment method selection
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', function () {
+                if (this.value === 'card') {
+                    cardDetails.style.display = 'block';
+                } else {
+                    cardDetails.style.display = 'none';
+                }
+            });
+        });
+
+        // Initialize card details visibility
+        cardDetails.style.display = 'block';
+
+        /* ========= IMPACT CALCULATOR ========= */
+        function calculateImpact() {
+            const amount = parseFloat(impactCalculator.value) || 50;
+
+            const impactData = {
+                meals: Math.floor(amount / 5),
+                education: Math.floor(amount / 25),
+                healthcare: amount >= 50 ? 1 : 0,
+                internet: amount >= 20 ? Math.floor(amount / 20) : 0
+            };
+
+            impactResults.innerHTML = `
+                <h4 class="font-semibold text-gray-800 mb-4 text-lg">With $${amount}, you can provide:</h4>
+                <ul class="space-y-3">
+                    ${impactData.meals > 0 ? `
+                        <li class="flex items-center">
+                            <i class="fas fa-utensils text-primary-green mr-3"></i>
+                            <span>Meals for ${impactData.meals} people for a day</span>
+                        </li>
+                    ` : ''}
+                   
+                    ${impactData.education > 0 ? `
+                        <li class="flex items-center">
+                            <i class="fas fa-book text-primary-blue mr-3"></i>
+                            <span>Educational materials for ${impactData.education} children</span>
+                        </li>
+                    ` : ''}
+                   
+                    ${impactData.healthcare > 0 ? `
+                        <li class="flex items-center">
+                            <i class="fas fa-heartbeat text-red-500 mr-3"></i>
+                            <span>Basic healthcare for ${impactData.healthcare} family</span>
+                        </li>
+                    ` : ''}
+                   
+                    ${impactData.internet > 0 ? `
+                        <li class="flex items-center">
+                            <i class="fas fa-wifi text-purple-600 mr-3"></i>
+                            <span>Internet access for ${impactData.internet} digital training sessions</span>
+                        </li>
+                    ` : ''}
+                </ul>
+            `;
+        }
+
+        // Initialize impact calculator
+        calculateImpact();
+
+        /* ========= ANIMATIONS ========= */
+        // Animate counters on scroll
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.ceil(current);
+                        setTimeout(updateCounter, 20);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+
+                // Start animation when element is in viewport
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+
+                observer.observe(counter);
+            });
+        }
+
+        // Fade in animations
+        function setupFadeAnimations() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => observer.observe(el));
+        }
+
+        // Animate progress bars
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.style.width;
+                        entry.target.style.width = '0%';
+                        setTimeout(() => {
+                            entry.target.style.width = width;
+                        }, 100);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            progressBars.forEach(bar => observer.observe(bar));
+        }
+
+        /* ========= DONATION COUNTER ========= */
+        function updateDonationCounter() {
+            const donations = JSON.parse(localStorage.getItem('hopelink_donations') || '[]');
+            const totalDonors = new Set(donations.map(d => d.email)).size;
+            const totalAmount = donations.reduce((sum, d) => sum + parseFloat(d.amount), 0);
+
+            // Update UI if elements exist
+            const donorCountEl = document.querySelector('[data-target="12547"]');
+            const amountRaisedEl = document.querySelector('[data-target="238450"]');
+
+            if (donorCountEl) {
+                donorCountEl.textContent = 12547 + totalDonors;
+            }
+
+            if (amountRaisedEl) {
+                amountRaisedEl.textContent = 238450 + Math.floor(totalAmount);
+            }
+        }
+
+        /* ========= UTILITY FUNCTIONS ========= */
+        function downloadReceipt() {
+            const donations = JSON.parse(localStorage.getItem('hopelink_donations') || '[]');
+            if (donations.length === 0) {
+                alert('No donation found to generate receipt.');
+                return;
+            }
+
+            const latestDonation = donations[donations.length - 1];
+            const receipt = `
+                HopeLink Mahama - Donation Receipt
+                =================================
+               
+                Receipt ID: ${latestDonation.id}
+                Date: ${new Date(latestDonation.date).toLocaleDateString()}
+                Donor: ${latestDonation.firstName}
+                Amount: $${latestDonation.amount}
+                Type: ${latestDonation.type === 'one-time' ? 'One-time' : 'Monthly'} Donation
+                Payment Method: ${latestDonation.paymentMethod}
+               
+                Thank you for your generous support!
+               
+                This receipt is for your records. HopeLink Mahama is a registered
+                non-profit organization. Your donation is tax-deductible.
+               
+                Contact: donations@hopelink.mahama.org
+                Website: www.hopelink.mahama.org
+            `;
+
+            const blob = new Blob([receipt], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `hopelink-receipt-${latestDonation.id}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('Receipt downloaded successfully!');
+        }
+
+        /* ========= INITIALIZATION ========= */
+        function init() {
+            animateCounters();
+            setupFadeAnimations();
+            animateProgressBars();
+            updateDonationCounter();
+
+            // Close modals when clicking outside
+            [donationModal, faqModal, successModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        if (modal === donationModal) closeDonationModal();
+                        if (modal === faqModal) closeFAQModal();
+                        if (modal === successModal) closeSuccessModal();
+                    }
+                });
+            });
+
+            // Close modals with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (!donationModal.classList.contains('hidden')) closeDonationModal();
+                    if (!faqModal.classList.contains('hidden')) closeFAQModal();
+                    if (!successModal.classList.contains('hidden')) closeSuccessModal();
+                }
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
