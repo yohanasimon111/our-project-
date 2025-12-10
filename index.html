@@ -378,17 +378,6 @@
         .nav-item:hover::after {
             width: 100%;
         }
-        .donate-btn {
-            background: linear-gradient(135deg, #10B981, #059669);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            transition: all 0.3s ease;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        .donate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
-        }
        
         /* Login and Signup button styles - Updated for new position */
         .login-btn {
@@ -2023,24 +2012,24 @@
             align-items: center;
         }
 
-        .donate-section-text {
+        /* .donate-section-text {
             color: white;
             font-weight: 600;
-        }
+        } */
 
-        .donate-section-btn {
+        /* .donate-section-btn {
             background: white;
             color: #059669;
             padding: 0.5rem 1.5rem;
             border-radius: 0.5rem;
             font-weight: 600;
             transition: all 0.3s ease;
-        }
+        } */
 
-        .donate-section-btn:hover {
+        /* .donate-section-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-        }
+        } */
 
         /* Voice of Hope Modal */
         .story-modal {
@@ -2082,6 +2071,67 @@
             border-left: 4px solid #10B981;
             color: #374151;
             margin: 1.5rem 0;
+        }
+
+        /* Donate Button Styles - UPDATED FOR HERO SECTION */
+        .hero-donate-btn {
+            background: linear-gradient(135deg, #f00085, #ff1493);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(240, 0, 133, 0.3);
+            position: relative;
+            overflow: hidden;
+            padding: 12px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+        }
+
+        .hero-donate-btn:hover {
+            background: linear-gradient(135deg, #ff1493, #ff69b4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(240, 0, 133, 0.4);
+        }
+
+        .hero-donate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .hero-donate-btn:hover::before {
+            left: 100%;
+        }
+
+        .hero-donate-btn i {
+            margin-right: 8px;
+        }
+
+        /* Hero section donate button container */
+        .hero-donate-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-donate-btn {
+                padding: 10px 20px;
+                font-size: 13px;
+                min-width: 100px;
+            }
         }
     </style>
 </head>
@@ -2208,7 +2258,9 @@
                 </div>
 
                 <!-- Right Section: Language selector and Login/Signup -->
-                <div id="nav-right-section" class="desktop-nav hidden lg-md:flex items-center space-x-3 lg-md:space-x-4 flex-shrink-0">
+                <div id="nav-right-section" class="desktop-nav hidden lg-md:flex items-center space-x-2 lg-md:space-x-3 flex-shrink-0">
+                    <!-- REMOVED DONATE BUTTON FROM NAVBAR -->
+
                     <!-- Language Selector -->
                     <div class="language-selector relative">
                         <button id="language-btn" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 flex items-center">
@@ -2424,20 +2476,6 @@
         </div>
     </nav>
 
-    <!-- Donate Section (Below Navbar) -->
-    <section class="donate-section">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="donate-section-text mb-4 md:mb-0">
-                    <p class="text-lg">Your donation can change lives in Mahama Refugee Camp</p>
-                </div>
-                <button onclick="openModal('donateModal')" class="donate-section-btn btn-professional">
-                    <i class="fas fa-heart mr-2"></i>Donate Now
-                </button>
-            </div>
-        </div>
-    </section>
-
     <!-- Notification System -->
     <div id="notification" class="notification">
         <div class="flex items-center">
@@ -2446,7 +2484,7 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Donate Button -->
     <section class="pt-32 hero-background min-h-screen flex items-center relative overflow-hidden">
         <!-- Hero content remains the same -->
         <div class="absolute inset-0 opacity-20">
@@ -2465,13 +2503,17 @@
                     Connecting children, women, and youth in Mahama Camp to food, safety, opportunity, and digital empowerment.
                 </p>
                 
-                <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-2">
+                <!-- Hero CTA Buttons with Donate Button -->
+                <div class="flex flex-wrap gap-3 md:gap-4 justify-center items-center px-2">
                     <button onclick="scrollToSection('programs')" class="btn-responsive btn-professional bg-white text-primary-green px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">
                         <i class="fas fa-hands-helping mr-2"></i><span class="btn-text-animated">Get Help</span>
                     </button>
-                    <button onclick="openModal('donateModal')" class="btn-responsive btn-professional bg-primary-yellow text-gray-800 px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-yellow-400 transition transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-gift mr-2"></i><span class="btn-text-animated">Donate Now</span>
+                    
+                    <!-- DONATE BUTTON ADDED HERE -->
+                    <button onclick="openModal('donateModal')" class="hero-donate-btn btn-professional">
+                        <i class="fas fa-heart mr-2"></i>DONATE NOW
                     </button>
+                    
                     <button onclick="scrollToSection('mission')" class="btn-responsive btn-professional bg-transparent border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-white hover:text-primary-blue transition transform hover:scale-105">
                         <i class="fas fa-info-circle mr-2"></i><span class="btn-text-animated">Learn More</span>
                     </button>
@@ -2789,7 +2831,7 @@
                     <div class="p-6">
                         <div class="flex flex-col items-center mb-4">
                             <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-primary-green mb-4">
-                                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTEhMWFRUVGBUWFRYVFRcVFRUVFRcWFxUVFRcYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGisfICUrLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKystLS03Lf/AABEIAPMAzwMBIgACEQEDEQH/xAAcAAACAwEBAQEAAAAAAAAAAAAFBgMEBwIBAAj/xABEEAACAAQEAwUECAMHAIcAAAABAgADBBEFEiExBkFREyJhcYEykaGxBxQjQlJywdGCkvAVFiRTYrLhM/FDc4Oio8LS/8QAGQEBAQEBAQEAAAAAAAAAAAAAAAECAwQF/8QAJREBAQACAgICAgIDAQAAAAAAAAECEQMhEjFBURMiUmEykfAE/9oADAMBAAIRAxEAPwAAPgttvbxjEqnA4+NK4Zx6UUGUVHPlF2bXUFU5ORVbkRoSfGOjmmNL5E8/EdT2WRHIXpFNqMhsjjeNFxvgoS0LSpgawuQbX8oy41gB1eBATJNwXjE5kjxjmRgJ6R40kg5WUqw0IPIxmhcaZEbUvSFmpk5TFuQ8Aa5sBYWqy8C4VNvDNwhiqpRuSQDfkSPCKnCNL22fW1rRrnD/D8lZed1BJJ38+UO3PfG/Jh2H1FWjAIzE9B/5i5j0zFpkvLNR8nQWjXmSGMMWIVJcZPKFp+jHaqryk7eDWzHzqYgQo7i8pWYhDcX0iNJIjRgIUw5f6oYR2k1UQRpJMiKGIUP2ZIMaZ0zOhlZc/wCU+4xA84nUxR7ArK1O48DEc7Fqk/3p/P8AeMmCgcez/wDMPv8A3i9LxSpaS0rOe77PvrFgV0z8b/8AUf3hz4Bw2XOSbnI0tod9DGa3jr3e2I1yMzln1bmY8w/GKlO0XOhpSNlNtR47/OHeo4SlT55pklvxOeYASxa/hyi1R8OVVbJWo7FKXs5gDBSCGmhCSoANzpqBrDdZsmFazwjikqbgCV8uqm0rSqeoqZLSjZxMkrnlTFSZNQls91W+u2hjHvog49l4fOnS5smYnazdJgBOovdWDn2mPtZhv8I6ZxXw8J9YplTUFKssSyry+zkkkTGaWQBkY+1ny7NvqYwPgqgpZNHV/3idTVCzpQnSZ00z7uk17FSvszCFUMqD2g3QiLs1H//Z" 
+                                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTEhMWFRUVGBUWFRYVFRcVFRUVFRcWFxUVFRcYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGisfICUrLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKystLS03Lf/AABEIAPMAzwMBIgACEQEDEQH/xAAcAAACAwEBAQEAAAAAAAAAAAAFBgMEBwIBAAj/xABEEAACAAQEAwUECAMHAIcAAAABAgADBBEFSiExBkFREyJxcYEykaGxBxQjQlJywdGCkvAVFiRTYrLhM/FDc4Oio8LS/8QAGQEBAQEBAQEAAAAAAAAAAAAAAAECAwQF/8QAJREBAQACAgICAgIDAQAAAAAAAAECEQMhSjFBURMiUmEykfAE/9oADAMBAAIRAxEAPwAAPgttvbxjEqnA4+NK4Zx6UUGUVHPlF2bXUFU5ORVbkRoSfGOjmmNL5E8/EdT2WRHIXpFNqMhsjjeNFxvgoS0LSpgawuQbX8oy41gB1eBATJNwXjE5kjxjmRgJ6R40kg5WUqw0IPIxmhcaZEbUvSFmpk5TFuQ8Aa5sBYWqy8C4VNvDNwhiqpRuSQDfkSPCKnCNL22fW1rRrnD/D8lZed1BJJ38+UO3PfG/Jh2H1FWjAIzE9B/5i5j0zFpkvLNR8nQWjXmSGMMWIVJcZPKFp+jHaqryk7eDWzHzqYgQo7i8pWYhDcX0iNJIjRgIUw5f6oYR2k1UQRpJMiKGIUP2ZIMaZ0zOhlZc/wCU+4xA84nUxR7ArK1O48DEc7Fqk/3p/P8AeMmCgcez/wDMPv8A3i9LxSpaS0rOe77PvrFgV0z8b/8AUf3hz4Bw2XOSbnI0tod9DGa3jr3e2I1yMzln1bmY8w/GKlO0XOhpSNlNtR47/OHeo4SlT55pklvxOeYASxa/hyi1R8OVVbJWo7FKXs5gDBSCGmhCSoANzpqBrDdZsmFazwjikqbgCV8uqm0rSqeoqZLSjZxMkrnlTFSZNQls91W+u2hjHvoo49l4fOnS5smYnazdJgBOovdWDn2mPtZhv8I6ZxXw8J9YplTUFKssSyry+zkkkTGaWQBkY+1ny7NvqYwPgqgpZNHV/3idTVCzpQnSZ00z7uk17FSvszCFUMqD2g3QiLs1H//Z" 
                                      alt="Jean, an 18-year-old youth leader" 
                                      class="w-full h-full object-cover">
                             </div>
@@ -2859,7 +2901,7 @@
                 <!-- World Food Programme -->
                 <div class="partner-item bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-center fade-in hover-lift">
                     <div class="w-full h-32 flex items-center justify-center mb-4">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJVSURBVHgB7Zq9btNAGMZfO20HJCZ+gKmISgwMDB1Y+gHIB3Tp0g9APqBLl34A8gFdunRDJgYGhg4s/QBkKurEUPFhO7Zj3/tYbqI0qWM7Psf2+0iWYzvx+Xl93/e1DcD/A0ARABABAAEhBAEACEBACEEAAAJwETIMY3o0Gj01TfORYRj3NE2bqVarNyzLum3b9oxpmjcsy5q2bXtK07RJ/neapt16rt81DOOLYRifDMP4DADHAHB6LkLtdvtpr9d7AwDPAGD2HJfaxmH83uv13hqG8QYAfgDA6XkItdvtp71e7y0APASAmXNeah+H8XO/339vGMY7APgNAKfnIWSa5tN+v/8BAB5l3fL/gG3Yc+91u92XAPAZD5OT8xBqNpuP+/3+RwB4kGXDP+AQAN5jX12A+AwAJ+chZBjG436//xEAHmbZyB/sAMD7fr//AgA+A8AxAJyeh5Bpmo/7/f5nALh/gfF/gUPM4mMA+AIARxcl1Ov1/gDAg1cQUoGLcucYAE4vSgj3wR/fuwi0h9/hP0i8s0O8+b9Ir78A8KDVan1cXl7GQAW5tra2uLa2tjZVoWq1upLL5QZmZmZ2QbfTjY0NpgKURKPRyBcKBVoqlYJ6vR41m80u6HZZq9WcarW6UiqV/Eqlsqvr+vcbN25g4F/Q7W11dZULiOFGo1FYKpWiWq0W7ezsxKDbfr/f6XQ6XavVaqqq+qtcLn+VZfnzpUuXPqE43d6eP3/OXWBiZ2enWKvVYtz4jm3bA9Btp9Nx8d0JXW/Nzc39mJ2d/Xb58uVPKF6n9+3btzkNZpimWUBBRNf1bjQaBaDbmqYZ4fshfifkC+zpX9Dr7fXr13QXH3a7vaSqaqwoSgzXJ9Vq1cZ3xP39/Rh0e3t7eyEUiui7jIhgYl63t9evX9MdfKDvsizHhmHEvTlVKpXANE3B9Tl+vx+Q58jKygpTAUryrq5UKonT8jkeY1P0M5JgjC1du3aNqQAl+b4+ZgUw4eErKChwmZ+fZypASZ6hKAEJClwkSaIrQEk+F0gSkKDARZZlugKU5Jt5kgQkKHCRZZmuACV5QyVJQoICl1qtRleAkrzIkyQkKHDRdZ2uACV5oSdJQoICF03T6ApQkr9TSJKQoMBF0zS6ApTk/9RIkpCgwEXTNLoClOT/1kiSkKDApV6v0xWgJB/ekCQhQYFLo9GgK0BJPv4hSUKCAlcA/gKf6vBKhZRoxwAAAABJRU5ErkJggg==" 
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJVSURBVHgB7Zq9btNAGMZfO20HJCZ+gKmISgwMDB1Y+gHIB3Tp0g9APqBLl34A8gFdunRDJgYGhg4s/QBkKurEUPFhO7Zj3/tYbqI0qWM7Psf2+0iWYzvx+Xl93/e1DcD/A0ARABABAAEhBAEACEBACEEAAAJwETIMY3o0Gj01TfORYRj3NE2bqVarNyzLum3b9oxpmjcsy5q2bXtK07RJ/neapt16rt81DOOLYRifDMP4DADHAHB6LkLtdvtpr9d7AwDPAGD2HJfaxmH83uv13hqG8QYAfgDA6XkItdvtp71e7y0APASAmXNeah+H8XO/339vGMY7APgNAKfnIWSa5tN+v/8BAB5l3fL/gG3Yc+91u92XAPAZD5OT8xBqNpuP+/3+RwB4kGXDP+AQAN5jX12A+AwAJ+chZBjG436//xEAHmbZyB/sAMD7fr//AgA+A8AJAByfh5Bpmo/7/f5nALh/gfF/gUPM4mMA+AIARxcl1Ov1/gDAg1cQUoGLcucYAE4vSgj3wR/fuwi0h9/hP0i8s0O8+b9Ir78A8KDVan1cXl7GQAW5tra2uLa2tjZVoWq1upLL5QZmZmZ2QbfTjY0NpgKURKPRyBcKBVoqlYJ6vR41m80u6HZZq9WcarW6UiqV/Eqlsqvr+vcbN25g4F/Q7W11dZULiOFGo1FYKpWiWq0W7ezsxKDbfr/f6XQ6XavVaqqq+qtcLn+VZfnzpUuXPqE43d5ev37NXWBiZ2enWKvVYtz4jm3bA9Btp9Nx8d0JXW/Nzc39mJ2d/Xb58uVPKF6n9+3btzkNZpimWUBBRNf1bjQaBaDbmqYZ4fshfifkC+zpX9Dr7fXr13QXH3a7vaSqaqwoSgzXJ9Vq1cZ3xP39/Rh0e3t7eyEUiui7jIhgYl63t9evX9MdfKDvsizHhmHEvTlVKpXANE3B9Tl+vx+Q58jKygpTAUryrq5UKonT8jkeY1P0M5JgjC1du3aNqQAl+b4+ZgUw4eErKChwmZ+fZypASZ6hKAEJClwkSaIrQEk+F0gSkKDARZZlugKU5Jt5kgQkKHCRZZmuACV5QyVJQoICF1qtRleAkrzIkyQkKHDRdZ2uACV5of9TI0lCggIXTdPoClCS/1sjSUKCAhVN0+gKUJL/UyNJQoICF03T6ApQkv9bI0lCggIXTdPoClCS/1sjSUKCAhVN0+gKU5L/UyNJQoICF03T6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkhCAgJDA/wDZ/NtA3g2F0gAAAABJRU5ErkJggg==" 
                              alt="World Food Programme logo" 
                              class="partner-logo">
                     </div>
@@ -3127,7 +3169,7 @@
            
             <div class="story-content">
                 <div class="story-header">
-                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTEhMWFRUVGBUWFRYVFRcVFRUVFRcWFxUVFRcYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGisfICUrLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKystLS03Lf/AABEIAPMAzwMBIgACEQEDEQH/xAAcAAACAwEBAQEAAAAAAAAAAAAFBgMEBwIBAAj/xABEEAACAAQEAwUECAMHAIcAAAABAgADBBEFEiExBkFREyJxcYEykaGxBxQjQlJywdGCkvAVFiRTYrLhM/FDc4Oio8LS/8QAGQEBAQEBAQEAAAAAAAAAAAAAAAECAwQF/8QAJREBAQACAgICAgIDAQAAAAAAAAECEQMhEjFBURMiUmEykfAE/9oADAMBAAIRAxEAPwAAPgttvbxjEqnA4+NK4Zx6UUGUVHPlF2bXUFU5ORVbkRoSfGOjmmNL5E8/EdT2WRHIXpFNqMhsjjeNFxvgoS0LSpgawuQbX8oy41gB1eBATJNwXjE5kjxjmRgJ6R40kg5WUqw0IPIxmhcaZEbUvSFmpk5TFuQ8Aa5sBYWqy8C4VNvDNwhiqpRuSQDfkSPCKnCNL22fW1rRrnD/D8lZed1BJJ38+UO3PfG/Jh2H1FWjAIzE9B/5i5j0zFpkvLNR8nQWjXmSGMMWIVJcZPKFp+jHaqryk7eDWzHzqYgQo7i8pWYhDcX0iNJIjRgIUw5f6oYR2k1UQRpJMiKGIUP2ZIMaZ0zOhlZc/wCU+4xA84nUxR7ArK1O48DEc7Fqk/3p/P8AeMmCgcez/wDMPv8A3i9LxSpaS0rOe77PvrFgV0z8b/8AUf3hz4Bw2XOSbnI0tod9DGa3jr3e2I1yMzln1bmY8w/GKlO0XOhpSNlNtR47/OHeo4SlT55pklvxOeYASxa/hyi1R8OVVbJWo7FKXs5gDBSCGmhCSoANzpqBrDdZsmFazwjikqbgCV8uqm0rSqeoqZLSjZxMkrnlTFSZNQls91W+u2hjHvoo49l4fOnS5smYnazdJgBOovdWDn2mPtZhv8I6ZxXw8J9YplTUFKssSyry+zkkkTGaWQBkY+1ny7NvqYwPgqgpZNHV/3idTVCzpQnSZ00z7uk17FSvszCFUMqD2g3QiLs1H//Z" 
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTEhMWFRUVGBUWFRYVFRcVFRUVFRcWFxUVFRcYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGxAQGisfICUrLS0tKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKystLS03Lf/AABEIAPMAzwMBIgACEQEDEQH/xAAcAAACAwEBAQEAAAAAAAAAAAAFBgMEBwIBAAj/xABEEAACAAQEAwUECAMHAIcAAAABAgADBBEFSiExBkFREyJxcYEykaGxBxQjQlJywdGCkvAVFiRTYrLhM/FDc4Oio8LS/8QAGQEBAQEBAQEAAAAAAAAAAAAAAAECAwQF/8QAJREBAQACAgICAgIDAQAAAAAAAAECEQMhSjFBURMiUmEykfAE/9oADAMBAAIRAxEAPwAAPgttvbxjEqnA4+NK4Zx6UUGUVHPlF2bXUFU5ORVbkRoSfGOjmmNL5E8/EdT2WRHIXpFNqMhsjjeNFxvgoS0LSpgawuQbX8oy41gB1eBATJNwXjE5kjxjmRgJ6R40kg5WUqw0IPIxmhcaZEbUvSFmpk5TFuQ8Aa5sBYWqy8C4VNvDNwhiqpRuSQDfkSPCKnCNL22fW1rRrnD/D8lZed1BJJ38+UO3PfG/Jh2H1FWjAIzE9B/5i5j0zFpkvLNR8nQWjXmSGMMWIVJcZPKFp+jHaqryk7eDWzHzqYgQo7i8pWYhDcX0iNJIjRgIUw5f6oYR2k1UQRpJMiKGIUP2ZIMaZ0zOhlZc/wCU+4xA84nUxR7ArK1O48DEc7Fqk/3p/P8AeMmCgcez/wDMPv8A3i9LxSpaS0rOe77PvrFgV0z8b/8AUf3hz4Bw2XOSbnI0tod9DGa3jr3e2I1yMzln1bmY8w/GKlO0XOhpSNlNtR47/OHeo4SlT55pklvxOeYASxa/hyi1R8OVVbJWo7FKXs5gDBSCGmhCSoANzpqBrDdZsmFazwjikqbgCV8uqm0rSqeoqZLSjZxMkrnlTFSZNQls91W+u2hjHvoo49l4fOnS5smYnazdJgBOovdWDn2mPtZhv8I6ZxXw8J9YplTUFKssSyry+zkkkTGaWQBkY+1ny7NvqYwPgqgpZNHV/3idTVCzpQnSZ00z7uk17FSvszCFUMqD2g3QiLs1H//Z" 
                          alt="Jean" 
                          class="story-avatar">
                     <div class="story-info">
@@ -3849,7 +3891,13 @@
             // Initialize donation section
             initDonationSection();
             
-            // Rest of your existing initialization code...
+            // Donate button functionality
+            const donateButtons = document.querySelectorAll('.hero-donate-btn');
+            donateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    openModal('donateModal');
+                });
+            });
             
             // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobileMenuButton');
