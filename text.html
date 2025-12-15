@@ -51,7 +51,6 @@
         }
     </script>
     <style>
-        
         /* Logo text animation container */
         .logo-text-animation-container {
             position: relative;
@@ -2012,25 +2011,6 @@
             align-items: center;
         }
 
-        /* .donate-section-text {
-            color: white;
-            font-weight: 600;
-        } */
-
-        /* .donate-section-btn {
-            background: white;
-            color: #059669;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        } */
-
-        /* .donate-section-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-        } */
-
         /* Voice of Hope Modal */
         .story-modal {
             max-width: 800px;
@@ -2399,26 +2379,27 @@
                 <!-- Desktop Navigation -->
                 <div class="desktop-nav hidden lg-md:flex items-center flex-1 justify-center">
                     <div class="flex items-center space-x-3 lg-md:space-x-4 xl:space-x-5">
-                        <a href="index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-hover-underline">Home</a>
+                        <a href="index.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-hover-underline" data-translate="home">Home</a>
                        
                         <!-- Programs Dropdown -->
                         <div class="dropdown relative">
-                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center text-hover-underline" data-dropdown="programs">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center text-hover-underline" data-dropdown="programs" data-translate="programs">
                                 Programs <i class="fas fa-chevron-down ml-1 text-xs"></i>
                             </button>
                             <div class="dropdown-content" id="programs-dropdown">
-                                <a href="hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Hunger Help</a>
-                                <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth Empowerment</a>
-                                <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Mental Wellness</a>
+                                <a href="hunger-help.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Youth</a>
+                                <a href="./Youth Empowerment .html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">mental</a>
+                                <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">advertisement</a>
+                                <a href="mental-wellness.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success s </a>
                             </div>
                         </div>
                        
-                        <a href="about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-hover-underline">who we are</a>
-                        <a href="get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-hover-underline">Get Involved</a>
+                        <a href="about-us.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-hover-underline" data-translate="about">who we are</a>
+                        <a href="get-involved.html" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 text-hover-underline" data-translate="getInvolved">Get Involved</a>
                        
-                        <!-- News & Updates -->
+                        <!-- News & Updates
                         <div class="dropdown relative">
-                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center text-hover-underline" data-dropdown="news">
+                            <button class="nav-item dropdown-btn text-gray-600 hover:text-primary-blue transition duration-300 flex items-center text-hover-underline" data-dropdown="news" data-translate="news">
                                 News & Updates <i class="fas fa-chevron-down ml-1 text-xs"></i>
                             </button>
                             <div class="dropdown-content" id="news-dropdown">
@@ -2427,18 +2408,17 @@
                                 <a href="stories.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Success Stories</a>
                             </div>
                         </div>
-                       
-                        <a href="contact.html" class="nav-item text-primary-blue font-semibold border-b-2 border-primary-blue text-hover-grow">Contact</a>
+                        -->
+                        <a href="contact.html" class="nav-item text-primary-blue font-semibold border-b-2 border-primary-blue text-hover-grow" data-translate="contact">Contact</a>
                        
                         <!-- Opportunities -->
                         <div class="dropdown relative">
-                            <button class="nav-item dropdown-btn opportunities-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition duration-300 flex items-center text-hover-grow" data-dropdown="opportunities">
+                            <button class="nav-item dropdown-btn opportunities-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition duration-300 flex items-center text-hover-grow" data-dropdown="careers" data-translate="careers">
                                 Opportunities <i class="fas fa-chevron-down ml-1 text-xs"></i>
                             </button>
                             <div class="dropdown-content" id="opportunities-dropdown">
-                                <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Volunteer</a>
-                                <a href="careers.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Careers</a>
-                                <a href="partnerships.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition">Partnerships</a>
+                                <a href="volunteer.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition" data-translate="volunteer">Volunteer</a>
+                                <a href="oppertanity.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-primary-blue transition" data-translate="partnerships">oppertanity</a>
                             </div>
                         </div>
                     </div>
@@ -2450,7 +2430,7 @@
                     <div class="language-selector relative">
                         <button id="language-btn" class="nav-item text-gray-600 hover:text-primary-blue transition duration-300 flex items-center">
                             <i class="fas fa-globe mr-2"></i>
-                            <span>EN</span>
+                            <span data-translate="language">EN</span>
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>
                         </button>
                         <div class="language-dropdown" id="language-dropdown">
@@ -2476,10 +2456,10 @@
                     <!-- Login/Signup Buttons (Visible when not logged in) -->
                     <div id="auth-buttons-section" class="flex space-x-2 lg-md:space-x-3">
                         <button onclick="window.location.href='login.html?view=login'" class="login-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
-                            <i class="fas fa-sign-in-alt mr-2"></i><span class="btn-text-animated">Login</span>
+                            <i class="fas fa-sign-in-alt mr-2"></i><span class="btn-text-animated" data-translate="login">Login</span>
                         </button>
                         <button onclick="window.location.href='signup.html?view=signup'" class="signup-btn px-3 py-2 lg-md:px-4 lg-md:py-2 rounded-lg transition flex items-center">
-                            <i class="fas fa-user-plus mr-2"></i><span class="btn-text-animated">Sign Up</span>
+                            <i class="fas fa-user-plus mr-2"></i><span class="btn-text-animated" data-translate="signup">Sign Up</span>
                         </button>
                     </div>
 
@@ -2549,11 +2529,11 @@
                 <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500"></div>
                 
                 <div class="px-4 py-2 space-y-3 pt-4">
-                    <a href="index.html" class="block mobile-nav-item-active py-2 text-primary-blue font-semibold border-b border-gray-200 transition text-hover-underline">Home</a>
+                    <a href="index.html" class="block mobile-nav-item-active py-2 text-primary-blue font-semibold border-b border-gray-200 transition text-hover-underline" data-translate="home">Home</a>
                    
                     <!-- Programs Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between text-hover-underline">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between text-hover-underline" data-translate="programs">
                             Programs <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
@@ -2563,12 +2543,12 @@
                         </div>
                     </div>
                    
-                    <a href="about-us.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition text-hover-underline">About</a>
-                    <a href="get-involved.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition text-hover-underline">Get Involved</a>
+                    <a href="about-us.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition text-hover-underline" data-translate="about">About</a>
+                    <a href="get-involved.html" class="block py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition text-hover-underline" data-translate="getInvolved">Get Involved</a>
                    
                     <!-- News & Updates Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between text-hover-underline">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between text-hover-underline" data-translate="news">
                             News & Updates <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
@@ -2578,17 +2558,17 @@
                         </div>
                     </div>
                    
-                    <a href="contact.html" class="block py-2 mobile-nav-item-active text-primary-blue font-semibold border-b-2 border-primary-blue transition text-hover-grow">Contact</a>
+                    <a href="contact.html" class="block py-2 mobile-nav-item-active text-primary-blue font-semibold border-b-2 border-primary-blue transition text-hover-grow" data-translate="contact">Contact</a>
                    
                     <!-- Opportunities Mobile Dropdown -->
                     <div class="mobile-dropdown">
-                        <button class="mobile-dropdown-btn w-full text-left py-2 opportunities-btn rounded-lg transition flex items-center justify-between px-4 text-hover-grow">
+                        <button class="mobile-dropdown-btn w-full text-left py-2 opportunities-btn rounded-lg transition flex items-center justify-between px-4 text-hover-grow" data-translate="opportunities">
                             Opportunities <i class="fas fa-chevron-down text-xs"></i>
                         </button>
                         <div class="mobile-dropdown-content">
-                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4 text-hover-color">Volunteer</a>
-                            <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4 text-hover-color">Careers</a>
-                            <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4 text-hover-color">Partnerships</a>
+                            <a href="volunteer.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4 text-hover-color" data-translate="volunteer">Volunteer</a>
+                            <a href="careers.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4 text-hover-color" data-translate="careers">Careers</a>
+                            <a href="partnerships.html" class="block py-2 text-gray-600 hover:text-primary-blue transition pl-4 text-hover-color" data-translate="partnerships">Partnerships</a>
                         </div>
                     </div>
                    
@@ -2597,7 +2577,7 @@
                         <button class="mobile-dropdown-btn w-full text-left py-2 mobile-nav-item text-gray-600 hover:text-primary-blue transition flex items-center justify-between text-hover-underline">
                             <div class="flex items-center">
                                 <i class="fas fa-globe mr-2"></i>
-                                <span>Language (EN)</span>
+                                <span data-translate="language">Language (EN)</span>
                             </div>
                             <i class="fas fa-chevron-down text-xs"></i>
                         </button>
@@ -2649,10 +2629,10 @@
                         <!-- Mobile Login/Signup buttons (visible when not logged in) -->
                         <div id="mobile-auth-buttons" class="flex flex-col space-y-2">
                             <button onclick="window.location.href='login.html?view=login'" class="login-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
-                                <i class="fas fa-sign-in-alt mr-2"></i><span class="btn-text-animated">Login</span>
+                                <i class="fas fa-sign-in-alt mr-2"></i><span class="btn-text-animated" data-translate="login">Login</span>
                             </button>
                             <button onclick="window.location.href='signup.html?view=signup'" class="signup-btn px-4 py-2 rounded-lg transition flex items-center justify-center">
-                                <i class="fas fa-user-plus mr-2"></i><span class="btn-text-animated">Sign Up</span>
+                                <i class="fas fa-user-plus mr-2"></i><span class="btn-text-animated" data-translate="signup">Sign Up</span>
                             </button>
                         </div>
                     </div>
@@ -2680,27 +2660,27 @@
        
         <div class="max-w-7xl mx-auto px-4 py-20 text-center text-white relative z-10">
             <div class="fade-in">
-                <h1 id="animated-hero-title" class="hero-title text-4xl xs:text-5xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight">
+                <h1 id="animated-hero-title" class="hero-title text-4xl xs:text-5xl md:text-6xl font-bold mb-4 md:mb-6 leading-tight" data-translate="heroTitle">
                     Empowering Refugees and Host Communities Through Technology and Hope
                 </h1>
                 
-                <p id="animated-hero-subtitle" class="hero-subtitle text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 opacity-90 max-w-4xl mx-auto px-2">
+                <p id="animated-hero-subtitle" class="hero-subtitle text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 opacity-90 max-w-4xl mx-auto px-2" data-translate="heroSubtitle">
                     Connecting children, women, and youth in Mahama Camp to food, safety, opportunity, and digital empowerment.
                 </p>
                 
                 <!-- Hero CTA Buttons with Donate Button -->
                 <div class="flex flex-wrap gap-3 md:gap-4 justify-center items-center px-2">
                     <button onclick="scrollToSection('programs')" class="btn-responsive btn-professional bg-white text-primary-green px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-hands-helping mr-2"></i><span class="btn-text-animated">Get Help</span>
+                        <i class="fas fa-hands-helping mr-2"></i><span class="btn-text-animated" data-translate="getHelp">Get Help</span>
                     </button>
                     
                     <!-- YOUR DONATE BUTTON ADDED HERE -->
                      <button onclick="openModal('donateModal')" class="btn-responsive btn-professional bg-primary-yellow text-gray-800 px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-yellow-400 transition transform hover:scale-105 shadow-lg">
-                        <i class="fas fa-gift mr-2"></i>Donate Now
+                        <i class="fas fa-gift mr-2"></i><span data-translate="donate">Donate Now</span>
                     </button>
                     
                     <button onclick="scrollToSection('mission')" class="btn-responsive btn-professional bg-transparent border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-white hover:text-primary-blue transition transform hover:scale-105">
-                        <i class="fas fa-info-circle mr-2"></i><span class="btn-text-animated">Learn More</span>
+                        <i class="fas fa-info-circle mr-2"></i><span class="btn-text-animated" data-translate="learnMore">Learn More</span>
                     </button>
                 </div>
                
@@ -2708,15 +2688,15 @@
                 <div class="stats-grid grid grid-cols-3 gap-4 md:gap-8 mt-12 md:mt-16 max-w-2xl mx-auto px-2">
                     <div class="text-center">
                         <div class="text-2xl md:text-3xl font-bold counter stats-text-animated" data-target="1000">0</div>
-                        <div class="text-xs md:text-sm opacity-80 stats-text-animated">Youth Trained</div>
+                        <div class="text-xs md:text-sm opacity-80 stats-text-animated" data-translate="youthTrained">Youth Trained</div>
                     </div>
                     <div class="text-center">
                         <div class="text-2xl md:text-3xl font-bold counter stats-text-animated" data-target="500">0</div>
-                        <div class="text-xs md:text-sm opacity-80 stats-text-animated">Families Supported</div>
+                        <div class="text-xs md:text-sm opacity-80 stats-text-animated" data-translate="familiesSupported">Families Supported</div>
                     </div>
                     <div class="text-center">
                         <div class="text-2xl md:text-3xl font-bold counter stats-text-animated" data-target="300">0</div>
-                        <div class="text-xs md:text-sm opacity-80 stats-text-animated">Wellness Participants</div>
+                        <div class="text-xs md:text-sm opacity-80 stats-text-animated" data-translate="wellnessParticipants">Wellness Participants</div>
                     </div>
                 </div>
             </div>
@@ -2734,10 +2714,10 @@
     <section id="mission" class="py-16 md:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-12 md:mb-16 fade-in">
-                <h2 id="mission-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                <h2 id="mission-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4" data-translate="missionVision">
                     Our Mission & Vision
                 </h2>
-                <p id="mission-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                <p id="mission-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600 max-w-3xl mx-auto" data-translate="missionSubtitle">
                     Building bridges of hope through technology and community collaboration
                 </p>
             </div>
@@ -2749,8 +2729,8 @@
                         <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center mb-4">
                             <i class="fas fa-bullseye text-white text-xl"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
-                        <p class="text-gray-600 leading-relaxed">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4" data-translate="ourMission">Our Mission</h3>
+                        <p class="text-gray-600 leading-relaxed" data-translate="missionText">
                             To empower every child, woman, and youth in Mahama Refugee Camp by connecting them with technology-driven solutions that promote education, opportunity, food security, and emotional well-being.
                         </p>
                     </div>
@@ -2778,8 +2758,8 @@
                         <div class="w-12 h-12 bg-primary-green rounded-lg flex items-center justify-center mb-4">
                             <i class="fas fa-eye text-white text-xl"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
-                        <p class="text-gray-600 leading-relaxed">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4" data-translate="ourVision">Our Vision</h3>
+                        <p class="text-gray-600 leading-relaxed" data-translate="visionText">
                             A self-reliant, digitally connected refugee and host community where innovation and humanity work hand in hand to create sustainable solutions and lasting hope.
                         </p>
                     </div>
@@ -2806,10 +2786,10 @@
     <section id="programs" class="py-16 md:py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-12 md:mb-16 fade-in">
-                <h2 id="programs-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                <h2 id="programs-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4" data-translate="whatWeDo">
                     What We Do
                 </h2>
-                <p id="programs-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                <p id="programs-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600 max-w-2xl mx-auto" data-translate="programsSubtitle">
                     Transforming lives through targeted programs that address critical community needs
                 </p>
             </div>
@@ -2822,7 +2802,7 @@
                             <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-orange-400 to-orange-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-utensils text-white text-lg md:text-xl"></i>
                             </div>
-                            <h3 class="program-title-animated text-xl md:text-2xl font-bold text-gray-800">Hunger Help</h3>
+                            <h3 class="program-title-animated text-xl md:text-2xl font-bold text-gray-800" data-translate="hungerHelp">Hunger Help</h3>
                             <span class="ml-4 bg-orange-100 text-orange-500 px-2 py-1 rounded-full text-xs font-semibold stats-text-animated">
                                 <i class="fas fa-fire mr-1"></i>Active
                             </span>
@@ -2849,7 +2829,7 @@
                        
                         <div class="mt-4">
                             <button onclick="openModal('hungerHelpModal')" class="bg-orange-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-orange-600 transition transform hover:scale-105 flex items-center justify-center">
-                                <i class="fas fa-utensils mr-2"></i><span class="btn-text-animated">Explore Hunger Help</span>
+                                <i class="fas fa-utensils mr-2"></i><span class="btn-text-animated" data-translate="exploreHungerHelp">Explore Hunger Help</span>
                             </button>
                         </div>
                     </div>
@@ -2875,7 +2855,7 @@
                             <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-primary-blue to-blue-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-users text-white text-lg md:text-xl"></i>
                             </div>
-                            <h3 class="program-title-animated text-xl md:text-2xl font-bold text-gray-800">Youth Empowerment</h3>
+                            <h3 class="program-title-animated text-xl md:text-2xl font-bold text-gray-800" data-translate="youthEmpowerment">Youth Empowerment</h3>
                             <span class="ml-4 bg-blue-100 text-primary-blue px-2 py-1 rounded-full text-xs font-semibold stats-text-animated">
                                 <i class="fas fa-bolt mr-1"></i>Growing
                             </span>
@@ -2902,7 +2882,7 @@
                        
                         <div class="mt-4">
                             <button onclick="openModal('youthEmpowermentModal')" class="bg-primary-blue text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-600 transition transform hover:scale-105 flex items-center justify-center">
-                                <i class="fas fa-users mr-2"></i><span class="btn-text-animated">See Opportunities</span>
+                                <i class="fas fa-users mr-2"></i><span class="btn-text-animated" data-translate="seeOpportunities">See Opportunities</span>
                             </button>
                         </div>
                     </div>
@@ -2928,7 +2908,7 @@
                             <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-primary-green to-green-500 rounded-lg flex items-center justify-center mr-4">
                                 <i class="fas fa-brain text-white text-lg md:text-xl"></i>
                             </div>
-                            <h3 class="program-title-animated text-xl md:text-2xl font-bold text-gray-800">Mental Wellness</h3>
+                            <h3 class="program-title-animated text-xl md:text-2xl font-bold text-gray-800" data-translate="mentalWellness">Mental Wellness</h3>
                             <span class="ml-4 bg-green-100 text-primary-green px-2 py-1 rounded-full text-xs font-semibold stats-text-animated">
                                 <i class="fas fa-heart mr-1"></i>Support
                             </span>
@@ -2955,7 +2935,7 @@
                        
                         <div class="mt-4">
                             <button onclick="openModal('mentalWellnessModal')" class="bg-primary-green text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition transform hover:scale-105 flex items-center justify-center">
-                                <i class="fas fa-brain mr-2"></i><span class="btn-text-animated">Join Support Network</span>
+                                <i class="fas fa-brain mr-2"></i><span class="btn-text-animated" data-translate="joinSupportNetwork">Join Support Network</span>
                             </button>
                         </div>
                     </div>
@@ -2979,10 +2959,10 @@
     <section class="py-16 md:py-20 bg-white" id="voices-section">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-12 md:mb-16 fade-in">
-                <h2 id="voices-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                <h2 id="voices-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4" data-translate="voicesOfHope">
                     Voices of Hope
                 </h2>
-                <p id="voices-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600">
+                <p id="voices-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600" data-translate="voicesSubtitle">
                     Real stories from our community members
                 </p>
             </div>
@@ -3006,7 +2986,7 @@
                             "Through HopeLink, I gained computer skills and confidence to help others."
                         </p>
                         <button onclick="openStoryModal('amina')" class="w-full bg-primary-blue text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition flex items-center justify-center">
-                            <i class="fas fa-book-open mr-2"></i>Read Full Story
+                            <i class="fas fa-book-open mr-2"></i><span data-translate="readFullStory">Read Full Story</span>
                         </button>
                     </div>
                 </div>
@@ -3029,7 +3009,7 @@
                             "HopeLink gave me a platform to make my voice heard and create positive change."
                         </p>
                         <button onclick="openStoryModal('jean')" class="w-full bg-primary-green text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center">
-                            <i class="fas fa-book-open mr-2"></i>Read Full Story
+                            <i class="fas fa-book-open mr-2"></i><span data-translate="readFullStory">Read Full Story</span>
                         </button>
                     </div>
                 </div>
@@ -3052,7 +3032,7 @@
                             "After losing everything, HopeLink gave me hope again and helped me heal."
                         </p>
                         <button onclick="openStoryModal('marie')" class="w-full bg-primary-yellow text-gray-800 py-2 rounded-lg font-semibold hover:bg-yellow-400 transition flex items-center justify-center">
-                            <i class="fas fa-book-open mr-2"></i>Read Full Story
+                            <i class="fas fa-book-open mr-2"></i><span data-translate="readFullStory">Read Full Story</span>
                         </button>
                     </div>
                 </div>
@@ -3064,10 +3044,10 @@
     <section class="py-16 md:py-20 bg-gray-50" id="partners-section">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-8 md:mb-12 fade-in">
-                <h2 id="partners-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                <h2 id="partners-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4" data-translate="partnersSupporters">
                     Our Partners & Supporters
                 </h2>
-                <p id="partners-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+                <p id="partners-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600 max-w-2xl mx-auto" data-translate="partnersSubtitle">
                     HopeLink Mahama works alongside NGOs, volunteers, and local leaders to build stronger, more connected communities.
                 </p>
             </div>
@@ -3076,7 +3056,7 @@
                 <!-- UNHCR Rwanda -->
                 <div class="partner-item bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-center fade-in hover-lift">
                     <div class="w-full h-32 flex items-center justify-center mb-4">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHSSURBVHgB7ZnNbYNAEIXnHmQegDgFOAXIFCAT2oWxUxAnIDgFcQpiFNjpMkqBQZE7J8iFMaA/JPwz48W8RyfB3lnv7K4HgP8BfEAIQEAAAkIIAhAQgICQwABwHAciN89zLMsSnyBJEkzT9Om6vu9xmiZ4hjzPsSiKl7wX7/Y9mTcJYL4JkmVZ0DQNVFUFtm2DpimKAtu2hadut9nB9XdfQ9z2+48cE0D1Y9wDts+M4YNs2fAp6bl1XD9foXhMEAfieh28JwEXHcXwRPM9D13WhqiqQJEmSRNd11HUdFcX/d2hZlooi4HsBfN8/mx38w8WyLIHaT0EQoG3b8Mv3BHBd99l9H6Qoimfz7HwX5L4Aqqr+ZfV9EVwX4J0F3PcFcF2AF4MfJ4BpmuC6AO8MftwAT9P0Q0Mf0ATgIuSiLIGLkIuyBC5CLsoSuAi5KEvgIuSiLIGLkIuyBC5CLsoSuAi5KEvgIuSiLIGLkIuyBC5CLsoS3oHA8zxffM5TlmUYRdHDdfTyZUG/TID/HsCf/dllWQZt3cB1XTdJkuHhunEcyZ/YH0+A/z5M0yQ2sMButm0bqL1UFMW3aNu2YLt9TIC+wY96zui6buqHYdv2pH0cx6l/y3NCAgJCCAKAEAAQEEIAAAC/AJIEJtVcIfZ+AAAAAElFTkSuQmCC" 
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHSSURBVHgB7ZnNbYNAEIXnHmQegDgFOAXIFCAT2oWxUxAnIDgFcQpiFNjpMkqBQZE7J8iFMaA/JPwz48W8RyfB3lnv7K4HgP8BfEAIQEAAAkIIAhAQgICQwABwHAciN89zLMsSnyBJEkzT9Om6vu9xmiZ4hjzPsSiKl7wX7/Y9mTcJYL4JkmVZ0DQNVFUFtm2DpimKAtu2hadut9nB9XdfQ9z2+48cE0D1Y9wDts+M4YBs2fAp6bl1XD9foXhMEAfieh28JwEXHcXwRPM9D13WhqiqQJEmSRNd11HUdFcX/d2hZlooi4HsBfN8/mx38w8WyLIHaT0EQoG3b8Mv3BHBd99l9H6Qoimfz7HwX5L4Aqqr+ZfV9EVwX4J0F3PcFcF2AF4MfJ4BpmuC6AO8MftwAT9P0Q0Mf0ATgIuSiLIGLkIuyBC5CLsoSuAi5KEvgIuSiLIGLkIuyBC5CLsoSuAi5KEvgIuSiLIGLkIuyBC5CLsoS3oHA8zxffM5TlmUYRdHDdfTyZUG/TID/HsCf/dllWQZt3cB1XTdJkuHhunEcyZ/YH0+A/z5M0yQ2sMButm0bqL1UFMW3aNu2YLt9TIC+wY96zui6buqHYdv2pH0cx6l/y3NCAgJCCAKAEAAQEEIAAAC/AJIEJtVcIfZ+AAAAAElFTkSuQmCC" 
                              alt="UNHCR Rwanda logo" 
                              class="partner-logo">
                     </div>
@@ -3086,7 +3066,7 @@
                 <!-- World Food Programme -->
                 <div class="partner-item bg-white p-6 rounded-2xl shadow-md flex flex-col items-center justify-center fade-in hover-lift">
                     <div class="w-full h-32 flex items-center justify-center mb-4">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJVSURBVHgB7Zq9btNAGMZfO20HJCZ+gKmISgwMDB1Y+gHIB3Tp0g9APqBLl34A8gFdunRDJgYGhg4s/QBkKurEUPFhO7Zj3/tYbqI0qWM7Psf2+0iWYzvx+Xl93/e1DcD/A0ARABABAAEhBAEACEBACEEAAAJwETIMY3o0Gj01TfORYRj3NE2bqVarNyzLum3b9oxpmjcsy5q2bXtK07RJ/neapt16rt81DOOLYRifDMP4DADHAHB6LkLtdvtpr9d7AwDPAGD2HJfaxmH83uv13hqG8QYAfgDA6XkItdvtp71e7y0APASAmXNeah+H8XO/339vGMY7APgNAKfnIWSa5tN+v/8BAB5l3fL/gG3Yc+91u92XAPAZD5OT8xBqNpuP+/3+RwB4kGXDP+AQAN5jX12A+AwAJ+chZBjG436//xEAHmbZyB/sAMD7fr//AgA+A8AJAByfh5Bpmo/7/f5nALh/gfF/gUPM4mMA+AIARxcl1Ov1/gDAg1cQUoGLcucYAE4vSgj3wR/fuwi0h9/hP0i8s0O8+b9Ir78A8KDVan1cXl7GQAW5tra2uLa2tjZVoWq1upLL5QZmZmZ2QbfTjY0NpgKURKPRyBcKBVoqlYJ6vR41m80u6HZZq9WcarW6UiqV/Eqlsqvr+vcbN25g4F/Q7W11dZULiOFGo1FYKpWiWq0W7ezsxKDbfr/f6XQ6XavVaqqq+qtcLn+VZfnzpUuXPqE43d5ev37NXWBiZ2enWKvVYtz4jm3bA9Btp9Nx8d0JXW/Nzc39mJ2d/Xb58uVPKF6n9+3btzkNZpimWUBBRNf1bjQaBaDbmqYZ4fshfifkC+zpX9Dr7fXr13QXH3a7vaSqaqwoSgzXJ9Vq1cZ3xP39/Rh0e3t7eyEUiui7jIhgYl63t9evX9MdfKDvsizHhmHEvTlVKpXANE3B9Tl+vx+Q58jKygpTAUryrq5UKonT8jkeY1P0M5JgjC1du3aNqQAl+b4+ZgUw4eErKChwmZ+fZypASZ6hKAEJClwkSaIrQEk+F0gSkKDARZZlugKU5Jt5kgQkKHCRZZmuACV5QyVJQoICF1qtRleAkrzIkyQkKHDRdZ2uACV5of9TI0lCggIXTdPoClCS/1sjSUKCAhVN0+gKUJL/UyNJQoICF03T6ApQkv9ZIkpCgwEXTNLoClOT/1kjSUKCAhVN0+gKU5L/UyNJQoICF03T6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkhCAgJDA/wDZ/NtA3g2F0gAAAABJRU5ErkJggg==" 
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAJVSURBVHgB7Zq9btNAGMZfO20HJCZ+gKmISgwMDB1Y+gHIB3Tp0g9APqBLl34A8gFdunRDJgYGhg4s/QBkKurEUPFhO7Zj3/tYbqI0qWM7Psf2+0iWYzvx+Xl93/e1DcD/A0ARABABAAEhBAEACEBACEEAAAJwETIMY3o0Gj01TfORYRj3NE2bqVarNyzLum3b9oxpmjcsy5q2bXtK07RJ/neapt16rt81DOOLYRifDMP4DADHAHB6LkLtdvtpr9d7AwDPAGD2HJfaxmH83uv13hqG8QYAfgDA6XkItdvtp71e7y0APASAmXNeah+H8XO/339vGMY7APgNAKfnIWSa5tN+v/8BAB5l3fL/gG3Yc+91u92XAPAZD5OT8xBqNpuP+/3+RwB4kGXDP+AQAN5jX12A+AwAJ+chZBjG436//xEAHmbZyB/sAMD7fr//AgA+A8AJAByfh5Bpmo/7/f5nALh/gfF/gUPM4mMA+AIARxcl1Ov1/gDAg1cQUoGLcucYAE4vSgj3wR/fuwi0h9/hP0i8s0O8+b9Ir78A8KDVan1cXl7GQAW5tra2uLa2tjZVoWq1upLL5QZmZmZ2QbfTjY0NpgKURKPRyBcKBVoqlYJ6vR41m80u6HZZq9WcarW6UiqV/Eqlsqvr+vcbN25g4F/Q7W11dZULiOFGo1FYKpWiWq0W7ezsxKDbfr/f6XQ6XavVaqqq+qtcLn+VZfnzpUuXPqE43d5ev37NXWBiZ2enWKvVYtz4jm3bA9Btp9Nx8d0JXW/Nzc39mJ2d/Xb58uVPKF6n9+3btzkNZpimWUBBRNf1bjQaBaDbmqYZ4fshfifkC+zpX9Dr7fXr13QXH3a7vaSqaqwoSgzXJ9Vq1cZ3xP39/Rh0e3t7eyEUiui7jIhgYl63t9evX9MdfKDvsizHhmHEvTlVKpXANE3B9Tl+vx+Q58jKygpTAUryrq5UKonT8jkeY1P0M5JgjC1du3aNqQAl+b4+ZgUw4eErKChwmZ+fZypASZ6hKAEJClwkSaIrQEk+F0gSkKDARZZlugKU5Jt5kgQkKHCRZZmuACV5QyVJQoICF1qtRleAkrzIkyQkKHDRdZ2uACV5of9TI0lCggIXTdPoClCS/1sjSUKCAhVN0+gKUJL/UyNJQoICF03T6ApQkv9ZIkpCgwEXTNLoClOS/1kjSUKCAhVN0+gKU5L/UyNJQoICF03T6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkpCgwEXTNLoClOT/1kiSkKDARdM0ugKU5P/USJKQoMBF0zS6ApTk/9ZIkhCAgJDA/wDZ/NtA3g2F0gAAAABJRU5ErkJggg==" 
                              alt="World Food Programme logo" 
                              class="partner-logo">
                     </div>
@@ -3130,10 +3110,10 @@
     <section class="py-16 md:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-12 md:mb-16 fade-in">
-                <h2 id="impact-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                <h2 id="impact-title" class="section-title text-3xl md:text-4xl font-bold text-gray-800 mb-4" data-translate="ourImpact">
                     Our Impact in Mahama
                 </h2>
-                <p id="impact-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600">
+                <p id="impact-subtitle" class="section-subtitle text-lg md:text-xl text-gray-600" data-translate="impactSubtitle">
                     Transforming lives through measurable outcomes
                 </p>
             </div>
@@ -3141,7 +3121,7 @@
             <div class="stats-grid grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
                 <div class="text-center fade-in hover-lift p-4 md:p-6 rounded-2xl bg-primary-light">
                     <div class="text-4xl md:text-5xl font-bold text-primary-blue mb-2 counter stats-text-animated" data-target="1000">0</div>
-                    <div class="text-lg md:text-xl font-semibold text-gray-800 stats-text-animated">Youth Trained</div>
+                    <div class="text-lg md:text-xl font-semibold text-gray-800 stats-text-animated" data-translate="youthTrained">Youth Trained</div>
                     <p class="text-gray-600 mt-2 text-sm md:text-base stats-text-animated">in digital and soft skills</p>
                     <div class="mt-4 w-full bg-gray-200 rounded-full h-2">
                         <div class="bg-primary-blue h-2 rounded-full stats-text-animated" style="width: 85%"></div>
@@ -3150,7 +3130,7 @@
                
                 <div class="text-center fade-in hover-lift p-4 md:p-6 rounded-2xl bg-primary-light">
                     <div class="text-4xl md:text-5xl font-bold text-primary-green mb-2 counter stats-text-animated" data-target="500">0</div>
-                    <div class="text-lg md:text-xl font-semibold text-gray-800 stats-text-animated">Families Supported</div>
+                    <div class="text-lg md:text-xl font-semibold text-gray-800 stats-text-animated" data-translate="familiesSupported">Families Supported</div>
                     <p class="text-gray-600 mt-2 text-sm md:text-base stats-text-animated">with food programs</p>
                     <div class="mt-4 w-full bg-gray-200 rounded-full h-2">
                         <div class="bg-primary-green h-2 rounded-full stats-text-animated" style="width: 75%"></div>
@@ -3159,7 +3139,7 @@
                
                 <div class="text-center fade-in hover-lift p-4 md:p-6 rounded-2xl bg-primary-light">
                     <div class="text-4xl md:text-5xl font-bold text-primary-yellow mb-2 counter stats-text-animated" data-target="300">0</div>
-                    <div class="text-lg md:text-xl font-semibold text-gray-800 stats-text-animated">Community Members</div>
+                    <div class="text-lg md:text-xl font-semibold text-gray-800 stats-text-animated" data-translate="communityMembers">Community Members</div>
                     <p class="text-gray-600 mt-2 text-sm md:text-base stats-text-animated">engaged in wellness initiatives</p>
                     <div class="mt-4 w-full bg-gray-200 rounded-full h-2">
                         <div class="bg-primary-yellow h-2 rounded-full stats-text-animated" style="width: 60%"></div>
@@ -3191,19 +3171,19 @@
         </div>
        
         <div class="max-w-4xl mx-auto text-center text-white px-4 relative z-10">
-            <h2 id="cta-title" class="cta-text-animated section-title text-3xl md:text-4xl font-bold mb-4 md:mb-6 fade-in">
+            <h2 id="cta-title" class="cta-text-animated section-title text-3xl md:text-4xl font-bold mb-4 md:mb-6 fade-in" data-translate="joinUs">
                 Join us in building a future of hope, connection, and empowerment for Mahama and beyond.
             </h2>
             
-            <p id="cta-subtitle" class="cta-text-animated section-subtitle text-lg md:text-xl opacity-90 mb-6 md:mb-8 fade-in">
+            <p id="cta-subtitle" class="cta-text-animated section-subtitle text-lg md:text-xl opacity-90 mb-6 md:mb-8 fade-in" data-translate="ctaSubtitle">
                 Together, we can create lasting change through technology, education, and community support.
             </p>
             <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center mt-6 md:mt-8 fade-in">
                 <button onclick="openModal('volunteerModal')" class="btn-responsive btn-professional bg-white text-primary-blue px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg flex items-center justify-center">
-                    <i class="fas fa-hands-helping mr-2"></i><span class="btn-text-animated">Become a Volunteer</span>
+                    <i class="fas fa-hands-helping mr-2"></i><span class="btn-text-animated" data-translate="becomeVolunteer">Become a Volunteer</span>
                 </button>
                 <button onclick="openModal('supportModal')" class="btn-responsive btn-professional bg-transparent border-2 border-white text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold text-base md:text-lg hover:bg-white hover:text-primary-blue transition transform hover:scale-105 flex items-center justify-center">
-                    <i class="fas fa-star mr-2"></i><span class="btn-text-animated">Support Our Mission</span>
+                    <i class="fas fa-star mr-2"></i><span class="btn-text-animated" data-translate="supportMission">Support Our Mission</span>
                 </button>
             </div>
         </div>
@@ -3231,9 +3211,9 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4 footer-text-animated">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-400 hover:text-white transition flex items-center text-hover-underline"><i class="fas fa-home mr-2 text-xs"></i>Home</a></li>
-                        <li><a href="#" onclick="openModal('getInvolvedModal')" class="text-gray-400 hover:text-white transition flex items-center text-hover-underline"><i class="fas fa-handshake mr-2 text-xs"></i>Get Involved</a></li>
-                        <li><a href="#" onclick="openModal('contactModal')" class="text-gray-400 hover:text-white transition flex items-center text-hover-underline"><i class="fas fa-envelope mr-2 text-xs"></i>Contact</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition flex items-center text-hover-underline"><i class="fas fa-home mr-2 text-xs"></i><span data-translate="home">Home</span></a></li>
+                        <li><a href="#" onclick="openModal('getInvolvedModal')" class="text-gray-400 hover:text-white transition flex items-center text-hover-underline"><i class="fas fa-handshake mr-2 text-xs"></i><span data-translate="getInvolved">Get Involved</span></a></li>
+                        <li><a href="#" onclick="openModal('contactModal')" class="text-gray-400 hover:text-white transition flex items-center text-hover-underline"><i class="fas fa-envelope mr-2 text-xs"></i><span data-translate="contact">Contact</span></a></li>
                     </ul>
                 </div>
                
@@ -3755,7 +3735,7 @@
                
                 <div class="pt-4">
                     <button type="submit" class="w-full donate-btn btn-professional bg-primary-green text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition flex items-center justify-center btn-text">
-                        <i class="fas fa-heart mr-2"></i>Donate Now
+                        <i class="fas fa-heart mr-2"></i><span data-translate="donate">Donate Now</span>
                     </button>
                 </div>
             </form>
@@ -3988,41 +3968,54 @@
             
             // Close language dropdown
             document.getElementById('language-dropdown').classList.remove('active');
+            
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenu.classList.contains('active')) {
+                mobileMenu.classList.remove('active');
+                const icon = document.getElementById('mobileMenuButton').querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         }
 
         // Update UI with current language
         function updateLanguageUI() {
             const t = translations[currentLanguage];
             
-            // Update navigation
+            // Update all elements with data-translate attribute
             document.querySelectorAll('[data-translate]').forEach(element => {
                 const key = element.getAttribute('data-translate');
                 if (t[key]) {
-                    element.textContent = t[key];
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = t[key];
+                    } else {
+                        element.textContent = t[key];
+                    }
                 }
             });
             
             // Update language button
             const langBtn = document.getElementById('language-btn');
             if (langBtn) {
-                langBtn.querySelector('span').textContent = t.language;
+                const span = langBtn.querySelector('span');
+                if (span) {
+                    span.textContent = t.language;
+                }
             }
             
             // Update mobile language button
-            const mobileLangBtn = document.querySelector('.mobile-dropdown-btn .fa-globe')?.closest('.mobile-dropdown-btn');
-            if (mobileLangBtn) {
-                const span = mobileLangBtn.querySelector('span');
-                if (span) {
+            const mobileLangBtns = document.querySelectorAll('.mobile-dropdown-btn');
+            mobileLangBtns.forEach(btn => {
+                const span = btn.querySelector('span');
+                if (span && span.hasAttribute('data-translate')) {
                     span.textContent = `Language (${t.language})`;
                 }
-            }
+            });
         }
 
         // Initialize language system
         function initLanguageSystem() {
-            // Add data-translate attributes to elements
-            document.querySelector('#language-btn span').setAttribute('data-translate', 'language');
-            
             // Add click handler for language button
             document.getElementById('language-btn').addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -4041,6 +4034,12 @@
             
             // Set initial language
             updateLanguageUI();
+            
+            // Save language preference to localStorage
+            const savedLanguage = localStorage.getItem('hopelink-language');
+            if (savedLanguage && translations[savedLanguage]) {
+                changeLanguage(savedLanguage);
+            }
         }
 
         // ==============================
@@ -4053,38 +4052,12 @@
         }
 
         // ==============================
-        // DONATION SECTION FUNCTIONALITY
-        // ==============================
-
-        function initDonationSection() {
-            const donateBtn = document.querySelector('.donate-section-btn');
-            if (donateBtn) {
-                donateBtn.addEventListener('click', function() {
-                    openModal('donateModal');
-                });
-            }
-        }
-
-        // ==============================
         // INITIALIZATION
         // ==============================
 
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize language system
             initLanguageSystem();
-            
-            // Initialize donation section
-            initDonationSection();
-            
-            // Hero Donate Button functionality - YOUR EXACT CODE
-            const heroDonateBtn = document.querySelector('.hero-donate-btn');
-            if (heroDonateBtn) {
-                heroDonateBtn.addEventListener('click', function() {
-                    alert("Donate button clicked!");
-                    // You can also open the donation modal here if you want:
-                    // openModal('donateModal');
-                });
-            }
             
             // Mobile menu toggle
             const mobileMenuButton = document.getElementById('mobileMenuButton');
@@ -4301,6 +4274,13 @@
                     animateCounters();
                 }
             }
+            
+            // Update changeLanguage to save preference
+            const originalChangeLanguage = window.changeLanguage;
+            window.changeLanguage = function(lang) {
+                originalChangeLanguage(lang);
+                localStorage.setItem('hopelink-language', lang);
+            };
         });
 
         // Notification system
